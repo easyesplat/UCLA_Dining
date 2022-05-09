@@ -99,10 +99,12 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { Button, View, Text, } from 'react-native';
+import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menubutton from './components/menubutton';
+import { BlurView } from 'expo-blur';
+import Gradient from 'dining_application/assets/gradient.js'
 
 function HomeScreen({ navigation }) {
   return (
@@ -113,6 +115,9 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('Details')}
       />
       <Menubutton name="Epicuria" waitTime="23" imageUri={require('dining_application/assets/epicimage.jpeg')}/>
+      <BlurView intensity={100} style={styles.blurContainer}>
+        <Gradient></Gradient>
+      </BlurView>
     </View>
   );
 }
@@ -147,5 +152,14 @@ function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  blurContainer: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+  },
+});
+
 
 export default App;

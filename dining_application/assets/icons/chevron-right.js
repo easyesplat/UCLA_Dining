@@ -8,7 +8,7 @@ const ChevronRight = (props) => (
     height={24}
     fill="none"
     stroke="#000"
-    strokeWidth={2}
+    strokeWidth={2.5}
     strokeLinecap="round"
     strokeLinejoin="round"
     className="feather feather-chevron-right"

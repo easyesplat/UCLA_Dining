@@ -2,7 +2,6 @@ import React from "react";
 import {StyleSheet, TouchableOpacity, View, Text, Image} from 'react-native'
 import ArrowRight from 'dining_application/assets/icons/chevron-right.js'
 import { useFonts } from 'expo-font';
-import { Keyframe, Easing } from 'react-native-reanimated';
 
 function Menubutton(props) {
     const [loaded] = useFonts({
@@ -21,8 +20,8 @@ function Menubutton(props) {
     }
 
     return (
-        <TouchableOpacity style={styles.button}>
-            <Image style={styles.icon} source={props.imageUri}/>
+        <TouchableOpacity style={styles.button} blurRadius={90}>
+            <Image style={styles.icon} source={props.imageUri} />
             <View style={styles.textWrapper}>
                 <Text style={{ fontFamily: 'sf-pro-sb', paddingBottom: 1, fontSize: 15, }}>{props.name}</Text>
                 <Text style={{ fontFamily: 'sf-pro-sb', fontSize: 13, color: timeColor}}>{props.waitTime} minutes</Text>
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        borderRadius: 5, 
+        borderRadius: 10, 
         color: "#000", 
         // width: "100%",  
         shadowColor: 'rgba(100,100,110, 0.18)', // IOS
@@ -49,8 +48,8 @@ const styles = StyleSheet.create({
     icon: {
         width: 50, 
         height: 50, 
-        borderBottomLeftRadius: 5, 
-        borderTopLeftRadius: 5, 
+        borderBottomLeftRadius: 10, 
+        borderTopLeftRadius: 10, 
     }, 
     textWrapper: {
         padding: 10,
