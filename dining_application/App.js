@@ -102,25 +102,7 @@ import * as React from 'react';
 import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Menubutton from './components/menubutton';
-import { BlurView } from 'expo-blur';
-import Gradient from 'dining_application/assets/gradient.js'
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-      <Menubutton name="Epicuria" waitTime="23" imageUri={require('dining_application/assets/epicimage.jpeg')}/>
-      <BlurView intensity={100} style={styles.blurContainer}>
-        <Gradient></Gradient>
-      </BlurView>
-    </View>
-  );
-}
+import HomeScreen from './screens/HomeScreen';
 
 function DetailsScreen({ navigation }) {
   return (
@@ -158,7 +140,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+    width: '100%',
+    zIndex: -1, 
   },
+  gradientPosition: {
+    position: 'absolute', 
+    left: 0, 
+    top: 0, 
+    zIndex: -2, 
+  }, 
 });
 
 
