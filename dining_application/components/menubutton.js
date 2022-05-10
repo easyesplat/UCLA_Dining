@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, TouchableOpacity, View, Text, Image} from 'react-native'
+import {StyleSheet, TouchableOpacity, View, Text, Image, Dimensions} from 'react-native'
 import ArrowRight from 'dining_application/assets/icons/chevron-right.js'
 import { useFonts } from 'expo-font';
 
@@ -21,10 +21,12 @@ function Menubutton(props) {
 
     return (
         <TouchableOpacity style={styles.button} blurRadius={90}>
-            <Image style={styles.icon} source={props.imageUri} />
-            <View style={styles.textWrapper}>
-                <Text style={{ fontFamily: 'sf-pro-sb', paddingBottom: 1, fontSize: 15, }}>{props.name}</Text>
-                <Text style={{ fontFamily: 'sf-pro-sb', fontSize: 13, color: timeColor}}>{props.waitTime} minutes</Text>
+            <View style={{flexDirection: "row"}}>
+                <Image style={styles.icon} source={props.imageUri} />
+                <View style={styles.textWrapper}>
+                    <Text style={{ fontFamily: 'sf-pro-sb', paddingBottom: 1, fontSize: 15, }}>{props.name}</Text>
+                    <Text style={{ fontFamily: 'sf-pro-sb', fontSize: 13, color: timeColor}}>{props.waitTime} minutes</Text>
+                </View>
             </View>
             <ArrowRight></ArrowRight>
         </TouchableOpacity>
@@ -38,12 +40,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10, 
         color: "#000", 
-        // width: "100%",  
+        width: (Dimensions.get('window').width / 2) - 25,
         shadowColor: 'rgba(100,100,110, 0.18)', // IOS
         shadowOpacity: 1, // IOS
         shadowRadius: 29, //IOS
         backgroundColor: "white",
         paddingRight: 5, 
+        marginBottom: 10, 
+        marginRight: 10, 
     },
     icon: {
         width: 50, 

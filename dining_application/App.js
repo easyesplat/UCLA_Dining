@@ -135,21 +135,5 @@ function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  blurContainer: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    width: '100%',
-    zIndex: -1, 
-  },
-  gradientPosition: {
-    position: 'absolute', 
-    left: 0, 
-    top: 0, 
-    zIndex: -2, 
-  }, 
-});
-
 
 export default App;
