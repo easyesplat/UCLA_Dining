@@ -13,49 +13,49 @@ const DATA = [
         id: 1,
         name: "Epicuria", 
         waitTime: 4, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/epicimage.jpeg'), 
     },
     {
         id: 2,
         name: "Bruin Plate", 
         waitTime: 6, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/bplateimage.jpg'), 
     },
     {
         id: 3,
         name: "De Neve", 
         waitTime: 6, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/deneve.jpg'), 
     },
     {
         id: 4,
         name: "Rendezvous", 
         waitTime: 18, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/rende.jpg'), 
     },
     {
         id: 5,
         name: "Bruin Cafe", 
         waitTime: 22, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/bcafe.jpg'), 
     },
     {
         id: 6,
         name: "The Feast", 
         waitTime: 34, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/feast.jpg'), 
     },
     {
         id: 7,
         name: "Bruin Bowl", 
         waitTime: 35, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/bowl.jpg'), 
     },
     {
         id: 8,
         name: "The Study", 
         waitTime: 45, 
-        imageUri: require('dining_application/assets/epicimage.jpeg'), 
+        imageUri: require('dining_application/assets/diningHallImages/study.jpg'), 
     },
 ];
 
@@ -120,7 +120,7 @@ function HomeScreenContent({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text style={{fontFamily: "sf-pro-sb", fontSize: 18, marginBottom: 10,}}>Dining Halls open for {mealPeriod}</Text>
+                <Text style={{fontFamily: "sf-pro-sb", fontSize: 20, marginBottom: 10,}}>Dining Halls open for {mealPeriod}</Text>
                 <DiningHalls/>
             </ScrollView>
         </SafeAreaView>
