@@ -63,7 +63,7 @@ function DiningHalls() {
     const renderMenuButton = ({item}) => (
         <Menubutton name={item.name} waitTime={item.waitTime} imageUri={item.imageUri}/>
     ); 
-    
+
     return (
         <FlatList
             data={DATA}
@@ -80,6 +80,7 @@ function DiningHalls() {
 function HomeScreenContent({navigation}) {
     const [loaded] = useFonts({
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
+        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
     });
     
     if (!loaded) {
@@ -97,7 +98,9 @@ function HomeScreenContent({navigation}) {
         greeting = "Night"; 
     }
 
-    let mealPeriod = "Dinner";
+    let mealPeriod = "dinner";
+    //Add Meal time changer
+
 
 
     return (
@@ -117,7 +120,7 @@ function HomeScreenContent({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text>Dining Halls open for {mealPeriod}</Text>
+                <Text style={{fontFamily: "sf-pro-sb", fontSize: 18, marginBottom: 10,}}>Dining Halls open for {mealPeriod}</Text>
                 <DiningHalls/>
             </ScrollView>
         </SafeAreaView>
