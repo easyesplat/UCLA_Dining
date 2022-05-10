@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, FlatList, Dimensions} from 'react-native';
+import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, FlatList, SectionList} from 'react-native';
 import Menubutton from 'dining_application/components/menubutton.js';
 import { BlurView } from 'expo-blur';
 import Gradient from 'dining_application/assets/gradient.js'
@@ -71,6 +71,7 @@ function DiningHalls() {
             keyExtractor={item => item.id}
             numColumns={2}
             style={styles.list}
+            scrollEnabled={false}
         />
     ); 
 }
