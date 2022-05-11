@@ -16,7 +16,9 @@ function Menubutton(props) {
     if (props.waitTime > 30) {
         timeColor = "#D24040"; 
     } else if (props.waitTime > 20) {
-        timeColor = "#EFC42B"; 
+        //timeColor = "#EFC42B";
+        //timeColor = "#EC9706"; 
+        timeColor = "#FCAE1E"
     }
 
     return (
@@ -28,7 +30,7 @@ function Menubutton(props) {
                     <Text style={{ fontFamily: 'sf-pro-sb', fontSize: 13, color: timeColor}}>{props.waitTime} minutes</Text>
                 </View>
             </View>
-            <ArrowRight></ArrowRight>
+            <ArrowRight/>
         </TouchableOpacity>
     );
 }

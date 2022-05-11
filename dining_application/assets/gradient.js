@@ -30,3 +30,6 @@ const Gradient = (props) => (
 )
 
 export default Gradient
+
+
+//git log --oneline --decorate --graph --all 14a38adf53033553da085549be989f02ca9d4ee4..79aed792415b35d1b31ddc26814a211c7bae97fe

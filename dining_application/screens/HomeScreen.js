@@ -48,7 +48,7 @@ const DATA = [
     {
         id: 7,
         name: "Bruin Bowl", 
-        waitTime: 35, 
+        waitTime: 21, 
         imageUri: require('dining_application/assets/diningHallImages/bowl.jpg'), 
     },
     {
@@ -59,22 +59,40 @@ const DATA = [
     },
 ];
 
-function DiningHalls() {
-    const renderMenuButton = ({item}) => (
-        <Menubutton name={item.name} waitTime={item.waitTime} imageUri={item.imageUri}/>
-    ); 
+function ActiveDiningHalls() {
+    let activeDiningHalls = []; 
+    let sortedData = DATA.slice(); 
+    sortedData.sort(function (a, b) {
+        return a.waitTime - b.waitTime;
+    }); 
+    for (let i = 0; i < sortedData.length; i++) {
+        activeDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()}/>); 
+    }
 
     return (
-        <FlatList
-            data={DATA}
-            renderItem={renderMenuButton}
-            keyExtractor={item => item.id}
-            numColumns={2}
-            style={styles.list}
-            scrollEnabled={false}
-        />
+        <View style={styles.grid}>
+            {activeDiningHalls}
+        </View>
     ); 
 }
+
+// function DiningHalls() {
+    
+//     const renderMenuButton = ({item}) => (
+//         <Menubutton name={item.name} waitTime={item.waitTime} imageUri={item.imageUri}/>
+//     ); 
+
+//     return (
+//         <FlatList
+//             data={DATA}
+//             renderItem={renderMenuButton}
+//             keyExtractor={item => item.id}
+//             numColumns={2}
+//             style={styles.list}
+//             scrollEnabled={false}
+//         />
+//     ); 
+// }
 
 
 
@@ -99,14 +117,20 @@ function HomeScreenContent({navigation}) {
         greeting = "Night"; 
     }
 
-    let mealPeriod = "dinner";
-    //Add Meal time changer
-
-
+    let mealPeriod = "Dining Halls are currently closed";
+    if (hours > 6 && hours < 11) {
+        mealPeriod = "Dining Halls open for breakfast"; 
+    } else if (hours > 10 && hours < 16) {
+        mealPeriod = "Dining Halls open for lunch"; 
+    } else if (hours > 16 && hours < 22) {
+        mealPeriod = "Dining Halls open for dinner"; 
+    } else if (hours > 21 || hours === 0) {
+        mealPeriod = "Dining Halls open for late night"; 
+    }
 
     return (
         <SafeAreaView>
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Good {greeting},{'\n'}Kalyan</Text>
                     <View style={styles.iconRow}>
@@ -121,8 +145,8 @@ function HomeScreenContent({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text style={{fontFamily: "sf-pro-sb", fontSize: 20, marginBottom: 10,}}>Dining Halls open for {mealPeriod}</Text>
-                <DiningHalls/>
+                <Text style={{fontFamily: "sf-pro-sb", fontSize: 20, marginBottom: 10,}}>{mealPeriod}</Text>
+                <ActiveDiningHalls/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -174,6 +198,12 @@ const styles = StyleSheet.create({
     },
     list: {
         overflow: "visible"
+    },
+    grid: { 
+        flex: 1, 
+        flexDirection: 'row', 
+        flexWrap: 'wrap',
+        marginRight: -20,
     },
 });
 
