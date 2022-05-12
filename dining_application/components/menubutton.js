@@ -16,9 +16,9 @@ function Menubutton(props) {
     if (props.waitTime > 30) {
         timeColor = "#D24040"; 
     } else if (props.waitTime > 20) {
-        //timeColor = "#EFC42B";
+        timeColor = "#EFC42B";
         //timeColor = "#EC9706"; 
-        timeColor = "#FCAE1E"
+        //timeColor = "#FCAE1E"
     }
 
     return (
@@ -26,11 +26,11 @@ function Menubutton(props) {
             <View style={{flexDirection: "row"}}>
                 <Image style={styles.icon} source={props.imageUri} />
                 <View style={styles.textWrapper}>
-                    <Text style={{ fontFamily: 'sf-pro-sb', paddingBottom: 1, fontSize: 15, }}>{props.name}</Text>
-                    <Text style={{ fontFamily: 'sf-pro-sb', fontSize: 13, color: timeColor}}>{props.waitTime} minutes</Text>
+                    <Text numberOfLines={1} style={{ fontFamily: 'sf-pro-sb', paddingBottom: 1, fontSize: 13, }}>{props.name}</Text>
+                    <Text numberOfLines={1} style={{ fontFamily: 'sf-pro-sb', fontSize: 12, color: timeColor}}>{props.waitTime} minutes</Text>
                 </View>
             </View>
-            <ArrowRight/>
+            <ArrowRight small="false"/>
         </TouchableOpacity>
     );
 }
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         borderRadius: 10, 
-        color: "#000", 
         width: (Dimensions.get('window').width / 2) - 25,
         shadowColor: 'rgba(100,100,110, 0.18)', // IOS
         shadowOpacity: 1, // IOS
@@ -53,14 +52,14 @@ const styles = StyleSheet.create({
     },
     icon: {
         width: 50, 
-        height: 50, 
+        height: 51.5, 
         borderBottomLeftRadius: 10, 
         borderTopLeftRadius: 10, 
     }, 
     textWrapper: {
         padding: 10,
-
+        maxWidth: 300,
     }
-})
+});
 
 export default Menubutton; 

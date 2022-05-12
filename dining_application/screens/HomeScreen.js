@@ -1,100 +1,20 @@
 import * as React from 'react';
-import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, FlatList, SectionList} from 'react-native';
-import Menubutton from 'dining_application/components/menubutton.js';
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
+import Block from '../components/block';
 import { BlurView } from 'expo-blur';
 import Gradient from 'dining_application/assets/gradient.js'
 import Refresh from '../assets/icons/refresh';
 import Gear from '../assets/icons/gear';
+import ChevronRight from '../assets/icons/chevron-right';
+import SimpleButton from '../components/simpleButton';
 import BellNotification from '../assets/icons/bell_notification';
+import RedHeart from '../assets/icons/redHeart';
+import MealPlan from '../components/mealPlan';
+import ActiveDiningHalls from '../components/activeDiningHalls';
 import { useFonts } from 'expo-font';
+import FoodTrucks from '../components/foodTrucks';
 
-const DATA = [
-    {
-        id: 1,
-        name: "Epicuria", 
-        waitTime: 4, 
-        imageUri: require('dining_application/assets/diningHallImages/epicimage.jpeg'), 
-    },
-    {
-        id: 2,
-        name: "Bruin Plate", 
-        waitTime: 6, 
-        imageUri: require('dining_application/assets/diningHallImages/bplateimage.jpg'), 
-    },
-    {
-        id: 3,
-        name: "De Neve", 
-        waitTime: 6, 
-        imageUri: require('dining_application/assets/diningHallImages/deneve.jpg'), 
-    },
-    {
-        id: 4,
-        name: "Rendezvous", 
-        waitTime: 18, 
-        imageUri: require('dining_application/assets/diningHallImages/rende.jpg'), 
-    },
-    {
-        id: 5,
-        name: "Bruin Cafe", 
-        waitTime: 22, 
-        imageUri: require('dining_application/assets/diningHallImages/bcafe.jpg'), 
-    },
-    {
-        id: 6,
-        name: "The Feast", 
-        waitTime: 34, 
-        imageUri: require('dining_application/assets/diningHallImages/feast.jpg'), 
-    },
-    {
-        id: 7,
-        name: "Bruin Bowl", 
-        waitTime: 21, 
-        imageUri: require('dining_application/assets/diningHallImages/bowl.jpg'), 
-    },
-    {
-        id: 8,
-        name: "The Study", 
-        waitTime: 45, 
-        imageUri: require('dining_application/assets/diningHallImages/study.jpg'), 
-    },
-];
-
-function ActiveDiningHalls() {
-    let activeDiningHalls = []; 
-    let sortedData = DATA.slice(); 
-    sortedData.sort(function (a, b) {
-        return a.waitTime - b.waitTime;
-    }); 
-    for (let i = 0; i < sortedData.length; i++) {
-        activeDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()}/>); 
-    }
-
-    return (
-        <View style={styles.grid}>
-            {activeDiningHalls}
-        </View>
-    ); 
-}
-
-// function DiningHalls() {
-    
-//     const renderMenuButton = ({item}) => (
-//         <Menubutton name={item.name} waitTime={item.waitTime} imageUri={item.imageUri}/>
-//     ); 
-
-//     return (
-//         <FlatList
-//             data={DATA}
-//             renderItem={renderMenuButton}
-//             keyExtractor={item => item.id}
-//             numColumns={2}
-//             style={styles.list}
-//             scrollEnabled={false}
-//         />
-//     ); 
-// }
-
-
+let hours = new Date().getHours(); 
 
 function HomeScreenContent({navigation}) {
     const [loaded] = useFonts({
@@ -106,8 +26,6 @@ function HomeScreenContent({navigation}) {
         return null;
     }
 
-    let hours = new Date().getHours(); 
-
     let greeting = "Morning";
     if (hours > 11 && hours < 18) {
         greeting = "Afternoon"; 
@@ -115,17 +33,6 @@ function HomeScreenContent({navigation}) {
         greeting = "Evening"; 
     } else if (hours > 20 || hours < 4) {
         greeting = "Night"; 
-    }
-
-    let mealPeriod = "Dining Halls are currently closed";
-    if (hours > 6 && hours < 11) {
-        mealPeriod = "Dining Halls open for breakfast"; 
-    } else if (hours > 10 && hours < 16) {
-        mealPeriod = "Dining Halls open for lunch"; 
-    } else if (hours > 16 && hours < 22) {
-        mealPeriod = "Dining Halls open for dinner"; 
-    } else if (hours > 21 || hours === 0) {
-        mealPeriod = "Dining Halls open for late night"; 
     }
 
     return (
@@ -145,8 +52,24 @@ function HomeScreenContent({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text style={{fontFamily: "sf-pro-sb", fontSize: 20, marginBottom: 10,}}>{mealPeriod}</Text>
                 <ActiveDiningHalls/>
+                <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
+                    <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
+                        <RedHeart style={{marginRight: 10}}/>
+                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap'}}>Take your COVID-19 clearance survey and protect others</Text>
+                    </View>
+                    <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey"/>
+                </Block>
+                <TouchableOpacity>
+                    <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
+                        <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
+                            <MealPlan style={{marginRight: 10}} mealPlan="14P"/>
+                            <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap'}}>You should have <Text style={{color: "#005587"}} >122</Text> meal swipes remaining for the quarter</Text>
+                            <ChevronRight style={{marginRight: 10}}/>
+                        </View>
+                    </Block>
+                </TouchableOpacity>
+                <FoodTrucks/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -154,10 +77,10 @@ function HomeScreenContent({navigation}) {
 
 function HomeScreen({ navigation }) {
     return (
-        <View>
-            <Gradient style={styles.gradientPosition}></Gradient>
+        <View style={{backgroundColor: "#fff"}}>
+            <Gradient style={styles.gradientPosition}/>
             <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
-            <HomeScreenContent></HomeScreenContent>
+            <HomeScreenContent/>
         </View>
     );
 }
@@ -185,7 +108,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontFamily: "sf-pro-b", 
-        fontSize: 36,
+        fontSize: 26,
     },    
     scrollView: {
         paddingHorizontal: 20, 
@@ -198,12 +121,6 @@ const styles = StyleSheet.create({
     },
     list: {
         overflow: "visible"
-    },
-    grid: { 
-        flex: 1, 
-        flexDirection: 'row', 
-        flexWrap: 'wrap',
-        marginRight: -20,
     },
 });
 

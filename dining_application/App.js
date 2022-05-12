@@ -96,13 +96,18 @@
 //   }
 // });
 
+
 // In App.js in a new project
 
+
 import * as React from 'react';
-import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, StatusBar} from 'react-native';
+import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, StatusBar, BackHandler} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
 
 function DetailsScreen({ navigation }) {
   return (
