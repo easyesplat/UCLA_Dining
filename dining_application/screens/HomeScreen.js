@@ -1,12 +1,21 @@
 import * as React from 'react';
-import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, FlatList, SectionList} from 'react-native';
-import Menubutton from 'dining_application/components/menubutton.js';
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
+import Menubutton from '../components/menubutton';
+import Block from '../components/block';
 import { BlurView } from 'expo-blur';
 import Gradient from 'dining_application/assets/gradient.js'
 import Refresh from '../assets/icons/refresh';
 import Gear from '../assets/icons/gear';
+import ChevronRight from '../assets/icons/chevron-right';
+import SimpleButton from '../components/simpleButton';
 import BellNotification from '../assets/icons/bell_notification';
+import RedHeart from '../assets/icons/redHeart';
+import MealPlan from '../components/mealPlan';
 import { useFonts } from 'expo-font';
+import FoodTrucks from '../components/foodTrucks';
+
+let hours = new Date().getHours(); 
+let minutes = new Date().getMinutes();
 
 const DATA = [
     {
@@ -59,7 +68,43 @@ const DATA = [
     },
 ];
 
-function ActiveDiningHalls() {
+function ActiveDiningHalls(props) {
+    const [loaded] = useFonts({
+        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
+    });
+    
+    if (!loaded) {
+        return null;
+    }
+
+    let mealPeriod = "Dining Halls are currently closed";
+    let closed = true; 
+    if (hours > 6 && hours < 11) {
+        mealPeriod = "Dining Halls open for breakfast"; 
+        closed = false; 
+    } else if (hours > 10 && hours < 16) {
+        mealPeriod = "Dining Halls open for lunch"; 
+        closed = false; 
+    } else if (hours > 20 && minutes > 0) {
+        mealPeriod = "Dining Halls open for late night"; 
+        closed = false; 
+    } else if (hours > 16 && hours < 22) {
+        mealPeriod = "Dining Halls open for dinner"; 
+        closed = false; 
+    } 
+    //closed = true; 
+
+    if(closed == true) {
+        return (
+            <View style={{marginTop: -20}}>
+                <Block>
+                    <Image style={{width: 100, height: 100, alignSelf: "center"}} source={require("dining_application/assets/animojis/sadbear.png")}/>
+                    <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, textAlign: "center", paddingHorizontal: 20, marginBottom: 20}}>Dining halls are closed right now. Dining halls will re-open in 6 hours</Text>
+                    <SimpleButton style={{alignSelf: "center", marginBottom: 10,}} background="true" text="See all dining halls"/>
+                </Block>
+            </View>
+        );
+    }
     let activeDiningHalls = []; 
     let sortedData = DATA.slice(); 
     sortedData.sort(function (a, b) {
@@ -70,31 +115,17 @@ function ActiveDiningHalls() {
     }
 
     return (
-        <View style={styles.grid}>
-            {activeDiningHalls}
+        <View>
+            <Text style={{fontFamily: "sf-pro-sb", fontSize: 18}}>{mealPeriod}</Text>
+            <View style={styles.grid}>
+                {activeDiningHalls}
+            </View>
+            <View style={{flexDirection: "row", justifyContent: "flex-end", paddingTop: 5}}>
+                    <SimpleButton text="See all dining halls"/>
+            </View>
         </View>
     ); 
 }
-
-// function DiningHalls() {
-    
-//     const renderMenuButton = ({item}) => (
-//         <Menubutton name={item.name} waitTime={item.waitTime} imageUri={item.imageUri}/>
-//     ); 
-
-//     return (
-//         <FlatList
-//             data={DATA}
-//             renderItem={renderMenuButton}
-//             keyExtractor={item => item.id}
-//             numColumns={2}
-//             style={styles.list}
-//             scrollEnabled={false}
-//         />
-//     ); 
-// }
-
-
 
 function HomeScreenContent({navigation}) {
     const [loaded] = useFonts({
@@ -106,8 +137,6 @@ function HomeScreenContent({navigation}) {
         return null;
     }
 
-    let hours = new Date().getHours(); 
-
     let greeting = "Morning";
     if (hours > 11 && hours < 18) {
         greeting = "Afternoon"; 
@@ -115,17 +144,6 @@ function HomeScreenContent({navigation}) {
         greeting = "Evening"; 
     } else if (hours > 20 || hours < 4) {
         greeting = "Night"; 
-    }
-
-    let mealPeriod = "Dining Halls are currently closed";
-    if (hours > 6 && hours < 11) {
-        mealPeriod = "Dining Halls open for breakfast"; 
-    } else if (hours > 10 && hours < 16) {
-        mealPeriod = "Dining Halls open for lunch"; 
-    } else if (hours > 16 && hours < 22) {
-        mealPeriod = "Dining Halls open for dinner"; 
-    } else if (hours > 21 || hours === 0) {
-        mealPeriod = "Dining Halls open for late night"; 
     }
 
     return (
@@ -145,8 +163,24 @@ function HomeScreenContent({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text style={{fontFamily: "sf-pro-sb", fontSize: 20, marginBottom: 10,}}>{mealPeriod}</Text>
                 <ActiveDiningHalls/>
+                <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
+                    <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
+                        <RedHeart style={{marginRight: 10}}/>
+                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap'}}>Take your COVID-19 clearance survey and protect others</Text>
+                    </View>
+                    <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey"/>
+                </Block>
+                <TouchableOpacity>
+                    <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
+                        <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
+                            <MealPlan style={{marginRight: 10}} mealPlan="14P"/>
+                            <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap'}}>You should have <Text style={{color: "#005587"}} >122</Text> meal swipes remaining for the quarter</Text>
+                            <ChevronRight style={{marginRight: 10}}/>
+                        </View>
+                    </Block>
+                </TouchableOpacity>
+                <FoodTrucks/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -154,10 +188,10 @@ function HomeScreenContent({navigation}) {
 
 function HomeScreen({ navigation }) {
     return (
-        <View>
-            <Gradient style={styles.gradientPosition}></Gradient>
+        <View style={{backgroundColor: "#fff"}}>
+            <Gradient style={styles.gradientPosition}/>
             <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
-            <HomeScreenContent></HomeScreenContent>
+            <HomeScreenContent/>
         </View>
     );
 }
@@ -185,7 +219,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontFamily: "sf-pro-b", 
-        fontSize: 36,
+        fontSize: 26,
     },    
     scrollView: {
         paddingHorizontal: 20, 
@@ -204,7 +238,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         flexWrap: 'wrap',
         marginRight: -20,
+        marginTop: 10, 
     },
+
 });
 
 export default HomeScreen
