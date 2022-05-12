@@ -45,6 +45,3 @@ for items in capri_list:
 print(spec_list[2]['option'])
 
 
-
-print("hello")
-
