@@ -3,8 +3,6 @@
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen as uReq
 
-from matplotlib.cbook import ls_mapper
-
 html_link = 'https://menu.dining.ucla.edu/hours/'
 
 #grabbing the page
