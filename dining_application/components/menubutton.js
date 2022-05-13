@@ -22,7 +22,7 @@ function Menubutton(props) {
     }
 
     return (
-        <TouchableOpacity style={styles.button} blurRadius={90}>
+        <TouchableOpacity style={styles.button} blurRadius={90} onPress={props.onPress}>
             <View style={{flexDirection: "row"}}>
                 <Image style={styles.icon} source={props.imageUri} />
                 <View style={styles.textWrapper}>

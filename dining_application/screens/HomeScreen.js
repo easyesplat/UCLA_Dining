@@ -13,10 +13,12 @@ import MealPlan from '../components/mealPlan';
 import ActiveDiningHalls from '../components/activeDiningHalls';
 import { useFonts } from 'expo-font';
 import FoodTrucks from '../components/foodTrucks';
+import { useNavigation } from '@react-navigation/native';
 
 let hours = new Date().getHours(); 
 
-function HomeScreenContent({navigation}) {
+function HomeScreenContent() {
+    const navigation = useNavigation();
     const [loaded] = useFonts({
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
         'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
@@ -58,7 +60,7 @@ function HomeScreenContent({navigation}) {
                         <RedHeart style={{marginRight: 10}}/>
                         <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap', marginRight: 15,}}>Take your COVID-19 clearance survey and protect others</Text>
                     </View>
-                    <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey"/>
+                    <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey" onPress={() => navigation.navigate("Dining Halls")}/>
                 </Block>
                 <TouchableOpacity>
                     <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
@@ -75,7 +77,7 @@ function HomeScreenContent({navigation}) {
     );
 }
 
-function HomeScreen({ navigation }) {
+function HomeScreen() {
     return (
         <View style={{backgroundColor: "#fff"}}>
             <Gradient style={styles.gradientPosition}/>

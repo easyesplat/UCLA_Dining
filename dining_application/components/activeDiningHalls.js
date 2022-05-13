@@ -4,6 +4,7 @@ import Menubutton from '../components/menubutton';
 import Block from '../components/block';
 import SimpleButton from '../components/simpleButton';
 import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
     {
@@ -57,10 +58,11 @@ const DATA = [
 ];
 
 function ActiveDiningHalls(props) {
+    const navigation = useNavigation(); 
     let hours = new Date().getHours(); 
     let minutes = new Date().getMinutes();
-    // hours = 10; 
-    // minutes = 0; 
+    hours = 10; 
+    minutes = 0; 
     let timeConstant = hours + (minutes/60);
 
     const [loaded] = useFonts({
@@ -143,7 +145,7 @@ function ActiveDiningHalls(props) {
         return a.waitTime - b.waitTime;
     }); 
     for (let i = 0; i < sortedData.length; i++) {
-        activeDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()}/>); 
+        activeDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls")} />); 
     }
 
     return (
