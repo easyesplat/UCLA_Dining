@@ -33,7 +33,7 @@ const DATA = [
     {
         id: 5,
         name: "Bruin Cafe", 
-        waitTime: 22, 
+        waitTime: 11, 
         imageUri: require('dining_application/assets/diningHallImages/bcafe.jpg'), 
     },
     {
@@ -59,8 +59,8 @@ const DATA = [
 function ActiveDiningHalls(props) {
     let hours = new Date().getHours(); 
     let minutes = new Date().getMinutes();
-    // hours = 10; 
-    // minutes = 59; 
+    hours = 10; 
+    minutes = 0; 
     let timeConstant = hours + (minutes/60);
 
     const [loaded] = useFonts({

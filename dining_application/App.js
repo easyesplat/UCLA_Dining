@@ -102,9 +102,8 @@
 
 import * as React from 'react';
 import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, StatusBar, BackHandler} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
+
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
@@ -127,11 +126,18 @@ function DetailsScreen({ navigation }) {
   );
 } 
 
-const Stack = createNativeStackNavigator();
 
 function App() {
-  return (
-    <NavigationContainer>
+    return (
+        <HomeScreen/>
+    );
+}
+
+
+export default App;
+
+/*
+<NavigationContainer>
       <StatusBar
         barStyle="dark-content"
       />
@@ -140,8 +146,4 @@ function App() {
         <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
-
-
-export default App;
+*/

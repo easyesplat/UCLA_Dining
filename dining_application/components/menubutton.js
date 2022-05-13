@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     }, 
     textWrapper: {
         padding: 10,
-        maxWidth: 300,
+        maxWidth: 100,
     }
 });
 

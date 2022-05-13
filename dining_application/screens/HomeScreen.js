@@ -56,7 +56,7 @@ function HomeScreenContent({navigation}) {
                 <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
                     <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
                         <RedHeart style={{marginRight: 10}}/>
-                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap'}}>Take your COVID-19 clearance survey and protect others</Text>
+                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap', marginRight: 15,}}>Take your COVID-19 clearance survey and protect others</Text>
                     </View>
                     <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey"/>
                 </Block>
