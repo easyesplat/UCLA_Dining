@@ -59,8 +59,8 @@ const DATA = [
 function ActiveDiningHalls(props) {
     let hours = new Date().getHours(); 
     let minutes = new Date().getMinutes();
-    hours = 10; 
-    minutes = 0; 
+    // hours = 10; 
+    // minutes = 0; 
     let timeConstant = hours + (minutes/60);
 
     const [loaded] = useFonts({
