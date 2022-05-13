@@ -18,7 +18,7 @@ function SimpleButton(props) {
     }
 
     return (
-        <TouchableOpacity style={[backgroundClassName, props.style]}>
+        <TouchableOpacity style={[backgroundClassName, props.style]} onPress={props.onPress}>
             <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, paddingRight: 2,}}>{props.text}</Text>
             <ArrowRight/>
         </TouchableOpacity>
