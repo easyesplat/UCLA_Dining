@@ -17,8 +17,6 @@ function Menubutton(props) {
         timeColor = "#D24040"; 
     } else if (props.waitTime > 20) {
         timeColor = "#EFC42B";
-        //timeColor = "#EC9706"; 
-        //timeColor = "#FCAE1E"
     }
 
     return (

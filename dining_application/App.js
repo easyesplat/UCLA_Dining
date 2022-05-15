@@ -7,7 +7,7 @@
 
 // export default function App() {
 //   const [selectedImage, setSelectedImage] = React.useState(null);
-  
+
 //   let openImagePickerAsync = async () => {
 //     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 

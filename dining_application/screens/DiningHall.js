@@ -1,26 +1,80 @@
-import { View, Text, StyleSheet, ImageBackground, Dimensions} from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Dimensions, StatusBar} from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
-import Overlay from '../assets/overlay'
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts } from 'expo-font';
+import { useRoute } from "@react-navigation/native"
+import DiningLogo from '../assets/icons/diningLogo';
 
-const DiningHall = () => {
+function DiningHall() {
+    const routes = useRoute(); 
+    const [loaded] = useFonts({
+        'dining-font': routes.params.data.font,
+        'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
+        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
+    });
+    
+    if (!loaded) {
+        return null;
+    }
+
     return (
         <View>
-            <ImageBackground style={styles.header} resizeMode="cover" source={require("dining_application/assets/diningHallImages/epicimage.jpeg")}>
-                <LinearGradient 
-                    colors={['transparent', 'rgba(11,11,13,0.4)']}
-                    style={styles.background}
-                />
-                
-            </ImageBackground>
-        
-            <SafeAreaView>
-                <ScrollView>
-                    <Text> Hello </Text>
-                </ScrollView>
-            </SafeAreaView>
+            <ScrollView>
+                <ImageBackground transition={false} style={styles.header} resizeMode="cover" source={routes.params.data.imageUri}>
+                    <LinearGradient 
+                        colors={['transparent', 'rgba(11,11,13,0.4)']}
+                        style={StyleSheet.absoluteFill}
+                    />
+                    <DiningLogo name={routes.params.name}/>
+                </ImageBackground>
+                <SafeAreaView>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                    <Text>{routes.params.name}</Text>
+                </SafeAreaView>
+            </ScrollView>
         </View>
     )
 }
@@ -29,15 +83,17 @@ const styles = StyleSheet.create({
     header: {
         height: 400, 
         //alignItems: "flex-end", 
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        padding: 20,
     },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: "100%",
-    },
+    headerText:  {
+        fontFamily: "dining-font", 
+        fontSize: 56, 
+        color: "#fff",
+        paddingTop: 15,
+        overflow: "visible"
+    }
+
 
 }); 
 

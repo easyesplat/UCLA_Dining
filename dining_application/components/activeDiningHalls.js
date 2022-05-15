@@ -1,70 +1,31 @@
 import * as React from 'react';
-import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
+import { View, Text, StyleSheet, Image} from 'react-native';
 import Menubutton from '../components/menubutton';
 import Block from '../components/block';
 import SimpleButton from '../components/simpleButton';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import {db} from "../Core/Config.js"
+import { getDoc, doc } from 'firebase/firestore';
+import { useState } from 'react';
+import AppLoading from 'expo-app-loading';
+import DATA from '../data/diningData';
 
-const DATA = [
-    {
-        id: 1,
-        name: "Epicuria", 
-        waitTime: 4, 
-        imageUri: require('dining_application/assets/diningHallImages/epicimage.jpeg'), 
-    },
-    {
-        id: 2,
-        name: "Bruin Plate", 
-        waitTime: 6, 
-        imageUri: require('dining_application/assets/diningHallImages/bplateimage.jpg'), 
-    },
-    {
-        id: 3,
-        name: "De Neve", 
-        waitTime: 6, 
-        imageUri: require('dining_application/assets/diningHallImages/deneve.jpg'), 
-    },
-    {
-        id: 4,
-        name: "Rendezvous", 
-        waitTime: 18, 
-        imageUri: require('dining_application/assets/diningHallImages/rende.jpg'), 
-    },
-    {
-        id: 5,
-        name: "Bruin Cafe", 
-        waitTime: 11, 
-        imageUri: require('dining_application/assets/diningHallImages/bcafe.jpg'), 
-    },
-    {
-        id: 6,
-        name: "The Feast", 
-        waitTime: 34, 
-        imageUri: require('dining_application/assets/diningHallImages/feast.jpg'), 
-    },
-    {
-        id: 7,
-        name: "Bruin Bowl", 
-        waitTime: 21, 
-        imageUri: require('dining_application/assets/diningHallImages/bowl.jpg'), 
-    },
-    {
-        id: 8,
-        name: "The Study", 
-        waitTime: 45, 
-        imageUri: require('dining_application/assets/diningHallImages/study.jpg'), 
-    },
-];
+
 
 function ActiveDiningHalls(props) {
+    //hooks
     const navigation = useNavigation(); 
+    const [userDoc, setUserDoc] = useState(null); 
+
+    //time
     let hours = new Date().getHours(); 
     let minutes = new Date().getMinutes();
-    hours = 10; 
-    minutes = 0; 
+    hours = 14; 
+    // minutes = 59; 
     let timeConstant = hours + (minutes/60);
 
+    //fonts
     const [loaded] = useFonts({
         'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
     });
@@ -73,21 +34,27 @@ function ActiveDiningHalls(props) {
         return null;
     }
 
+    //Meal Period 
     const openingTimes = [17, 11, 7]; 
 
-    let mealPeriod = "Dining Halls are currently closed";
+    let mealPeriodMessage = "Dining Halls are currently closed";
+    let mealPeriod; 
     let closed = true; 
     if (timeConstant >= 7 && timeConstant <= 10) {
-        mealPeriod = "Dining Halls open for breakfast"; 
+        mealPeriodMessage = "Dining Halls open for breakfast"; 
+        mealPeriod = "breakfast"
         closed = false; 
     } else if (timeConstant >= 11 && timeConstant <= 15) {
-        mealPeriod = "Dining Halls open for lunch"; 
+        mealPeriodMessage = "Dining Halls open for lunch"; 
+        mealPeriod = "lunch"; 
         closed = false; 
     } else if (timeConstant >= 17 && timeConstant <= 21) {
-        mealPeriod = "Dining Halls open for dinner"; 
+        mealPeriodMessage = "Dining Halls open for dinner"; 
+        mealPeriod = "dinner"
         closed = false; 
     } else if (timeConstant >= 21) {
-        mealPeriod = "Dining Halls open for late night"; 
+        mealPeriodMessage = "Dining Halls open for late night"; 
+        mealPeriod = "late_dinner"
         closed = false; 
     }
     //closed = true; 
@@ -139,20 +106,53 @@ function ActiveDiningHalls(props) {
         );
     }
 
-    let activeDiningHalls = []; 
-    let sortedData = DATA.slice(); 
+    // let openDiningHalls; 
+
+    // if (!closed) {
+    //     const myDoc = doc(db, "time", mealPeriod); 
+    
+    //     getDoc(myDoc)
+    //     .then((snapshot) => {
+    //         if (snapshot.exists) {
+    //             setUserDoc(snapshot.data())
+    //         } else {
+    //             alert("No Document found")
+    //             return null; 
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         alert(error.message)
+    //     })
+
+    // }
+
+    // if(userDoc != null) {
+    //     openDiningHalls = (userDoc.restaurants).slice();
+        
+    // } else {
+    //     return (
+    //         //Change this
+    //         <AppLoading/>
+    //     ); 
+    // }
+
+    let renderDiningHalls = []; 
+    let sortedData = DATA.slice();
     sortedData.sort(function (a, b) {
         return a.waitTime - b.waitTime;
     }); 
     for (let i = 0; i < sortedData.length; i++) {
-        activeDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls")} />); 
+        //if (openDiningHalls.includes(sortedData[i].name)) {
+            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", {name: sortedData[i].name, data: sortedData[i]})} />); 
+        //}
     }
+
 
     return (
         <View>
-            <Text style={{fontFamily: "sf-pro-sb", fontSize: 18}}>{mealPeriod}</Text>
+            <Text style={{fontFamily: "sf-pro-sb", fontSize: 18}}>{mealPeriodMessage}</Text>
             <View style={styles.grid}>
-                {activeDiningHalls}
+                {renderDiningHalls}
             </View>
             <View style={{flexDirection: "row", justifyContent: "flex-end", paddingTop: 5}}>
                     <SimpleButton text="See all dining halls"/>
@@ -173,3 +173,63 @@ const styles = StyleSheet.create({
 });
 
 export default ActiveDiningHalls; 
+
+
+/*
+const DATA = [
+    {
+        id: 1,
+        name: "Epicuria", 
+        waitTime: 4, 
+        imageUri: require('dining_application/assets/diningHallImages/epicimage.jpeg'), 
+    },
+    {
+        id: 2,
+        name: "Bruin Plate", 
+        waitTime: 6, 
+        imageUri: require('dining_application/assets/diningHallImages/bplateimage.jpg'), 
+    },
+    {
+        id: 3,
+        name: "De Neve", 
+        waitTime: 6, 
+        imageUri: require('dining_application/assets/diningHallImages/deneve.jpg'), 
+    },
+    {
+        id: 4,
+        name: "Rendezvous", 
+        waitTime: 18, 
+        imageUri: require('dining_application/assets/diningHallImages/rende.jpg'), 
+    },
+    {
+        id: 5,
+        name: "Bruin Café", 
+        waitTime: 11, 
+        imageUri: require('dining_application/assets/diningHallImages/bcafe.jpg'), 
+    },
+    {
+        id: 6,
+        name: "The Feast", 
+        waitTime: 34, 
+        imageUri: require('dining_application/assets/diningHallImages/feast.jpg'), 
+    },
+    {
+        id: 7,
+        name: "Bruin Bowl", 
+        waitTime: 21, 
+        imageUri: require('dining_application/assets/diningHallImages/bowl.jpg'), 
+    },
+    {
+        id: 8,
+        name: "The Study at Hedrick", 
+        waitTime: 45, 
+        imageUri: require('dining_application/assets/diningHallImages/study.jpg'), 
+    },
+    {
+        id: 9,
+        name: "The Drey", 
+        waitTime: 35, 
+        imageUri: require('dining_application/assets/diningHallImages/drey.jpg'), 
+    },
+];
+*/
