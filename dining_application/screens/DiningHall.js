@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { useRoute } from "@react-navigation/native"
 import DiningLogo from '../assets/icons/diningLogo';
+import Block from '../components/block';
 
 function DiningHall() {
     const routes = useRoute(); 
@@ -20,7 +21,7 @@ function DiningHall() {
     }
 
     return (
-        <View>
+        <View style={{backgroundColor: "#fff"}}>
             <ScrollView>
                 <ImageBackground transition={false} style={styles.header} resizeMode="cover" source={routes.params.data.imageUri}>
                     <LinearGradient 
@@ -29,6 +30,13 @@ function DiningHall() {
                     />
                     <DiningLogo name={routes.params.name}/>
                 </ImageBackground>
+                <View style={styles.body}>
+                    <Block>
+                        <View style={{padding: 8}}>
+                            <Text style={styles.insightsHeaderText}>{routes.params.name} at a glance</Text>
+                        </View>
+                    </Block>
+                </View>
                 <SafeAreaView>
                     <Text>{routes.params.name}</Text>
                     <Text>{routes.params.name}</Text>
@@ -92,7 +100,16 @@ const styles = StyleSheet.create({
         color: "#fff",
         paddingTop: 15,
         overflow: "visible"
-    }
+    }, 
+    body: {
+        paddingHorizontal: 20, 
+    }, 
+    insightsHeaderText: {
+        fontFamily: 'sf-pro-sb', 
+        fontSize: 18, 
+    }, 
+
+
 
 
 }); 

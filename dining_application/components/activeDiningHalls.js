@@ -5,23 +5,20 @@ import Block from '../components/block';
 import SimpleButton from '../components/simpleButton';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-import {db} from "../Core/Config.js"
+import { db } from "../Core/Config"
 import { getDoc, doc } from 'firebase/firestore';
 import { useState } from 'react';
 import AppLoading from 'expo-app-loading';
-import DATA from '../data/diningData';
-
-
+import DATA from '../data/diningData'; 
 
 function ActiveDiningHalls(props) {
-    //hooks
+
     const navigation = useNavigation(); 
     const [userDoc, setUserDoc] = useState(null); 
 
-    //time
     let hours = new Date().getHours(); 
     let minutes = new Date().getMinutes();
-    hours = 14; 
+    // hours = 1; 
     // minutes = 59; 
     let timeConstant = hours + (minutes/60);
 
@@ -106,35 +103,35 @@ function ActiveDiningHalls(props) {
         );
     }
 
-    // let openDiningHalls; 
+    let openDiningHalls; 
 
-    // if (!closed) {
-    //     const myDoc = doc(db, "time", mealPeriod); 
+    if (!closed) {
+        const myDoc = doc(db, "time", mealPeriod); 
     
-    //     getDoc(myDoc)
-    //     .then((snapshot) => {
-    //         if (snapshot.exists) {
-    //             setUserDoc(snapshot.data())
-    //         } else {
-    //             alert("No Document found")
-    //             return null; 
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         alert(error.message)
-    //     })
+        getDoc(myDoc)
+        .then((snapshot) => {
+            if (snapshot.exists) {
+                setUserDoc(snapshot.data());
+            } else {
+                alert("No Document found")
+                return null; 
+            }
+        })
+        .catch((error) => {
+            alert(error.message)
+        })
 
-    // }
+    }
 
-    // if(userDoc != null) {
-    //     openDiningHalls = (userDoc.restaurants).slice();
+    if(userDoc != null) {
+        openDiningHalls = (userDoc.restaurants).slice();
         
-    // } else {
-    //     return (
-    //         //Change this
-    //         <AppLoading/>
-    //     ); 
-    // }
+    } else {
+        return (
+            //Change this
+            <AppLoading/>
+        ); 
+    }
 
     let renderDiningHalls = []; 
     let sortedData = DATA.slice();
@@ -142,9 +139,9 @@ function ActiveDiningHalls(props) {
         return a.waitTime - b.waitTime;
     }); 
     for (let i = 0; i < sortedData.length; i++) {
-        //if (openDiningHalls.includes(sortedData[i].name)) {
+        if (openDiningHalls.includes(sortedData[i].name)) {
             renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", {name: sortedData[i].name, data: sortedData[i]})} />); 
-        //}
+        }
     }
 
 
@@ -173,63 +170,3 @@ const styles = StyleSheet.create({
 });
 
 export default ActiveDiningHalls; 
-
-
-/*
-const DATA = [
-    {
-        id: 1,
-        name: "Epicuria", 
-        waitTime: 4, 
-        imageUri: require('dining_application/assets/diningHallImages/epicimage.jpeg'), 
-    },
-    {
-        id: 2,
-        name: "Bruin Plate", 
-        waitTime: 6, 
-        imageUri: require('dining_application/assets/diningHallImages/bplateimage.jpg'), 
-    },
-    {
-        id: 3,
-        name: "De Neve", 
-        waitTime: 6, 
-        imageUri: require('dining_application/assets/diningHallImages/deneve.jpg'), 
-    },
-    {
-        id: 4,
-        name: "Rendezvous", 
-        waitTime: 18, 
-        imageUri: require('dining_application/assets/diningHallImages/rende.jpg'), 
-    },
-    {
-        id: 5,
-        name: "Bruin Café", 
-        waitTime: 11, 
-        imageUri: require('dining_application/assets/diningHallImages/bcafe.jpg'), 
-    },
-    {
-        id: 6,
-        name: "The Feast", 
-        waitTime: 34, 
-        imageUri: require('dining_application/assets/diningHallImages/feast.jpg'), 
-    },
-    {
-        id: 7,
-        name: "Bruin Bowl", 
-        waitTime: 21, 
-        imageUri: require('dining_application/assets/diningHallImages/bowl.jpg'), 
-    },
-    {
-        id: 8,
-        name: "The Study at Hedrick", 
-        waitTime: 45, 
-        imageUri: require('dining_application/assets/diningHallImages/study.jpg'), 
-    },
-    {
-        id: 9,
-        name: "The Drey", 
-        waitTime: 35, 
-        imageUri: require('dining_application/assets/diningHallImages/drey.jpg'), 
-    },
-];
-*/

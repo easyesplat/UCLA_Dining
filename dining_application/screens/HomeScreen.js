@@ -62,15 +62,7 @@ function HomeScreenContent() {
                     </View>
                     <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey" onPress={() => navigation.navigate("Dining Halls")}/>
                 </Block>
-                <TouchableOpacity>
-                    <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
-                        <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
-                            <MealPlan style={{marginRight: 10}} mealPlan="14P"/>
-                            <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap'}}>You should have <Text style={{color: "#005587"}} >122</Text> meal swipes remaining for the quarter</Text>
-                            <ChevronRight style={{marginRight: 10}}/>
-                        </View>
-                    </Block>
-                </TouchableOpacity>
+                <MealPlan mealPlan="14P"/>
                 <FoodTrucks/>
             </ScrollView>
         </SafeAreaView>
