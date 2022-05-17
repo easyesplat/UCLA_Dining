@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Pop-up Chats",
+    "version": "1.0",
+    "description": "This extension shows a popup webpage when one clicks the icon.",
+    "icons": {
+      "16": "popup-logo.png",
+      "48": "popup-logo.png",
+      "128": "popup-logo.png"
+    },
+    "action": {
+      "default_icon": {
+        "16": "popup-logo.png",
+        "48": "popup-logo.png",
+        "128": "popup-logo.png"
+      },
+      "default_popup": "popup.html"
+    },
+    "permissions": ["activeTab"]
+}
