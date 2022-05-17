@@ -34,7 +34,7 @@ elem = table.find_all("tr")
 b_ref = db.collection(u'time').document(u'breakfast')
 l_ref = db.collection(u'time').document(u'lunch')
 d_ref = db.collection(u'time').document(u'dinner')
-ld_ref = db.collection(u'time').document(u'late_dinner')
+ld_ref = db.collection(u'time').document(u'late_night')
 
 for element in elem:
     indiv = element.find_all("td")
