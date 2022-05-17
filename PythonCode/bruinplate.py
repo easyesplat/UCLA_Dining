@@ -44,10 +44,16 @@ for food_block in foodlist:
         else:
             if items.find('\xa0') != -1:
                 dict[current_food].append(items.strip())
+            elif items.strip() == '(Prepared with Alcohol)':
+                dict[current_food].append('Prepared with Alcohol')
             else:
                 current_food = items.strip(' ')
+                if current_food == 'w/' or current_food == '&':
+                    continue
                 dict[current_food] = []
                 count+=1
     col.set({
         'food':dict
     })
+
+
