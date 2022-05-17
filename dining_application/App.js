@@ -7,7 +7,7 @@
 
 // export default function App() {
 //   const [selectedImage, setSelectedImage] = React.useState(null);
-  
+
 //   let openImagePickerAsync = async () => {
 //     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -111,6 +111,7 @@ Text.defaultProps.allowFontScaling = false;
 
 
 function App() {
+    console.log('Hello');
     return (
         <NavigationContainer>
             <StatusBar barStyle="dark-content"/>
