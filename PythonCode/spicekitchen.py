@@ -15,21 +15,17 @@ firebase_admin.initialize_app(cred, {
 db = firestore.client()
 db.collection('menu').document('Bruin Plate').delete()
 
-html_link = 'https://menu.dining.ucla.edu/Menus/BruinPlate/Today'
+html_link = 'https://menu.dining.ucla.edu/Menus/FeastAtRieber/Today'
 #grabbing the page
 uClient = uReq(html_link)
 page_html = uClient.read()
 uClient.close()
 
-#parsing page
 page = soup(page_html, 'html.parser')
 foodlist = page.find_all("li", class_="sect-item")
 
-time_periods = ['breakfast', 'lunch', 'dinner']
-per_count = 0
-
-for food_block in foodlist:
-    topic_list = food_block.text.splitlines()
+for food_items in foodlist:
+    topic_list = food_items.text.splitlines()
     topic_list = [x for x in topic_list if x.strip()]
     count = 0
     col = db.collection(u'menu')
@@ -37,9 +33,7 @@ for food_block in foodlist:
     dict = {}
     for items in topic_list:
         if count == 0:
-            col = db.collection(u'menu').document(u'Bruin Plate').collection(time_periods[per_count]).document(items.strip())
-            if items.strip()=='Beverage Special':
-                per_count = per_count+1
+            col = db.collection(u'menu').document(u'Spice Kitchen at Feast').collection('dinner').document(items.strip())
             count+=1
         else:
             if items.find('\xa0') != -1:
