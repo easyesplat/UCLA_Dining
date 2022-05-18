@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import Block from '../components/block';
 import { BlurView } from 'expo-blur';
 import Gradient from 'dining_application/assets/gradient.js'
 import Refresh from '../assets/icons/refresh';
 import Gear from '../assets/icons/gear';
-import ChevronRight from '../assets/icons/chevron-right';
 import SimpleButton from '../components/simpleButton';
 import BellNotification from '../assets/icons/bell_notification';
 import RedHeart from '../assets/icons/redHeart';
@@ -14,10 +13,12 @@ import ActiveDiningHalls from '../components/activeDiningHalls';
 import { useFonts } from 'expo-font';
 import FoodTrucks from '../components/foodTrucks';
 import { useNavigation } from '@react-navigation/native';
+import * as WebBrowser from 'expo-web-browser'; 
 
 let hours = new Date().getHours(); 
 
 function HomeScreenContent() {
+    const [result, setResult] = useState(null);
     const navigation = useNavigation();
     const [loaded] = useFonts({
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
@@ -27,6 +28,11 @@ function HomeScreenContent() {
     if (!loaded) {
         return null;
     }
+
+    const _handlePressButtonAsync = async () => {
+        let result = await WebBrowser.openBrowserAsync('https://uclasurveys.co1.qualtrics.com/jfe/form/SV_3qRLtouCYKzBbH7');
+        setResult(result);
+    };
 
     let greeting = "Morning";
     if (hours > 11 && hours < 18) {
@@ -58,11 +64,11 @@ function HomeScreenContent() {
                 <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
                     <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
                         <RedHeart style={{marginRight: 10}}/>
-                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap', marginRight: 15,}}>Take your COVID-19 clearance survey and protect others</Text>
+                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap', marginRight: 15,}} >Take your COVID-19 clearance survey and protect others</Text>
                     </View>
-                    <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey" onPress={() => navigation.navigate("Dining Halls")}/>
+                    <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync}/>
                 </Block>
-                <MealPlan mealPlan="14P"/>
+                <MealPlan mealPlan={19} type="R"/>
                 <FoodTrucks/>
             </ScrollView>
         </SafeAreaView>

@@ -111,7 +111,6 @@ Text.defaultProps.allowFontScaling = false;
 
 
 function App() {
-    console.log('Hello');
     return (
         <NavigationContainer>
             <StatusBar barStyle="dark-content"/>
