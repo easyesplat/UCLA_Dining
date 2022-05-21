@@ -1,0 +1,22 @@
+{
+  "name": "Dining Extension",
+  "version": "1.0",
+  "description": "Basic React app running in an extension pop-up.",
+  "manifest_version": 2,
+  "icons": {
+    "16": "images/square-logo.png",
+    "48": "images/square-logo.png",
+    "128": "images/square-logo.png"
+  },
+  "browser_action": {
+      "default_popup": "index.html",
+      "default_icon": {
+        "16": "images/square-logo.png",
+        "48": "images/square-logo.png",
+        "128": "images/square-logo.png"
+      }
+  },
+  "permissions": [
+    "activeTab"
+  ]
+}
