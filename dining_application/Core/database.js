@@ -16,12 +16,14 @@ export default async function readTimes() {
     // const timeMap = new Map(); 
     const querySnapshot = await getDocs(collection(db, "time"));
     querySnapshot.forEach((doc) => {
-        // timeMap.set(doc.id, doc.data()); 
-        let newEntry = { name : doc.id, data : doc.data()}
-        timeArray.push(doc.id, doc.data()); 
+        //timeMap.set(doc.id, doc.data()); 
+        let newEntry = {name : doc.id, data : doc.data()}
+        timeArray.push(newEntry); 
     });
 
     return timeArray; 
+    
+    // return timeMap; 
 }
 
 

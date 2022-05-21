@@ -7,31 +7,13 @@ import SimpleButton from '../components/simpleButton';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import DATA from '../data/diningData';
-import readTimes from "../Core/database";
+//TODO: Uncomment:
+// import readTimes from "../Core/database";
 import AppLoading from 'expo-app-loading';
 
-// const App = () => {
-//     const [timeMap, setTimeMap] = useState(null)
-
-//     useEffect(() => {
-//         readTimes().then(result => {
-//             setTimeMap(result)
-//         }).catch(error => console.log('error', error))
-//     }, [])
-
-//     if (timeMap == null) {
-//         return <AppLoading />
-//     }
-
-//     return (
-//         <LoadedApp timeMap={timeMap} />
-//     )
-// }
-
-// export default App
-
 function ActiveDiningHalls(props) {
-    const [timeMap, setTimeMap] = useState(null)
+    //TODO: Uncomment:
+    //  const [timeMap, setTimeMap] = useState(null)
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
@@ -44,16 +26,16 @@ function ActiveDiningHalls(props) {
         'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
     });
 
-    useEffect(() => {
-        readTimes().then(result => {
-            setTimeMap(result);
-            console.log(result);
-        }).catch(error => console.log('error', error))
-    }, [])
+    //TODO: Uncomment:
+    // useEffect(() => {
+    //     readTimes().then(result => {
+    //         setTimeMap(result);
+    //     }).catch(error => console.log('error', error))
+    // }, [])
 
-    if (timeMap == null) {
-        return <AppLoading />
-    }
+    // if (timeMap == null) {
+    //     return <AppLoading />
+    // }
 
     if (!loaded) {
         return null;
@@ -131,7 +113,9 @@ function ActiveDiningHalls(props) {
         );
     }
 
-    //let openDiningHalls = timeMap.get(mealPeriod).restaurants;
+    //TODO: Uncomment: Get open dining halls
+    // let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants; 
+    
 
     let renderDiningHalls = [];
     let sortedData = DATA.slice();
@@ -139,9 +123,10 @@ function ActiveDiningHalls(props) {
         return a.waitTime - b.waitTime;
     });
     for (let i = 0; i < sortedData.length; i++) {
-        //if (openDiningHalls.includes(sortedData[i].name)) {
+        //TODO: Uncomment:
+        // if (openDiningHalls.includes(sortedData[i].name)) {
             renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i] })} />);
-        //}
+        // }
     }
 
 
@@ -152,7 +137,7 @@ function ActiveDiningHalls(props) {
                 {renderDiningHalls}
             </View>
             <View style={{ flexDirection: "row", justifyContent: "flex-end", paddingTop: 5 }}>
-                <SimpleButton text="See all dining halls" onPress={() => navigation.navigate("All Dining Halls", { data: timeMap })} />
+                <SimpleButton text="See all dining halls" onPress={() => navigation.navigate("All Dining Halls", { /*data: timeMap*/ })} />
             </View>
         </View>
     );
