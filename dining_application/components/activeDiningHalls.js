@@ -8,12 +8,12 @@ import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import DATA from '../data/diningData';
 //TODO: Uncomment:
-// import readTimes from "../Core/database";
+import readTimes from "../Core/timeDatabase";
 import AppLoading from 'expo-app-loading';
 
 function ActiveDiningHalls(props) {
     //TODO: Uncomment:
-    //  const [timeMap, setTimeMap] = useState(null)
+    const [timeMap, setTimeMap] = useState(null)
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
@@ -27,15 +27,15 @@ function ActiveDiningHalls(props) {
     });
 
     //TODO: Uncomment:
-    // useEffect(() => {
-    //     readTimes().then(result => {
-    //         setTimeMap(result);
-    //     }).catch(error => console.log('error', error))
-    // }, [])
+    useEffect(() => {
+        readTimes().then(result => {
+            setTimeMap(result);
+        }).catch(error => console.log('error', error))
+    }, [])
 
-    // if (timeMap == null) {
-    //     return <AppLoading />
-    // }
+    if (timeMap == null) {
+        return <AppLoading/>;
+    }
 
     if (!loaded) {
         return null;
@@ -114,7 +114,7 @@ function ActiveDiningHalls(props) {
     }
 
     //TODO: Uncomment: Get open dining halls
-    // let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants; 
+    let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants; 
     
 
     let renderDiningHalls = [];
@@ -124,9 +124,9 @@ function ActiveDiningHalls(props) {
     });
     for (let i = 0; i < sortedData.length; i++) {
         //TODO: Uncomment:
-        // if (openDiningHalls.includes(sortedData[i].name)) {
+        if (openDiningHalls.includes(sortedData[i].name)) {
             renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i] })} />);
-        // }
+        }
     }
 
 

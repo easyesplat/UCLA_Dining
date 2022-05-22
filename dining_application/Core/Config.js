@@ -1,9 +1,12 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB2WzKvsGyagffu4sZ3AVjWfmW_HJFxG0Y",
     authDomain: "ucla-dining.firebaseapp.com",
+    databaseURL: "https://ucla-dining-default-rtdb.firebaseio.com",
     projectId: "ucla-dining",
     storageBucket: "ucla-dining.appspot.com",
     messagingSenderId: "517969650307",
@@ -13,14 +16,8 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app); 
+export const db = getFirestore(app);
 
-// const docRef = doc(db, "time", "breakfast");
-// const docSnap = await getDoc(docRef);
+export const auth = getAuth(app);
 
-// if (docSnap.exists()) {
-//     console.log("Document data:", docSnap.data());
-// } else {
-//   // doc.data() will be undefined in this case
-//     console.log("No such document!");
-// }
+export const database = getDatabase(app); 
