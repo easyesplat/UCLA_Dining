@@ -31,27 +31,18 @@ per_count = 0
 for food_block in foodlist:
     topic_list = food_block.text.splitlines()
     topic_list = [x for x in topic_list if x.strip()]
-    count = 0
-    col = db.collection(u'menu')
-    current_food = ''
+    main_title = topic_list[0].strip()
+    col = db.collection(u'menu').document(u'Bruin Plate').collection(time_periods[per_count]).document(main_title)
+    if main_title == 'Beverage Special':
+        per_count = per_count+1
     dict = {}
-    for items in topic_list:
-        if count == 0:
-            col = db.collection(u'menu').document(u'Bruin Plate').collection(time_periods[per_count]).document(items.strip())
-            if items.strip()=='Beverage Special':
-                per_count = per_count+1
-            count+=1
-        else:
-            if items.find('\xa0') != -1:
-                dict[current_food].append(items.strip())
-            elif items.strip() == '(Prepared with Alcohol)':
-                dict[current_food].append('Prepared with Alcohol')
-            else:
-                current_food = items.strip(' ')
-                if current_food == 'w/' or current_food == '&':
-                    continue
-                dict[current_food] = []
-                count+=1
+    menu_items = food_block.find_all("li", class_="menu-item")
+    for item in menu_items:
+        current_food = item.a.text
+        dict[current_food] = []
+        diet_needs = item.find_all("div", class_="tt-prodwebcode")
+        for i in diet_needs:
+            dict[current_food].append(i.text)
     col.set({
         'food':dict
     })
