@@ -21,11 +21,6 @@ function ActiveDiningHalls(props) {
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
-    //fonts
-    const [loaded] = useFonts({
-        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
-    });
-
     //TODO: Uncomment:
     useEffect(() => {
         readTimes().then(result => {
@@ -35,10 +30,6 @@ function ActiveDiningHalls(props) {
 
     if (timeMap == null) {
         return <AppLoading/>;
-    }
-
-    if (!loaded) {
-        return null;
     }
 
     //Meal Period 
@@ -106,7 +97,7 @@ function ActiveDiningHalls(props) {
             <View style={{ marginTop: -20 }}>
                 <Block>
                     <Image style={{ width: 100, height: 100, alignSelf: "center" }} source={bearImage} />
-                    <Text style={{ fontFamily: "sf-pro-sb", fontSize: 14, textAlign: "center", paddingHorizontal: 20, marginBottom: 20 }}>Dining halls are closed right now. Dining halls will re-open in {message}</Text>
+                    <Text style={{ fontFamily: "publica-sans-s", fontSize: 15, textAlign: "center", paddingHorizontal: 20, marginBottom: 20 }}>Dining halls are closed right now. Dining halls will re-open in {message}</Text>
                     <SimpleButton style={{ alignSelf: "center", marginBottom: 10, }} background="true" text="See all dining halls" />
                 </Block>
             </View>
@@ -132,7 +123,7 @@ function ActiveDiningHalls(props) {
 
     return (
         <View>
-            <Text style={{ fontFamily: "sf-pro-sb", fontSize: 18 }}>{mealPeriodMessage}</Text>
+            <Text style={{ fontFamily: "publica-sans-s", fontSize: 18 }}>{mealPeriodMessage}</Text>
             <View style={styles.grid}>
                 {renderDiningHalls}
             </View>

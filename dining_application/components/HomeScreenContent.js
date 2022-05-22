@@ -21,8 +21,8 @@ function HomeScreenContent() {
     const [result, setResult] = useState(null);
     const navigation = useNavigation();
     const [loaded] = useFonts({
-        'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
-        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
+        'publica-sans-m': require('dining_application/assets/fonts/PublicaSans-Medium.otf'),
+        'publica-sans-s': require('dining_application/assets/fonts/PublicaSans-Standard.otf'),
     });
 
     const _handlePressButtonAsync = async () => {
@@ -79,7 +79,7 @@ function HomeScreenContent() {
                 <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
                     <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
                         <RedHeart style={{marginRight: 10}}/>
-                        <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, flex: 1, flexWrap: 'wrap', marginRight: 15,}} >Take your COVID-19 clearance survey and protect others</Text>
+                        <Text style={{fontFamily: "publica-sans-s", fontSize: 15, flex: 1, flexWrap: 'wrap', marginRight: 15,}} >Take your COVID-19 clearance survey and protect others</Text>
                     </View>
                     <SimpleButton style={{alignSelf: "flex-end", marginTop: 10,}} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync}/>
                 </Block>
@@ -99,8 +99,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     headerText: {
-        fontFamily: "sf-pro-b", 
-        fontSize: 26,
+        fontFamily: "publica-sans-m", 
+        lineHeight: 30, 
+        fontSize: 28,
     },    
     scrollView: {
         paddingHorizontal: 20, 
