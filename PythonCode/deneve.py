@@ -13,19 +13,28 @@ firebase_admin.initialize_app(cred, {
   'projectId': "ucla-dining",
 })
 db = firestore.client()
-db.collection('menu').document('Spice Kitchen').delete()
+db.collection('menu').document('De Neve').delete()
 
-html_link = 'https://menu.dining.ucla.edu/Menus/FeastAtRieber/Today'
+html_link = 'https://menu.dining.ucla.edu/Menus/DeNeve/today'
 #grabbing the page
 uClient = uReq(html_link)
 page_html = uClient.read()
 uClient.close()
 
+#parsing page
 page = soup(page_html, 'html.parser')
 foodlist = page.find_all("li", class_="sect-item")
 
+time_periods = ['breakfast', 'lunch', 'dinner']
+per_count = 0
+
 for food_block in foodlist:
-    col = db.collection(u'menu').document(u'Spice Kitchen at Feast').collection('dinner').document('Spice Kitchen')
+    topic_list = food_block.text.splitlines()
+    topic_list = [x for x in topic_list if x.strip()]
+    main_title = topic_list[0].strip()
+    col = db.collection(u'menu').document(u'De Neve').collection(time_periods[per_count]).document(main_title)
+    if main_title == 'The Sweet Stop':
+        per_count = per_count+1
     dict = {}
     menu_items = food_block.find_all("li", class_="menu-item")
     for item in menu_items:

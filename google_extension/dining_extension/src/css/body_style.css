@@ -1,0 +1,81 @@
+body{
+    margin: 0;
+    background-image: linear-gradient(to left,rgb(68, 117, 208),rgb(30, 195, 246));
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex > *{
+    font-size: 25px;
+}
+
+p {
+    text-align: left;
+    font-size: 16px;
+    margin: 0;
+}
+
+h1 {
+    color:rgb(218, 205, 205);
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    text-shadow: rgb(128, 121, 158) 1px 0 5px;    
+}
+
+img{ 
+    display: block;
+    border: 3px solid rgb(238, 141, 37); 
+    
+}
+
+.pbackground{
+    text-align: center;
+    font-size: 22px;
+    width: 80%;
+    background-color: rgb(230, 199, 230);
+    margin: auto;
+}
+
+#pic{
+    margin: auto;
+    width: 80%;
+}
+
+
+/* Container to position the button at the center of an image */
+.container {
+    position: relative;
+    width: 50%;
+  }
+  
+  /* Make the image responsive */
+  .container img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Style the button and place it in the middle of the container/image */
+  .container .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .container .btn:hover {
+    background-color: black;
+  }
+  
