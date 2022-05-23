@@ -6,6 +6,8 @@ import DiningHall from './screens/DiningHall';
 import AllDiningHalls from './screens/AllDiningHalls';
 import LoginScreen from './screens/LoginScreen';
 import TabNavigator from './TabNavigator';
+import WelcomeScreen from './screens/WelcomeScreen'
+import SignupScreen from './screens/SignupScreen';
 import { onAuthStateChanged } from 'firebase/auth'; 
 import { auth } from './Core/Config'
 
@@ -13,23 +15,24 @@ import { auth } from './Core/Config'
 const Stack = createNativeStackNavigator(); 
 
 const StackNavigator = () => {
-    const signedIn = onAuthStateChanged(auth, (user) => {
-        if (user) {
-            return false; 
-        } else {
-            return true; 
-        }
-    })
+    // const signedIn = onAuthStateChanged(auth, (user) => {
+    //     if (user) {
+    //         console.log("Signed in"); 
+    //         return true; 
+    //     } else {
+    //         console.log("Signed out"); 
+    //         return false; 
+    //     }
+    // })
+
+    //navigationKey={signedIn ? 'Welcome' : 'guest'}
 
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Group>
-                {
-                    signedIn &&
-                    <Stack.Screen name="Login" component={LoginScreen}/>
-                }
+                <Stack.Screen name="Welcome" component={WelcomeScreen}/>
+                <Stack.Screen name="Log in" component={LoginScreen}/>
+                <Stack.Screen name="Sign up" component={SignupScreen}/>
                 <Stack.Screen name="HomeScreen" component={TabNavigator}/>
-            </Stack.Group>
         </Stack.Navigator>
     )
 }

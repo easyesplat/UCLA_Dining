@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
 import { auth, db } from '../Core/Config'
-import { doc, setDoc, Timestamp, addDoc } from "firebase/firestore";
-import { useFonts } from 'expo-font';
-import { SafeAreaView } from 'react-navigation'
+import { doc, setDoc, Timestamp, addDoc, getDoc } from "firebase/firestore";
+// import { SafeAreaView } from 'react-navigation'
 import { BlurView } from 'expo-blur';
 import Gradient from 'dining_application/assets/gradient.js'
 
@@ -13,56 +12,29 @@ import Gradient from 'dining_application/assets/gradient.js'
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loaded] = useFonts({
-        'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
-        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
-        'sf-pro-m': require('dining_application/assets/fonts/SF-Pro-Text-Medium.otf'),
-        'publica-sans-m': require('dining_application/assets/fonts/PublicaSans-Medium.otf'),
-        'publica-sans-l': require('dining_application/assets/fonts/PublicaSans-Light.otf'),
-    });
+    const [border1, setBorder1] = useState('#D8D8D8');
+    const [border2, setBorder2] = useState('#D8D8D8');
+    const [userDoc, setUserDoc] = useState(null)
 
     const navigation = useNavigation();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                navigation.replace("HomeScreen")
+                navigation.replace("HomeScreen");
             }
         })
 
         return unsubscribe
     }, [])
 
-    if (!loaded) {
-        return null;
-    }
-
-
-    const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredentials) => {
-                const user = userCredentials.user;
-                const data = {
-                    fname: '',
-                    lname: '',
-                    email: email,
-                    likedItems: [],
-                    userImg: null,
-                }
-                setDoc(doc(db, "users", user.uid), data)
-                    .then(() => {
-                        alert("Welcome to our app");
-                    })
-                    .catch((error) => alert(error.message));
-            })
-            .catch((error) => alert(error.message))
-    }
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 const user = userCredentials.user;
-                console.log('Logged in with:', user.email);
+                //Todo: Firestore
+                //const userData = getDoc(doc(db, "users", user.uid)); 
             })
             .catch((error) => alert(error.message));
     }
@@ -83,14 +55,18 @@ const LoginScreen = () => {
                             placeholder="Email"
                             value={email}
                             onChangeText={text => setEmail(text)}
-                            style={styles.input}
+                            style={[styles.input, {borderColor: border1}]}
+                            onFocus={() => setBorder1("#2774AE")}
+                            onBlur={() => setBorder1("#D8D8D8")}
                         />
                         <TextInput
                             placeholder="Password"
                             value={password}
                             onChangeText={text => setPassword(text)}
-                            style={styles.input}
+                            style={[styles.input, {borderColor: border2}]}
                             secureTextEntry
+                            onFocus={() => setBorder2("#2774AE")}
+                            onBlur={() => setBorder2("#D8D8D8")}
                         />
                     </View>
 
@@ -101,12 +77,13 @@ const LoginScreen = () => {
                         >
                             <Text style={styles.buttonText}>Log in</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={handleSignUp}
-                            style={[styles.button, styles.buttonOutline]}
-                        >
-                            <Text style={styles.buttonOutlineText}>Sign Up</Text>
-                        </TouchableOpacity>
+                        <Text style={{
+                            marginTop: 10, 
+                            fontFamily: "publica-sans-l", 
+                            fontSize: 14, 
+                            marginTop: 6,
+                        }}>Don't have an account?</Text>
+                        <TouchableOpacity onPress={() => {navigation.replace('Sign up')}} style={{marginTop: 4,}}><Text style={{ color: "#2774AE",fontFamily: "publica-sans-l" }}>Sign up</Text></TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
@@ -159,7 +136,6 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         marginTop: 5,
         marginBottom: 10,
-        borderColor: "#D8D8D8",
         borderWidth: 1,
         fontSize: 15,
         fontFamily: "publica-sans-l", 
@@ -172,13 +148,14 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: '#007AFF',
+        //old color: 007AFF
+        backgroundColor: '#2774AE',
         width: '100%',
         padding: 15,
         borderRadius: 18,
         alignItems: 'center',
         marginTop: 5,
-        borderColor: '#007AFF',
+        borderColor: '#2774AE',
         borderWidth: 2,
     },
     buttonOutline: {
@@ -191,7 +168,7 @@ const styles = StyleSheet.create({
         fontFamily: "publica-sans-m", 
     },
     buttonOutlineText: {
-        color: '#0782F9',
+        color: '#2774AE',
         fontWeight: '700',
         fontFamily: "publica-sans-m",
         fontSize: 14,

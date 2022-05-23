@@ -12,7 +12,7 @@ function SimpleButton(props) {
 
     return (
         <TouchableOpacity style={[backgroundClassName, props.style]} onPress={props.onPress}>
-            <Text style={{fontFamily: "publica-sans-s", fontSize: 14, paddingRight: 2,}}>{props.text}</Text>
+            <Text style={{fontFamily: "publica-sans-s", fontSize: 14, paddingRight: 2, paddingTop: 1}}>{props.text}</Text>
             <ArrowRight/>
         </TouchableOpacity>
     );
