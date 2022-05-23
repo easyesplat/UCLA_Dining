@@ -58,8 +58,8 @@ export default WelcomeScreen
 const styles = StyleSheet.create({
     headerText: {
         fontFamily: "publica-sans-m", 
-        fontSize: 33,
-        lineHeight: 40,
+        fontSize: 38,
+        lineHeight: 42,
         alignSelf: 'flex-start',
         paddingTop: 40, 
     },    

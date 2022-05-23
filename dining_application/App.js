@@ -17,6 +17,8 @@ function App() {
         'publica-sans-l': require('dining_application/assets/fonts/PublicaSans-Light.otf'),
     });
 
+    console.disableYellowBox = true;
+
     if (!loaded) {
         return null;
     }

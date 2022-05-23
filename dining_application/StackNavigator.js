@@ -8,22 +8,11 @@ import LoginScreen from './screens/LoginScreen';
 import TabNavigator from './TabNavigator';
 import WelcomeScreen from './screens/WelcomeScreen'
 import SignupScreen from './screens/SignupScreen';
-import { onAuthStateChanged } from 'firebase/auth'; 
-import { auth } from './Core/Config'
 
 
 const Stack = createNativeStackNavigator(); 
 
 const StackNavigator = () => {
-    // const signedIn = onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //         console.log("Signed in"); 
-    //         return true; 
-    //     } else {
-    //         console.log("Signed out"); 
-    //         return false; 
-    //     }
-    // })
 
     //navigationKey={signedIn ? 'Welcome' : 'guest'}
 

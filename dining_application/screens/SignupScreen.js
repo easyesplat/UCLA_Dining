@@ -11,6 +11,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 
 const SignupScreen = () => {
+    const [state, setState] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -50,7 +51,7 @@ const SignupScreen = () => {
                 navigation.replace("HomeScreen");
             }
         })
-
+        setState({});
         return unsubscribe
     }, [])
 
@@ -63,13 +64,13 @@ const SignupScreen = () => {
                     fname: name,
                     email: email,
                     likedItems: [],
-                    mealPlan: mealPlan,
-                    dietaryRestrictions: [],
+                    mealPlan: value,
+                    dietaryRestrictions: value2,
                     userImg: null,
                 }
                 setDoc(doc(db, "users", user.uid), data)
                     .then(() => {
-                        //alert("Welcome to our app");
+                        alert("Welcome to Bruin Dine");
                         // navigation.replace("Signup");
                     })
                     .catch((error) => alert(error.message));
