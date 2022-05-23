@@ -50,7 +50,7 @@ const LoginScreen = () => {
                 >
                     <Text style={styles.headerText}>Welcome back to {'\n'}Bruin Dine</Text>
                     <View style={styles.inputContainer}>
-                        <Text style={styles.subtext}>Log in or Sign up</Text>
+                        <Text style={styles.subtext}>Log in</Text>
                         <TextInput
                             placeholder="Email"
                             value={email}
