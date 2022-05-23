@@ -13,7 +13,7 @@ firebase_admin.initialize_app(cred, {
   'projectId': "ucla-dining",
 })
 db = firestore.client()
-db.collection('menu').document('Bruin Plate').delete()
+db.collection('menu').document('Spice Kitchen').delete()
 
 html_link = 'https://menu.dining.ucla.edu/Menus/FeastAtRieber/Today'
 #grabbing the page
