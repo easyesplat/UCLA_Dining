@@ -4,13 +4,6 @@ import ArrowRight from 'dining_application/assets/icons/chevron-right.js'
 import { useFonts } from 'expo-font';
 
 function SimpleButton(props) {
-    const [loaded] = useFonts({
-        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
-    });
-    
-    if (!loaded) {
-        return null;
-    }
 
     let backgroundClassName = styles.backgroundOff; 
     if (props.background == "true") {
@@ -19,7 +12,7 @@ function SimpleButton(props) {
 
     return (
         <TouchableOpacity style={[backgroundClassName, props.style]} onPress={props.onPress}>
-            <Text style={{fontFamily: "sf-pro-sb", fontSize: 14, paddingRight: 2,}}>{props.text}</Text>
+            <Text style={{fontFamily: "publica-sans-s", fontSize: 14, paddingRight: 2, paddingTop: 1}}>{props.text}</Text>
             <ArrowRight/>
         </TouchableOpacity>
     );

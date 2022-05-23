@@ -73,7 +73,7 @@ function FoodTrucks() {
 
     return (
         <View>
-            <Text style={{fontFamily: "sf-pro-sb", fontSize: 18, marginTop: 20}}>Discover more with Food Trucks</Text>
+            <Text style={{fontFamily: "publica-sans-s", fontSize: 18, marginTop: 20}}>Discover more with Food Trucks</Text>
             <FlatList
                 horizontal
                 data={DATA}

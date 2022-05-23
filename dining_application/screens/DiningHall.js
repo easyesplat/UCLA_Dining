@@ -11,7 +11,6 @@ import Block from '../components/block';
 function DiningHall() {
     const routes = useRoute(); 
     const [loaded] = useFonts({
-        'dining-font': routes.params.data.font,
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
         'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
     });
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     headerText:  {
-        fontFamily: "dining-font", 
+        fontFamily: 'sf-pro-sb', 
         fontSize: 56, 
         color: "#fff",
         paddingTop: 15,

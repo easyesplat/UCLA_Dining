@@ -4,13 +4,6 @@ import ArrowRight from 'dining_application/assets/icons/chevron-right.js'
 import { useFonts } from 'expo-font';
 
 function Menubutton(props) {
-    const [loaded] = useFonts({
-        'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
-    });
-    
-    if (!loaded) {
-        return null;
-    }
 
     let timeColor = '#37B96B'; 
     if (props.waitTime > 30) {
@@ -24,8 +17,8 @@ function Menubutton(props) {
             <View style={{flexDirection: "row"}}>
                 <Image style={styles.icon} source={props.imageUri} />
                 <View style={styles.textWrapper}>
-                    <Text numberOfLines={1} style={{ fontFamily: 'sf-pro-sb', paddingBottom: 1, fontSize: 13, }}>{props.name}</Text>
-                    <Text numberOfLines={1} style={{ fontFamily: 'sf-pro-sb', fontSize: 12, color: timeColor}}>{props.waitTime} minutes</Text>
+                    <Text numberOfLines={1} style={{ fontFamily: 'publica-sans-s', paddingBottom: 2, fontSize: 14, }}>{props.name}</Text>
+                    <Text numberOfLines={1} style={{ fontFamily: 'publica-sans-s', fontSize: 13, color: timeColor}}>{props.waitTime} minutes</Text>
                 </View>
             </View>
             <ArrowRight small="false"/>
@@ -55,7 +48,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10, 
     }, 
     textWrapper: {
-        padding: 10,
+        paddingTop: 12, 
+        paddingHorizontal: 10,
         maxWidth: 100,
     }
 });

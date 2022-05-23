@@ -1,8 +1,10 @@
 
+To upload extension to Chrome:
+
 - First run "npm install" in the dining_extension directory.
-- After node modules are loaded, run "npm run build" in the same directory,
-which updates the "build" folder.
-- Load unpacked the "build" folder, which is the usable extension.
+- After node modules are loaded, run "npm run build" in the dining_extension
+directory, which creates/updates the "build" folder.
+- In Chrome extension manager, "load unpacked" the "build" folder.
 - After some changes to the app, we can test the website simply by running "npm start".
 If we want to test the extension icon to see if the new features are compatible in the pop-up,
 run "npm run build" first to update the "build" folder and reload the extension.
