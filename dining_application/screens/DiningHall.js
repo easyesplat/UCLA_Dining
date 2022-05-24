@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Dimensions, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -12,6 +12,7 @@ import { MenuItem, MenuHeader, MenuBlock } from '../components/menuItem';
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from '../Core/Config';
+import AtAGlanceItem from '../components/atAGlanceItem';
 
 function DiningHall() {
     const routes = useRoute();
@@ -57,6 +58,15 @@ function DiningHall() {
     }
 
     const menu = []; 
+    let vegetarianItems = 0; 
+    let veganItems = 0; 
+    let halalItems = 0; 
+    let likedItems = 0;
+    
+    let vegetarianItemsList = []; 
+    let veganItemsList = [];
+    let halalItemsList = [];
+    let likedItemsList = [];
 
     for(let [key, value] of menuMap.get(routes.params.period))
     {
@@ -66,12 +76,28 @@ function DiningHall() {
         {
             let alreadyLiked = false; 
             if(userDoc.likedItems.includes(item)) {
-                alreadyLiked = true; 
+                alreadyLiked = true;
+                likedItems++;  
+                likedItemsList.push({parent: key, itemName: item, liked: null}); 
             }
-            subMenu.push(<MenuItem itemName={item} liked={alreadyLiked} uid={user.uid}/>)
+            for(let x in (value["food"])[item])
+            {
+                if (value["food"][item][x] == " Vegetarian Menu Option") {
+                    vegetarianItems++; 
+                    vegetarianItemsList.push({parent: key, itemName: item, liked: alreadyLiked}); 
+                } else if (value["food"][item][x] == " Vegan Menu Option") {
+                    veganItems++; 
+                    veganItemsList.push({parent: key, itemName: item, liked: alreadyLiked}); 
+                } else if (value["food"][item][x] == " Halal Menu Option") {
+                    halalItems++; 
+                    halalItemsList.push({parent: key, itemName: item, liked: alreadyLiked}); 
+                }
+            }
+            subMenu.push(<MenuItem itemName={item} liked={alreadyLiked} uid={user.uid} parent={key} information={(value["food"])[item]}/>)
         }
         menu.push(<MenuBlock>{subMenu}</MenuBlock>)
     }
+
 
     let mealPeriod = routes.params.period; 
     if (routes.params.period === "late_night") {
@@ -89,6 +115,19 @@ function DiningHall() {
                     <DiningLogo name={routes.params.name} />
                 </ImageBackground>
                 <Text style={styles.mainHeading}>{routes.params.name} for {mealPeriod}</Text>
+                <View style={styles.body}>
+                    <View style={styles.block}>
+                        <View style={{ padding: 8 }}>
+                            <Text style={styles.insightsHeaderText}>{mealPeriod[0].toUpperCase() + mealPeriod.substring(1)} at a glance</Text>
+                            <View style={styles.glanceView}>
+                                <AtAGlanceItem number={vegetarianItems} type="vegetarian" list={vegetarianItemsList}/>
+                                <AtAGlanceItem number={veganItems} type="vegan" list={veganItemsList}/>
+                                <AtAGlanceItem number={halalItems} type="halal" list={halalItemsList}/>
+                                <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList}/>
+                            </View>
+                        </View>
+                    </View>
+                </View>
                 <SafeAreaView style={styles.items}>
                     {menu}
                 </SafeAreaView>
@@ -100,7 +139,6 @@ function DiningHall() {
 const styles = StyleSheet.create({
     header: {
         height: 400,
-        //alignItems: "flex-end", 
         justifyContent: "flex-end",
         padding: 20,
     },
@@ -109,8 +147,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20, 
         fontSize: 28,
         lineHeight: 36,
-        marginBottom: 5, 
         fontFamily: "publica-sans-s",
+        marginBottom: 20, 
     },
     headerText: {
         fontFamily: 'sf-pro-sb',
@@ -123,26 +161,28 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     insightsHeaderText: {
-        fontFamily: 'sf-pro-sb',
+        fontFamily: 'publica-sans-s',
         fontSize: 18,
+        marginBottom: 20,
     },
     items: {
         paddingHorizontal: 20,
-        marginTop: -40,
+        marginTop: -45,
+    },
+    block: {
+        padding: 10,
+        borderRadius: 15,
+        width: "100%",
+        shadowColor: 'rgba(100,100,110, 0.18)', // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 29, //IOS
+        backgroundColor: "white",
+        marginBottom: 20,
     }, 
-
-
-
-
+    glanceView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
 });
 
 export default DiningHall; 
-
-
-{/* <View style={styles.body}>
-                    <Block>
-                        <View style={{ padding: 8 }}>
-                            <Text style={styles.insightsHeaderText}>{routes.params.name} at a glance</Text>
-                        </View>
-                    </Block>
-                </View> */}

@@ -16,7 +16,7 @@ function ActiveDiningHalls(props) {
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    hours = 18;
+    // hours = 18;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
