@@ -28,11 +28,12 @@ foodlist = page.find_all("li", class_="sect-item")
 time_periods = ['breakfast', 'lunch', 'dinner']
 per_count = 0
 
+col = db.collection(u'menu').document('De Neve').set({'name':'De Neve'})
 for food_block in foodlist:
     topic_list = food_block.text.splitlines()
     topic_list = [x for x in topic_list if x.strip()]
     main_title = topic_list[0].strip()
-    col = db.collection(u'menu').document(u'De Neve').collection(time_periods[per_count]).document(main_title)
+    col = db.collection(u'menu').document('De Neve').collection(time_periods[per_count]).document(main_title)
     if main_title == 'The Sweet Stop':
         per_count = per_count+1
     dict = {}
