@@ -1,7 +1,6 @@
 import React from "react";
 import {StyleSheet, TouchableOpacity, View, Text, Image, Dimensions} from 'react-native'
 import ArrowRight from 'dining_application/assets/icons/chevron-right.js'
-import { useFonts } from 'expo-font';
 
 function SimpleButton(props) {
 

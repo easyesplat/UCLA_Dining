@@ -12,11 +12,11 @@ import AppLoading from 'expo-app-loading';
 
 function ActiveDiningHalls(props) {
     //TODO: Uncomment:
-    const [timeMap, setTimeMap] = useState(null)
+    const [timeMap, setTimeMap] = useState(null);
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    // hours = 12;
+    // hours = 18;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
@@ -24,12 +24,13 @@ function ActiveDiningHalls(props) {
     useEffect(() => {
         readTimes().then(result => {
             setTimeMap(result);
-        }).catch(error => console.log('error', error))
+        }).catch(error => console.log('error', error)); 
     }, []);
 
     if (timeMap == null) {
         return <AppLoading/>;
     }
+
 
     //Meal Period 
     const openingTimes = [17, 11, 7];
@@ -115,7 +116,7 @@ function ActiveDiningHalls(props) {
     for (let i = 0; i < sortedData.length; i++) {
         //TODO: Uncomment:
         if (openDiningHalls.includes(sortedData[i].name)) {
-            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i] })} />);
+            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod })} />);
         }
     }
 
