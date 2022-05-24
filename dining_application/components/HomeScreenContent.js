@@ -14,7 +14,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { SignOut } from '../assets/icons/icons';
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from '../Core/Config';
-import { doc, DocumentSnapshot, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
 
 let hours = new Date().getHours();
@@ -114,7 +114,7 @@ function HomeScreenContent() {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ActiveDiningHalls />
+                <ActiveDiningHalls/>
                 <Block style={{ flexDirection: "column", alignItems: "flex-end" }}>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <RedHeart style={{ marginRight: 10 }} />

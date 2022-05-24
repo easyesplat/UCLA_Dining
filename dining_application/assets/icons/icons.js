@@ -79,4 +79,66 @@ const Bell = (props) => (
     </Svg>
 )
 
-export { SignOut, PersonFill, Food, Feed, Bell }; 
+function Heart(props) {
+    if (!props.liked) {
+        return (
+            <Svg
+                width={19}
+                height={17}
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                {...props}
+            >
+                <Path
+                    d="M16.69 2.326a4.468 4.468 0 0 0-1.452-.981 4.428 4.428 0 0 0-4.876.981l-.862.872-.862-.872A4.448 4.448 0 0 0 5.474 1 4.448 4.448 0 0 0 2.31 2.326c-.839.849-1.31 2-1.31 3.2 0 1.201.471 2.352 1.31 3.201l.862.872L9.5 16l6.327-6.4.862-.873c.416-.42.745-.92.97-1.468a4.571 4.571 0 0 0-.97-4.933v0Z"
+                    stroke="#D8D8D8"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            </Svg>
+        );
+    } else {
+        return (
+            <Svg
+                width={19}
+                height={17}
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                {...props}
+            >
+                <Path
+                    d="M16.69 2.326a4.468 4.468 0 0 0-1.452-.981 4.428 4.428 0 0 0-4.876.981l-.862.872-.862-.872A4.448 4.448 0 0 0 5.474 1 4.448 4.448 0 0 0 2.31 2.326c-.839.849-1.31 2-1.31 3.2 0 1.201.471 2.352 1.31 3.201l.862.872L9.5 16l6.327-6.4.862-.873c.416-.42.745-.92.97-1.468a4.571 4.571 0 0 0-.97-4.933v0Z"
+                    fill="#D24040"
+                    stroke="#D24040"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            </Svg>
+        );
+    }
+
+}
+
+function Info(props) {
+    return (
+        <Svg
+            width={19}
+            height={19}
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <Path
+                d="M9.5 18a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17ZM9.5 12.9V9.5M9.5 6.1h.009"
+                stroke="#000"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </Svg>
+    )
+}
+
+export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info }; 
