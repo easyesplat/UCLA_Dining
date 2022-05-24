@@ -35,9 +35,15 @@ for food_block in foodlist:
     for item in menu_items:
         current_food = item.a.text
         dict[current_food] = []
+        diet_link = item.find("a", class_="recipelink")['href']
+        description = ''
+        if(item.find('div', class_="tt-description")):
+            description = item.find('div', class_="tt-description").text.strip()
+        dict[current_food].append(diet_link)
         diet_needs = item.find_all("div", class_="tt-prodwebcode")
         for i in diet_needs:
             dict[current_food].append(i.text)
+        dict[current_food].append(description)
     col.set({
         'food':dict
     })
