@@ -55,7 +55,7 @@ function AtAGlanceItem(props) {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                    <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.4)", alignItems: "center", justifyContent: "center", borderRadius: 40, }]}>
+                    <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.4)", alignItems: "center", justifyContent: "center", borderRadius: 20, }]}>
                         <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
                         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignSelf: "center", justifyContent: "center", overflow: 'hidden', paddingVertical: 70 }}>
                             {textItems}

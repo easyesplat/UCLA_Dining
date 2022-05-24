@@ -56,7 +56,7 @@ const MenuItem = ({ liked, itemName, uid, information, parent, }) => {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                    <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.4)", alignItems: "center", justifyContent: "center", borderRadius: 50, }]}>
+                    <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.4)", alignItems: "center", justifyContent: "center", borderRadius: 20, }]}>
                         <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
                         <Text style={styles.modalText}>{itemName}</Text>
                         <Text style={styles.parentTextStyle}>at {parent}</Text>
