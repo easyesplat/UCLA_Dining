@@ -24,6 +24,7 @@ uClient.close()
 page = soup(page_html, 'html.parser')
 foodlist = page.find_all("li", class_="sect-item")
 
+col = db.collection(u'menu').document('Spice Kitchen at Feast').set({'name':'Spice Kitchen at Feast'})
 for food_block in foodlist:
     topic_list = food_block.text.splitlines()
     topic_list = [x for x in topic_list if x.strip()]

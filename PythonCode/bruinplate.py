@@ -28,6 +28,7 @@ foodlist = page.find_all("li", class_="sect-item")
 time_periods = ['breakfast', 'lunch', 'dinner']
 per_count = 0
 
+col = db.collection(u'menu').document('Bruin Plate').set({'name':'Bruin Plate'})
 for food_block in foodlist:
     topic_list = food_block.text.splitlines()
     topic_list = [x for x in topic_list if x.strip()]
