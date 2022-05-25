@@ -4,18 +4,18 @@ import Block from './block';
 import Refresh from '../assets/icons/refresh';
 import SimpleButton from './simpleButton';
 import BellNotification from '../assets/icons/bell_notification';
-import RedHeart from '../assets/icons/redHeart';
 import MealPlan from './mealPlan';
 import ActiveDiningHalls from './activeDiningHalls';
 import { useFonts } from 'expo-font';
 import FoodTrucks from './foodTrucks';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
-import { SignOut } from '../assets/icons/icons';
+import { GreenHeart, SignOut } from '../assets/icons/icons';
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from '../Core/Config';
 import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
+import LikedItems from "../screens/LikedItems"; 
 
 let hours = new Date().getHours();
 
@@ -115,15 +115,15 @@ function HomeScreenContent() {
                     </View>
                 </View>
                 <ActiveDiningHalls/>
-                <Block style={{ flexDirection: "column", alignItems: "flex-end" }}>
+                <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
-                        <RedHeart style={{ marginRight: 10 }} />
+                        <GreenHeart style={{ marginRight: 10 }} />
                         <Text style={{ fontFamily: "publica-sans-s", fontSize: 15, flex: 1, flexWrap: 'wrap', marginRight: 15, }} >Take your COVID-19 clearance survey and protect others</Text>
                     </View>
                     <SimpleButton style={{ alignSelf: "flex-end", marginTop: 10, }} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync} />
                 </Block>
                 <MealPlan mealPlan={mealPlanNumber} type={mealPlanPremium} />
-                <FoodTrucks />
+                <FoodTrucks/>
             </ScrollView>
         </SafeAreaView>
     );
