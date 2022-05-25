@@ -13,9 +13,6 @@ import SignupScreen from './screens/SignupScreen';
 const Stack = createNativeStackNavigator(); 
 
 const StackNavigator = () => {
-
-    //navigationKey={signedIn ? 'Welcome' : 'guest'}
-
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Welcome" component={WelcomeScreen}/>

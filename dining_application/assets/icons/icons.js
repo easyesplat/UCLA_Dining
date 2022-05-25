@@ -151,7 +151,7 @@ const X = (props) => (
     >
         <Path
             d="M6 1 1 6M1 1l5 5"
-            stroke="#000"
+            stroke="white"
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -246,4 +246,82 @@ const LikedIcon = (props) => (
     </Svg>
 )
 
-export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info, X, SmallHeart, VegetarianIcon, VeganIcon, HalalIcon, LikedIcon }; 
+const BigLikedIcon = (props) => (
+    <Svg
+        width={43}
+        height={43}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Circle cx={21.5} cy={21.5} r={21.5} fill="#F5ABAB" />
+        <Path
+            d="M29.582 14.617a5.028 5.028 0 0 0-3.557-1.478 5.014 5.014 0 0 0-3.556 1.478l-.97.972-.968-.972a5.022 5.022 0 0 0-7.113 0 5.054 5.054 0 0 0 0 7.136l.969.972 7.113 7.136 7.113-7.136.969-.972a5.045 5.045 0 0 0 1.473-3.568 5.058 5.058 0 0 0-1.473-3.568Z"
+            fill="#D80000"
+            stroke="#D80000"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </Svg>
+)
+
+const TabLikedIcon = (props) => (
+    <Svg
+        width={24}
+        height={24}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Circle cx={12} cy={12} r={12} fill={props.color} />
+        <Path
+            d="M15.383 8.619a2.104 2.104 0 0 0-2.294-.458 2.104 2.104 0 0 0-.683.458L12 9.026l-.406-.407a2.102 2.102 0 0 0-2.977 0 2.116 2.116 0 0 0 0 2.987l.405.407L12 15l2.977-2.987.406-.407a2.112 2.112 0 0 0 .457-2.302 2.113 2.113 0 0 0-.457-.685Z"
+            fill="#fff"
+            stroke="#fff"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </Svg>
+)
+
+const ExternalLink = (props) => (
+    <Svg
+        width={14}
+        height={14}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Path
+            d="M10.375 7.25V11a1.25 1.25 0 0 1-1.25 1.25H2.25A1.25 1.25 0 0 1 1 11V4.125a1.25 1.25 0 0 1 1.25-1.25H6M8.5 1h3.75v3.75M5.375 7.875 12.25 1"
+            stroke="#000"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </Svg>
+)
+
+const GreenHeart = (props) => (
+    <Svg
+        width={43}
+        height={43}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Circle cx={21.5} cy={21.5} r={21.5} fill="#95EDB8" />
+        <Path
+            d="M30.291 15.612a5.5 5.5 0 0 0-7.78 0l-1.06 1.06-1.06-1.06a5.501 5.501 0 0 0-7.78 7.78l1.06 1.06 7.78 7.78 7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78v0Z"
+            stroke="#37B96B"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </Svg>
+)
+
+
+export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info, X, SmallHeart, VegetarianIcon, VeganIcon, HalalIcon, LikedIcon, ExternalLink, GreenHeart, BigLikedIcon, TabLikedIcon }; 

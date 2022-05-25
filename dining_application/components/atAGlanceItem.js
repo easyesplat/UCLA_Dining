@@ -44,32 +44,35 @@ function AtAGlanceItem(props) {
 
     return (
         <SafeAreaView>
-            <GestureRecognizer
-                onSwipeDown={() => setModalVisible(!modalVisible)}
-            >
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
+            {
+                props.number !== 0 &&
+                <GestureRecognizer
+                    onSwipeDown={() => setModalVisible(!modalVisible)}
                 >
-                    <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.4)", alignItems: "center", justifyContent: "center", borderRadius: 20, }]}>
-                        <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
-                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignSelf: "center", justifyContent: "center", overflow: 'hidden', paddingVertical: 70 }}>
-                            {textItems}
-                        </ScrollView>
-                        <TouchableOpacity
-                            onPress={() => setModalVisible(!modalVisible)}
-                            style={styles.button}
-                        >
-                            <Text style={{ color: "black", fontFamily: "publica-sans-s", paddingRight: 5 }}>Swipe down to close</Text>
-                            <X />
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
-            </GestureRecognizer>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.5)", alignItems: "center", justifyContent: "center", borderRadius: 20, }]}>
+                            <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
+                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignSelf: "center", justifyContent: "center", overflow: 'hidden', paddingVertical: 70 }}>
+                                {textItems}
+                            </ScrollView>
+                            <TouchableOpacity
+                                onPress={() => setModalVisible(!modalVisible)}
+                                style={styles.closingButton}
+                            >
+                                <Text style={{ color: "white", fontFamily: "publica-sans-s", paddingRight: 5 }}>Swipe down to close</Text>
+                                <X />
+                            </TouchableOpacity>
+                        </View>
+                    </Modal>
+                </GestureRecognizer>
+            }
             <TouchableOpacity style={styles.glanceItem} onPress={() => setModalVisible(true)}>
                 <GetIcon type={props.type} />
                 <Text style={styles.glanceText}>{props.number} {props.type} item{props.number != 1 && "s"}</Text>
@@ -124,8 +127,8 @@ const styles = StyleSheet.create({
     parentTextStyle: {
         color: "white",
         fontFamily: "publica-sans-s",
-        fontSize: 20,
-        lineHeight: 25,
+        fontSize: 16,
+        lineHeight: 21,
         textAlign: "center",
         marginBottom: 20,
     },
@@ -140,5 +143,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: -15,
         marginBottom: 30,
-    }
+    },
+    closingButton: {
+        paddingVertical: 8,
+        borderRadius: 10,
+        paddingHorizontal: 12,
+        flexDirection: "row",
+        alignItems: "center",
+        borderColor: "white",
+        borderWidth: 2,
+    },
 })
+

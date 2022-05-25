@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         // flexDirection: "row",
         // justifyContent: "space-between",
         // alignItems: "center",
-        borderRadius: 10, 
+        borderRadius: 18, 
         width: 280,
         height: 170,
         shadowColor: 'rgba(100,100,110, 0.18)', // IOS

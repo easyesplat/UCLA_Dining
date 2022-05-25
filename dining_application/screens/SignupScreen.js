@@ -48,7 +48,10 @@ const SignupScreen = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                navigation.replace("HomeScreen");
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'HomeScreen' }]
+                });
             }
         })
         setState({});
