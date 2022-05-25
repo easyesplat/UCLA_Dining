@@ -49,9 +49,11 @@ for link in links:
     pageHTML = uClient.read()
     page = soup(pageHTML, 'html.parser')
     center_region = page.find('p', class_="center")
-    if center_region.find('span', class_="activity-level-wrapper"):
-        percentage = int(center_region.text.split(' ')[-1][:-1])
-        level_placer(names[count], percentage)
-    count = count+1
+    if page.find('p', class_="center"):
+        center_region = page.find('p', class_="center")
+        if center_region.find('span', class_="activity-level-wrapper"):
+            percentage = int(center_region.text.split(' ')[-1][:-1])
+            level_placer(names[count], percentage)
+        count = count+1
 uClient.close()
 
