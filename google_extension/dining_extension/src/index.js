@@ -5,10 +5,15 @@ import "./css/body_style.css";
 import "./css/header_style.css";
 //import { Link, animateScroll as scroll } from "react-scroll";
 
-//import firebase from "firebase/compat/app";
-//import db from './firebase.config.js';
-//import "firebase/compat/firestore";
+import firebase from "firebase/compat/app";
+import {firebaseConfig, firebaseInit} from './firebase.config.js';
+import "firebase/compat/firestore";
+import { DataSnapshot, getDatabase, ref, child, get } from "firebase/database";
 
+// ------------- Initialize Firestore & Realtime DB data ----------------
+const firebaseApp = firebase.initializeApp(firebaseInit);
+let db = firebase.firestore();
+let dbrt = ref(getDatabase(firebaseApp));
 
 // ----------------- Functions for basic rendering --------------------
 const ButtonGroup = ({ buttons, doSomethingAfterClick }) => {
@@ -34,19 +39,6 @@ const ButtonGroup = ({ buttons, doSomethingAfterClick }) => {
   );
 };
 
-function WindowSize() {
-  const [count, setCount] = useState(0);
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const [height, setHeight] = React.useState(window.innerHeight);
-
-  return (
-    <div>
-      <div>{`Window width = ${width}`}</div>
-      <div>{`Window height = ${height}`}</div>
-    </div>
-  );
-}
-
 function MainMenu() {
   return (
     <div class="App">
@@ -66,63 +58,77 @@ function MainMenu() {
   )
 }
 
-/* FireStore data loading (commented out; have been basically tested to work)
-function PrintData() {
-  const [BPlateInfo, setLists] = useState([]);
-
-  useEffect(() => {
-    var BPlateInfo  = {
-      breakfast: "",
-      lunch: "",
-      dinner: "",
-      late_night: ""
-    };
-
-  // Get data in JS objects
-	db.collection("time")
-		.get()
-		.then((querySnapshot) => {
-      let BPlateBreakfast = querySnapshot.docs[1].data().breakfast;
-      BPlateInfo.breakfast = BPlateBreakfast;
-			//querySnapshot.forEach((doc) => {
-			//	console.log(doc.data());
-			//});
-      //setLists(BPlateInfo);
-		});
-  }, []);
-  return BPlateInfo;
-}
-*/
-
-function PrintTime() {
-  // (Hard-coded for testing, firebase code below is commented out)
+// FireStore Database data loading
+function BPlateData() {
   var BPlateInfo = {
-    breakfast: "7am - 10am",
-    lunch: "11am - 3pm",
-    dinner: "5pm - 9pm",
+    breakfast: "",
+    lunch: "",
+    dinner: "",
     late_night: ""
   };
 
-  //let BPlateInfo = PrintData();  // print real-time data
-  return (
-    <div className="App">
-      <p> BPlate info printed from firebase: </p>
-      <p> Brekafast: {BPlateInfo.breakfast} </p>
-      <p> Lunch: {BPlateInfo.lunch} </p>
-      <p> Dinner: {BPlateInfo.dinner} </p>
-    </div>
-  )
+  db.collection("time")
+		.get()
+		.then((querySnapshot) => {
+      let BPlateBreakfast = querySnapshot.docs[1].data().breakfast;
+      BPlateInfo.breakfast = BPlateBreakfast;      
+		});
+
+  return BPlateInfo;
+} 
+
+// Realtime Database data loading
+function RT_DeNeveData() {
+  var DeNeveTime = {
+    level: "",
+    percentage: 0
+  };
+
+  get(child(dbrt, "density/De Neve/-N2wOhiL3q_o4V08Ejjl")).then((snapshot) => {
+    if (snapshot.exists()) {
+      DeNeveTime.level = snapshot.val().level;
+      DeNeveTime.percentage = snapshot.val().percentage;
+    } else {
+      console.log("DEBUG: no data available");
+    }
+    }).catch((error) => {
+    console.error(error);
+  });
+  console.log(DeNeveTime);
+  return DeNeveTime;
 }
 
 // ------------------ Main rendering class component ------------------
 class App extends Component {
   
-  // State
+  // State: data objects for passing around functions
   constructor(props) {
     super(props);
     this.state = {
-      BPlateData: "",
+      BPlateTime: {
+        breakfast: "",
+        lunch: "",
+        dinner: "",
+        late_night: ""
+      },
+      DeNeveBusy: {
+        level: "",
+        percentage: 0
+      },
+      dataLoaded: false
     };
+  }
+
+  loadData() {
+    if (this.state.dataLoaded == false) {
+      let BPlateInfo = BPlateData();
+      this.setState({BPlateTime: BPlateInfo});
+      let DeNeveTime = RT_DeNeveData();
+      this.setState({DeNeveBusy: DeNeveTime});
+      this.setState({dataLoaded: true});
+    }
+    console.log(this.state.BPlateTime);
+    console.log(this.state.DeNeveBusy);
   }
 
     render() {      
@@ -147,7 +153,9 @@ class App extends Component {
         <br></br>
         <p> Display Data: </p>
         <ButtonGroup buttons={["BPlate", "De Neve", "Epicuria"]} />
-        <PrintTime />
+        <button className="btn" onClick={() => this.loadData()}>
+          LOAD DATA
+        </button>
         <MainMenu />
            
         </div>
