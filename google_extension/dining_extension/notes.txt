@@ -9,3 +9,5 @@ directory, which creates/updates the "build" folder.
 If we want to test the extension icon to see if the new features are compatible in the pop-up,
 run "npm run build" first to update the "build" folder and reload the extension.
 
+Current bugs:
+- URL links cannot be opened in the extension's pop-up window 
