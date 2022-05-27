@@ -34,7 +34,8 @@ for food_items in lunch:
     infos = food_items.find_all("div", class_="style-entree")
     i = 0 
     for title in titles:
-        col = db.collection(u'menu').document(u'Bruin Café').collection('lunch').document(title.text)
+        col1 = db.collection(u'menu').document(u'Bruin Café').collection('lunch').document(title.text)
+        col2 = db.collection(u'menu').document(u'Bruin Café').collection('dinner').document(title.text)
         info = infos[i].find_all("div", class_="menu-item")
         dict = {}
         for inform in info:
@@ -48,7 +49,10 @@ for food_items in lunch:
                     dict[food].append(description.strip())
                 else:
                     dict[food].append('')
-            col.set({
+            col1.set({
+                'food': dict
+            })
+            col2.set({
                 'food': dict
             })
         i = i+1
@@ -60,7 +64,7 @@ for food_items in dinner:
     infos = food_items.find_all("div", class_="style-entree")
     i = 0 
     for title in titles:
-        col = db.collection(u'menu').document(u'Bruin Café').collection('dinner').document(title.text)
+        col = db.collection(u'menu').document(u'Bruin Café').collection('late_night').document(title.text)
         info = infos[i].find_all("div", class_="menu-item")
         dict = {}
         for inform in info:
@@ -78,4 +82,16 @@ for food_items in dinner:
                 'food': dict
             })
         i = i+1
-pastries = foodlist[1].find('div', class_=' style-2flow style-side')
+col = db.collection(u'menu').document(u'Bruin Café').collection('late_night').document('Pastries')
+pastries = foodlist[1].find('div', class_='style-2flow')
+pastries_info = pastries.find_all('a', class_='recipelink')
+dict = {}
+for i in pastries_info:
+    food = i.text
+    link = i['href']
+    dict[food] = []
+    dict[food].append(link)
+    dict[food].append('')
+col.set({
+    'food': dict
+})
