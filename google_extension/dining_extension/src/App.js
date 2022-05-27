@@ -5,13 +5,6 @@ import "./css/body_style.css";
 import "./css/header_style.css";
 //import { Link, animateScroll as scroll } from "react-scroll";
 
-import firebase from "firebase/compat/app";
-import React, { useEffect, useRef, useState, Component } from 'react'
-import ReactDOM from 'react-dom/client'
-import "./css/App.css";
-import "./css/body_style.css";
-import "./css/header_style.css";
-
 import {ButtonGroup, RenderData} from "./renderFuncs/renderData";
 import {UserInput} from "./renderFuncs/userInput";
 //import { Link, animateScroll as scroll } from "react-scroll";
@@ -22,16 +15,25 @@ function MainMenu() {
   return (
     <div className="App">
       <div className="container">
-        <img src={require("./assets/diningHallImages/bplateimage.jpg")} />
-        <button className="btn">BPlate</button>
+      <div className="row">
+        <img src={require("./assets/diningHallImages/bcafe.jpg")} />
+        <button className="btn">Bruin Café</button>
       </div>
       <div className="container">
         <img src={require("./assets/diningHallImages/deneve.jpg")} />
         <button className="btn">DeNeve</button>
       </div>
+      </div>
+
+      <div className="row">
+      <div className="container">
+        <img src={require("./assets/diningHallImages/bplateimage.jpg")} />
+        <button className="btn">Bruin Plate</button>
+      </div>
       <div className="container">
         <img src={require("./assets/diningHallImages/epicimage.jpeg")} />
         <button className="btn">Epicuria</button>
+      </div>
       </div>
     </div>
   )
@@ -61,11 +63,9 @@ function App() {
             </div>
             </div>
         
-        <p> Display Data: </p>
-          <ButtonGroup buttons={["BPlate", "De Neve", "Epicuria"]} />
-        
-          <div> <RenderData /> </div>
-          <MainMenu />
+        <ButtonGroup buttons={["BPlate", "De Neve", "Epicuria"]} />
+        <div> <RenderData /> </div>
+        <MainMenu />
         </div>
         
       </div>
