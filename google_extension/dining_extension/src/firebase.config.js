@@ -1,4 +1,3 @@
-/*
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -14,12 +13,17 @@ const firebaseConfig = {
   measurementId: "G-LPLE8Y3HZD"
 };
 
+export const firebaseInit = {
+  apiKey: "AIzaSyB2WzKvsGyagffu4sZ3AVjWfmW_HJFxG0Y",
+  authDomain: "ucla-dining.firebaseapp.com",
+  projectId: "ucla-dining"
+}
+
 // Use this to initialize the firebase App
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+//const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 // Use these for db & auth
-const db = firebase.firestore();
-const auth = firebase.auth();
+//const db = firebase.firestore();
+//const auth = firebase.auth();
 
-export default { auth, db };
-*/
+//export default { auth, db };
