@@ -3,24 +3,25 @@ import React, { useState } from 'react'
 import { VegetarianIcon, VeganIcon, HalalIcon, LikedIcon, X, SmallHeart } from '../assets/icons/icons'
 import { BlurView } from 'expo-blur';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import * as Haptics from 'expo-haptics';
 
 function GetIcon(props) {
     if (props.type === "vegetarian") {
         return (
-            <VegetarianIcon />
+            <VegetarianIcon/>
         )
     } else if (props.type === "vegan") {
         return (
-            <VeganIcon />
+            <VeganIcon/>
         )
     } else if (props.type === "halal") {
         return (
-            <HalalIcon />
+            <HalalIcon/>
         )
 
     } else if (props.type === "liked") {
         return (
-            <LikedIcon />
+            <LikedIcon/>
         )
     }
 
@@ -47,7 +48,10 @@ function AtAGlanceItem(props) {
             {
                 props.number !== 0 &&
                 <GestureRecognizer
-                    onSwipeDown={() => setModalVisible(!modalVisible)}
+                    onSwipeDown={() => {
+                        setModalVisible(!modalVisible);
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }}
                 >
                     <Modal
                         animationType="slide"
@@ -63,7 +67,9 @@ function AtAGlanceItem(props) {
                                 {textItems}
                             </ScrollView>
                             <TouchableOpacity
-                                onPress={() => setModalVisible(!modalVisible)}
+                                onPress={() => {
+                                    setModalVisible(!modalVisible); 
+                                }}
                                 style={styles.closingButton}
                             >
                                 <Text style={{ color: "white", fontFamily: "publica-sans-s", paddingRight: 5 }}>Swipe down to close</Text>
@@ -73,7 +79,14 @@ function AtAGlanceItem(props) {
                     </Modal>
                 </GestureRecognizer>
             }
-            <TouchableOpacity style={styles.glanceItem} onPress={() => setModalVisible(true)}>
+            <TouchableOpacity style={styles.glanceItem} onPress={() => {
+                setModalVisible(true); 
+                if (props.number == 0) {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
+                } else {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                }
+                }}>
                 <GetIcon type={props.type} />
                 <Text style={styles.glanceText}>{props.number} {props.type} item{props.number != 1 && "s"}</Text>
             </TouchableOpacity>

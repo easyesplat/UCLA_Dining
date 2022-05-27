@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Animated } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -27,6 +27,15 @@ function DiningHall() {
         'publica-sans-m': require('dining_application/assets/fonts/PublicaSans-Medium.otf'),
         'publica-sans-l': require('dining_application/assets/fonts/PublicaSans-Light.otf'),
     });
+
+    let menuSupported = true; 
+    let dietaryRestriction = true; 
+
+    if (routes.params.name === "The Study at Hedrick") {
+        menuSupported = false; 
+    } else if (routes.params.name === "Bruin Café" || routes.params.name === "The Drey") {
+        dietaryRestriction = false; 
+    }
 
     function authStateChanged(user) {
         setUser(user);
@@ -98,6 +107,23 @@ function DiningHall() {
         menu.push(<MenuBlock>{subMenu}</MenuBlock>)
     }
 
+    if (menu.length === 0) {
+        menu.push(
+            <View>
+                <MenuBlock>
+                    <Text style={{
+                        fontSize: 15,
+                        lineHeight: 20,
+                        fontFamily: "publica-sans-l",
+                        margin: 5, 
+                        marginBottom: 15, 
+                        textAlign: 'center',
+                    }}>Looks like we don't support menus for this dining hall yet!</Text>
+                </MenuBlock>
+            </View>
+        );
+    }
+
 
     let mealPeriod = routes.params.period; 
     if (routes.params.period === "late_night") {
@@ -119,12 +145,20 @@ function DiningHall() {
                     <View style={styles.block}>
                         <View style={{ padding: 8 }}>
                             <Text style={styles.insightsHeaderText}>{mealPeriod[0].toUpperCase() + mealPeriod.substring(1)} at a glance</Text>
-                            <View style={styles.glanceView}>
-                                <AtAGlanceItem number={vegetarianItems} type="vegetarian" list={vegetarianItemsList}/>
-                                <AtAGlanceItem number={veganItems} type="vegan" list={veganItemsList}/>
-                                <AtAGlanceItem number={halalItems} type="halal" list={halalItemsList}/>
-                                <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList}/>
-                            </View>
+                            {
+                                menuSupported &&
+                                <View style={styles.glanceView}>
+                                    {
+                                        dietaryRestriction && 
+                                        <>
+                                            <AtAGlanceItem number={vegetarianItems} type="vegetarian" list={vegetarianItemsList}/>
+                                            <AtAGlanceItem number={veganItems} type="vegan" list={veganItemsList}/>
+                                            <AtAGlanceItem number={halalItems} type="halal" list={halalItemsList}/>
+                                        </>
+                                    }
+                                    <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList}/>
+                                </View>
+                            }
                         </View>
                     </View>
                 </View>

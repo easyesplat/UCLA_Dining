@@ -1,31 +1,77 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text, StyleSheet, ScrollView} from 'react-native'
+import Gradient from '../assets/gradient.js'
+import { BlurView } from 'expo-blur';
 import React from 'react'
-import { BigLikedIcon } from '../assets/icons/icons'
+import { useRoute } from "@react-navigation/native"
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LikedIcon } from '../assets/icons/icons.js';
 
-const LikedItems = () => {
+const LikedItemsComponent = () => {
+    const routes = useRoute(); 
+    const navigation = useNavigation();
     return (
-        <View style={styles.block}>
-            <View style={{ flexDirection: "row", alignItems: "center", width: "100%"}}>
-                <BigLikedIcon />
-                <Text>Your Liked Items Today</Text>
-            </View>
+        <SafeAreaView>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>Your liked items</Text>
+                    <LikedIcon/>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    )
+}
+
+function LikedItems() {
+    return(
+        <View style={{backgroundColor: "#fff", flex: 1}}>
+            {
+                <Gradient style={styles.gradientPosition} color1="#D24040" color2="#F5ABAB"/>
+            }
+            <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer, {flex: 1}]}></BlurView>
+            <LikedItemsComponent/>
         </View>
     )
 }
 
-export default LikedItems
-
 const styles = StyleSheet.create({
-    block: {
+    blurContainer: {
+        flex: 1,
+        padding: 20,
+        justifyContent: 'center',
+        width: '100%',
+        zIndex: -1, 
+    },
+    gradientPosition: {
+        position: 'absolute', 
+        left: 0, 
+        top: 0, 
+        zIndex: -2, 
+    },
+    header: {
+        paddingTop: 20,
+        paddingBottom: 20,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    headerText: {
+        fontFamily: "publica-sans-m",
+        lineHeight: 30,
+        fontSize: 28,
+    },
+    scrollView: {
         paddingHorizontal: 20,
-        paddingVertical: 20,
-        borderRadius: 15,
-        width: "100%",
-        shadowColor: 'rgba(100,100,110, 0.18)', // IOS
-        shadowOpacity: 1, // IOS
-        shadowRadius: 29, //IOS
-        backgroundColor: "white",
-        marginBottom: 20,
-        marginTop: 10,
+    },
+    iconRow: {
+        flexDirection: "row",
+    },
+    icon: {
+        paddingLeft: 15,
+    },
+    list: {
+        overflow: "visible"
     },
 })
+
+export default LikedItems
