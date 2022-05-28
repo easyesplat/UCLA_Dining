@@ -123,7 +123,7 @@ const DATA = [
       id: 21,
       name: "8E8 Thai Street Food",
       link: "https://roaminghunger.com/8e8-thai-street-food/",
-      imageUri: require('./assets/foodTruck_images/thai8E8.jpeg')
+      imageUri: require('./assets/foodTruck_images/thai8E8.jpeg'),
     },
     {
       id: 22,
