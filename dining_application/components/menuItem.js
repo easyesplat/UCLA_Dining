@@ -8,6 +8,7 @@ import AppLoading from 'expo-app-loading';
 import { BlurView } from 'expo-blur';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import * as WebBrowser from 'expo-web-browser';
+import * as Haptics from 'expo-haptics';
 
 const MenuItem = ({ liked, itemName, uid, information, parent, }) => {
     const [itemLiked, setItemLiked] = useState(liked);
@@ -54,7 +55,10 @@ const MenuItem = ({ liked, itemName, uid, information, parent, }) => {
     return (
         <View>
             <GestureRecognizer
-                onSwipeDown={() => setModalVisible(!modalVisible)}
+                onSwipeDown={() => {
+                    setModalVisible(!modalVisible);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }}
             >
                 <Modal
                     animationType="slide"
@@ -77,7 +81,10 @@ const MenuItem = ({ liked, itemName, uid, information, parent, }) => {
                                 </View>
                             }
                             <TouchableOpacity
-                                onPress={() => _handlePressButtonAsync()}
+                                onPress={() => {
+                                    _handlePressButtonAsync();
+                                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                                }}
                                 style={[styles.button, { marginTop: 0, marginBottom: 20, backgroundColor: "white" }]}
                             >
                                 <Text style={{ color: "black", fontFamily: "publica-sans-s", paddingRight: 5 }}>Get more info</Text>
@@ -92,7 +99,10 @@ const MenuItem = ({ liked, itemName, uid, information, parent, }) => {
                             }
                         </View>
                         <TouchableOpacity
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                            }}
                             style={styles.closingButton}
                         >
                             <Text style={{ color: "white", fontFamily: "publica-sans-s", paddingRight: 5 }}>Swipe down to close</Text>
@@ -102,13 +112,19 @@ const MenuItem = ({ liked, itemName, uid, information, parent, }) => {
                 </Modal>
             </GestureRecognizer>
             <View style={styles.item}>
-                <TouchableOpacity style={{ flexDirection: "row", alignItems: 'center' }} onPress={() => setModalVisible(true)} hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}>
+                <TouchableOpacity style={{ flexDirection: "row", alignItems: 'center' }} onPress={() => {
+                    setModalVisible(true);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    }} hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}>
                     <Text style={styles.itemText}>{itemName}</Text>
                     <View style={{ marginLeft: 3, padding: 5, }}>
                         <Info />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleClick()} hitSlop={{top: 20, left: 40, bottom: 20, right: 20}}>
+                <TouchableOpacity onPress={() => {
+                    handleClick();
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Success);
+                    }} hitSlop={{top: 20, left: 40, bottom: 20, right: 20}}>
                     <Heart liked={itemLiked} />
                 </TouchableOpacity>
             </View>

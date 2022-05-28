@@ -8,7 +8,7 @@ import HomeScreenContent from '../components/HomeScreenContent'
 function HomeScreen() {
     return (
         <View style={{backgroundColor: "#fff", flex: 1}}>
-            <Gradient style={styles.gradientPosition}/>
+            <Gradient style={styles.gradientPosition} color1="#2774AE" color2="#FFD100"/>
             <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
             <HomeScreenContent/>
         </View>

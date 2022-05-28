@@ -6,6 +6,8 @@ import Block from '../components/block';
 import SimpleButton from '../components/simpleButton';
 import { useNavigation } from '@react-navigation/native';
 import DATA from '../data/diningData';
+import * as Haptics from 'expo-haptics';
+
 //TODO: Uncomment:
 import readTimes from "../Core/timeDatabase";
 import AppLoading from 'expo-app-loading';
@@ -16,7 +18,7 @@ function ActiveDiningHalls(props) {
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    hours = 20;
+    hours = 12;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
@@ -98,7 +100,9 @@ function ActiveDiningHalls(props) {
                 <Block>
                     <Image style={{ width: 100, height: 100, alignSelf: "center" }} source={bearImage} />
                     <Text style={{ fontFamily: "publica-sans-s", fontSize: 15, textAlign: "center", paddingHorizontal: 20, marginBottom: 20 }}>Dining halls are closed right now. Dining halls will re-open in {message}</Text>
-                    <SimpleButton style={{ alignSelf: "center", marginBottom: 10, }} background="true" text="See all dining halls" />
+                    <SimpleButton style={{ alignSelf: "center", marginBottom: 10, }} background="true" text="See all dining halls" onPress={() => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    }} />
                 </Block>
             </View>
         );
@@ -116,7 +120,10 @@ function ActiveDiningHalls(props) {
     for (let i = 0; i < sortedData.length; i++) {
         //TODO: Uncomment:
         if (openDiningHalls.includes(sortedData[i].name)) {
-            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod })} />);
+            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => {
+                navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod });
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            }} />);
         }
     }
 
@@ -128,7 +135,10 @@ function ActiveDiningHalls(props) {
                 {renderDiningHalls}
             </View>
             <View style={{ flexDirection: "row", justifyContent: "flex-end", paddingTop: 5 }}>
-                <SimpleButton text="See all dining halls" onPress={() => navigation.navigate("All Dining Halls", { /*data: timeMap*/ })} />
+                <SimpleButton text="See all dining halls" onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    navigation.navigate("All Dining Halls", { /*data: timeMap*/ });
+                    }} />
             </View>
         </View>
     );

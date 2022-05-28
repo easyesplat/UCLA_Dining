@@ -26,9 +26,7 @@ function App() {
     return (
         <NavigationContainer>
             <StatusBar barStyle="dark-content"/>
-            {
-                <StackNavigator/>
-            }
+            <StackNavigator/>
         </NavigationContainer>
     );
 }

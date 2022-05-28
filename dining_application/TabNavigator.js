@@ -3,6 +3,7 @@ import AllDiningHalls from './screens/AllDiningHalls';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStackNavigator } from './StackNavigator';
 import { Food, PersonFill, Feed, TabLikedIcon } from './assets/icons/icons'; 
+import LikedItems from './screens/LikedItems';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +15,7 @@ const TabNavigator = () => {
                     <Food color={tabInfo.focused ? "#007AFF" : "rgba(60, 60, 67, 0.60)"}/>
                 )
             }}}/>
-            <Tab.Screen name="Liked" component={AllDiningHalls} options={{tabBarActiveTintColor: "#007AFF", tabBarIcon: (tabInfo) => { 
+            <Tab.Screen name="Liked" component={LikedItems} options={{tabBarActiveTintColor: "#007AFF", tabBarIcon: (tabInfo) => { 
                 return (
                     <TabLikedIcon color={tabInfo.focused ? "#007AFF" : "rgba(60, 60, 67, 0.60)"}/>
                 )

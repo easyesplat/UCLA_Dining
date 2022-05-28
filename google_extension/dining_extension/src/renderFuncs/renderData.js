@@ -60,66 +60,135 @@ function Square(props) {
     );
 }
 
-
 export function RenderData() {
-    const [name, setname] = useState("");
-    const [teststr, setteststr] = useState("Click to load BPlate data");
-    const [teststr2, setteststr2] = useState("Click to load user input");
-    const [dataLoaded, setdataLoaded] = useState(false);
-    const [BPlateInfo, setBPlateInfo] = useState("");
-    const [DeNeveBusyInfo, setDeNeveBusyInfo] = useState("");
+  const [name, setname] = useState("");
+  const [teststr, setteststr2] = useState("Click to load user input");
+  const [dataLoaded, setdataLoaded] = useState(false);
+  const [BPlateInfo, setBPlateInfo] = useState("");
+  const [AllTime, setAllTime] = useState("");
+  const [BCTime, setBCTime] = useState({level: "", percentage: 0});
+  const [BPTime, setBPTime] = useState({level: "", percentage: 0});
+  const [DNTime, setDNTime] = useState({level: "", percentage: 0});
+  const [EPTime, setEPTime] = useState({level: "", percentage: 0});
 
-    function NameChange(e) {
-      setname(e.target.value);
-      setteststr2(name);
-    }
+  function NameChange(e) {
+    setname(e.target.value);
+    setteststr2(name);
+  }
 
-    function loadData() {
-      if (dataLoaded === false) {
-        let BPlateLoadData = {
-          breakfast: "7-10",
-          lunch: "11-3",
-          dinner: "5-9",
-          late_night: "N/A"
-        };
-        setBPlateInfo(BPlateLoadData);
-        setteststr(BPlateLoadData.breakfast);
-        let DeNeveTime = {
-          level: 'slightly busy',
-          percentage: 10
-        };
-        setDeNeveBusyInfo(DeNeveTime);
-        setdataLoaded(true);
+  function loadData() {
+    if (dataLoaded === false) {
+      // Hard-coded Firestore data for testing
+      let BPlateInfoData = {
+        breakfast: "7-10",
+        lunch: "11-3",
+        dinner: "5-9",
+        late_night: "N/A"
+      };
+      setBPlateInfo(BPlateInfoData);
+
+      // Hard-coded Realtime data for testing
+      let DeNeveTime = {
+        level: 'slightly busy: 10%',
+        percentage: 10
+      };
+      var BCafeTime = {
+        level: 'getting busy: 30%',
+        percentage: 30
+      };
+      var BPlateTime = {
+        level: 'not too busy: 8%',
+        percentage: 8
+      };
+      var EpicuriaTime = {
+        level: 'not too busy: 5%',
+        percentage: 5
+      };
+      let AllTimeData = {
+        DN: DeNeveTime,
+        BC: BCafeTime,
+        BP: BPlateTime,
+        EP: EpicuriaTime
       }
-      console.log(BPlateInfo);
-      console.log(DeNeveBusyInfo);
+      setAllTime(AllTimeData);
+      setBCTime(AllTimeData.BC)
+      setBPTime(AllTimeData.BP)
+      setDNTime(AllTimeData.DN)
+      setEPTime(AllTimeData.EP)
+      setdataLoaded(true);
     }
+    console.log(AllTime);
+  }
+  
+// Click on first box to display all wait times
+function renderSquares() {
+  return (
+    <dir>
+    <Square 
+      value = {"Bruin Café is " + BCTime.level}
+      onClick={() => loadData()}
+    />
+    <dir>
+    <Square 
+      value = {"Bruin Plate is " + BPTime.level}
+    />
+    <Square 
+      value = {"DeNeve is " + DNTime.level}
+    />
+    <Square 
+      value = {"Epicuria is " + EPTime.level}
+    />
+    </dir>
+    </dir>
+  );
+}
+function renderInput() {
+  return (
+    <Square 
+      value = {teststr}
+      onClick={() => NameChange()}
+    />
+  );
+}
+
+return (
+  <div>
+    <input 
+      value = {name}
+      onChange = {NameChange}
+    />
+    <div className="board-row"> 
+      {renderSquares()} 
+    </div>
     
-  function renderSquare() {
-    return (
-      <Square 
-        value = {teststr}
-        onClick={() => loadData()}
-      />
-    );
-  }
-  function renderInput() {
-    return (
-      <Square 
-        value = {teststr2}
-        onClick={() => NameChange()}
-      />
-    );
-  }
+  </div>
+)
+}
+
+
+
+
+
+// ButtonGroup formatting
+export const ButtonGroup = ({ buttons, doSomethingAfterClick }) => {
+  const [clickedId, setClickedId] = useState(-1);
+
+  const handleClick = (event, id) => {
+    setClickedId(id);
+  };
 
   return (
-    <div>
-      <input 
-        value = {name}
-        onChange = {NameChange}
-      />
-      <div className="board-row"> {renderSquare()} {renderInput()} </div>
-      
-    </div>
-  )
-}
+    <>
+      {buttons.map((buttonLabel, i) => (
+        <button
+          key={i}
+          name={buttonLabel}
+          onClick={(event) => handleClick(event, i)}
+          className={i === clickedId ? "customButton active" : "customButton"}
+        >
+          {buttonLabel}
+        </button>
+      ))}
+    </>
+  );
+};

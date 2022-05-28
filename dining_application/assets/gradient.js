@@ -1,6 +1,5 @@
 import * as React from "react"
 import Svg, { G, Ellipse, Defs, LinearGradient, Stop } from "react-native-svg"
-/* SVGR has dropped some elements not supported by react-native-svg: filter */
 
 const Gradient = (props) => (
     <Svg
@@ -22,8 +21,8 @@ const Gradient = (props) => (
                 y2={-17.174}
                 gradientUnits="userSpaceOnUse"
             >
-                <Stop stopColor="#2774AE" />
-                <Stop offset={1} stopColor="#FFD100" stopOpacity={0.62} />
+                <Stop stopColor={props.color1} />
+                <Stop offset={1} stopColor={props.color2} stopOpacity={0.62} />
             </LinearGradient>
         </Defs>
     </Svg>
@@ -31,5 +30,5 @@ const Gradient = (props) => (
 
 export default Gradient
 
-
-//git log --oneline --decorate --graph --all 14a38adf53033553da085549be989f02ca9d4ee4..79aed792415b35d1b31ddc26814a211c7bae97fe
+//#2774AE
+//#FFD100

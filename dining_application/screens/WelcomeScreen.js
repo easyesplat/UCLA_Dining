@@ -22,7 +22,7 @@ const WelcomeScreen = () => {
 
     return (
         <View style={{flex: 1, backgroundColor: "white"}}>
-            <Gradient style={styles.gradientPosition}/>
+            <Gradient style={styles.gradientPosition} color1="#2774AE" color2="#FFD100"/>
             <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
             <SafeAreaView style={{flex: 1}}>
                 <View style={styles.container}>

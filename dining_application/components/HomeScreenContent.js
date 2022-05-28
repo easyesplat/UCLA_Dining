@@ -15,7 +15,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from '../Core/Config';
 import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
-import LikedItems from "../screens/LikedItems"; 
+import * as Haptics from 'expo-haptics';
 
 let hours = new Date().getHours();
 
@@ -50,6 +50,7 @@ function HomeScreenContent() {
 
 
     const _handlePressButtonAsync = async () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
         let result = await WebBrowser.openBrowserAsync('https://uclasurveys.co1.qualtrics.com/jfe/form/SV_3qRLtouCYKzBbH7');
         setResult(result);
     };
