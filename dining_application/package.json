@@ -35,7 +35,8 @@
     "react-native-web": "0.17.7",
     "react-navigation": "^4.4.4",
     "expo-updates": "~0.13.1",
-    "expo-haptics": "~11.2.0"
+    "expo-haptics": "~11.2.0",
+    "@expo/vector-icons": "^13.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
