@@ -27,27 +27,31 @@ const Item = ({ name, diningHall, link, time, itemLiked, area }) => {
 	}
 
 	return (
-		<View style={styles.item}>
-			<View style={{ maxWidth: 200 }}>
-				<Text style={styles.title}>{name}</Text>
-				<Text style={styles.subHeading}>at <Text style={styles.important}>{area}</Text> at <Text style={styles.important}>{diningHall}</Text> for <Text style={styles.important}>{time}</Text></Text>
-			</View>
-			<View style={{ flexDirection: 'row', alignItems: "center" }}>
-				{
-					itemLiked &&
-					<View style={styles.likedItem}>
-						<SmallHeart liked={true} />
-						<Text style={{ color: "#D24040", fontFamily: "publica-sans-m", paddingLeft: 5, lineHeight: 14, fontSize: 12 }}>Liked Item</Text>
+		<TouchableOpacity
+			onPress={() => {
+				_handlePressButtonAsync();
+				Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+			}}
+		>
+			<View style={styles.item}>
+				<View style={{ maxWidth: 200 }}>
+					<Text style={styles.title}>{name}</Text>
+					<Text style={styles.subHeading}>at <Text style={styles.important}>{area}</Text> at <Text style={styles.important}>{diningHall}</Text> for <Text style={styles.important}>{time}</Text></Text>
+				</View>
+				<View style={{ flexDirection: 'row', alignItems: "center" }}>
+					{
+						itemLiked &&
+						<View style={styles.likedItem}>
+							<SmallHeart liked={true} />
+							<Text style={{ color: "#D24040", fontFamily: "publica-sans-m", paddingLeft: 5, lineHeight: 14, fontSize: 12 }}>Liked Item</Text>
+						</View>
+					}
+					<View style={{ marginLeft: 10, }} hitSlop={{ top: 20, left: 20, bottom: 20, right: 20 }}>
+						<ExternalLink />
 					</View>
-				}
-				<TouchableOpacity style={{marginLeft: 10,}} hitSlop={{ top: 20, left: 20, bottom: 20, right: 20 }} onPress={() => {
-					_handlePressButtonAsync();
-					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-				}}>
-					<ExternalLink />
-				</TouchableOpacity>
+				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	)
 
 
@@ -62,6 +66,9 @@ const List = (props) => {
 		if (props.searchPhrase === "") {
 			return <></>
 		}
+
+		let condensedString = (item.itemName.toUpperCase() + item.diningHall.toUpperCase() + item.area.toUpperCase() + item.time.toUpperCase()).trim().replace(/\s/g, "");
+
 		// filter of the name
 		if (item.itemName.toUpperCase().includes(phrase)) {
 			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
@@ -76,6 +83,10 @@ const List = (props) => {
 		}
 		//meal Period
 		if (item.time.toUpperCase().includes(phrase)) {
+			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
+		}
+		//condensedString
+		if (condensedString.includes(phrase)) {
 			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
 		}
 
@@ -95,10 +106,8 @@ const List = (props) => {
 						keyExtractor={(item) => item.id}
 						style={{ marginHorizontal: -20, paddingHorizontal: 20, paddingTop: 20, paddingBottom: 200 }}
 						showsVerticalScrollIndicator={false}
-						maxToRenderPerBatch={15}
 					/>
 				</View>
-				{/* <View style={{height: 200, backgroundColor: "red"}}><Text>Hello</Text></View> */}
 			</View>
 		</SafeAreaView>
 	);
@@ -108,7 +117,6 @@ export default List;
 
 const styles = StyleSheet.create({
 	list__container: {
-		// margin: 10,
 		height: "100%",
 		width: "100%",
 	},
