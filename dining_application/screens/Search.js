@@ -15,7 +15,7 @@ import List from "../components/List";
 import SearchBar from "../components/SearchBar";
 import { useFonts } from 'expo-font';
 
-const LikedItemsComponent = () => {
+const SearchComponent = () => {
     const [menuMap, setMenuMap] = useState(null);
     const [userDoc, setUserDoc] = useState(null);
     const [initializing, setInitializing] = useState(true);
@@ -102,7 +102,7 @@ function Search() {
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
             <Gradient style={styles.gradientPosition} color1="#2774AE" color2="#FFD100" />
             <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer, { flex: 1 }]}></BlurView>
-            <LikedItemsComponent />
+            <SearchComponent />
         </View>
     )
 }
