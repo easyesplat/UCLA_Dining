@@ -1,6 +1,5 @@
 
-To upload extension to Chrome:
-
+To test the app/extension:
 - First run "npm install" in the dining_extension directory.
 - After node modules are loaded, run "npm run build" in the dining_extension
 directory, which creates/updates the "build" folder.
@@ -9,8 +8,14 @@ directory, which creates/updates the "build" folder.
 If we want to test the extension icon to see if the new features are compatible in the pop-up,
 run "npm run build" first to update the "build" folder and reload the extension.
 
+
+
 Current problems:
+- Is there a way we can use the data in Firebase as well? I only have the extension
+display the capacity directly on the webpage. If we don't have access to more data 
+then I think we're good.
 - Starting at line #8 of renderFuncs/renderTimeData.js, I left the firebase codes 
-commented out to test the website. 
-- 
+commented out to test the website without over-reading the database. 
+- I put some flipcards in the app for demo/better visuals. Feel free to change it 
+or add any other styles. 
 
