@@ -1,14 +1,14 @@
 {
-  "name": "Dining Extension",
+  "name": "Bear Food Extension",
   "version": "1.0",
-  "description": "Basic React app running in an extension pop-up.",
-  "manifest_version": 2,
+  "description": "Chrome extension for real-time dining halls information.",
+  "manifest_version": 3,
   "icons": {
     "16": "images/square-logo.png",
     "48": "images/square-logo.png",
     "128": "images/square-logo.png"
   },
-  "browser_action": {
+  "action": {
       "default_popup": "index.html",
       "default_icon": {
         "16": "images/square-logo.png",
