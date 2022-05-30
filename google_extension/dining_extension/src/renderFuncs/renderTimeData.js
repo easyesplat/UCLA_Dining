@@ -5,11 +5,11 @@ import React, { useEffect, useState } from 'react'
 //import { DataSnapshot, getDatabase, ref, child, get } from "firebase/database";
 
 // ------------- Initialize Firestore & Realtime DB data ----------------
-/*
-const firebaseApp = firebase.initializeApp(firebaseInit);
-let db = firebase.firestore();
-let dbrt = ref(getDatabase(firebaseApp));
+//const firebaseApp = firebase.initializeApp(firebaseInit);
+//let db = firebase.firestore();
+//let dbrt = ref(getDatabase(firebaseApp));
 
+/*
 function BPlateData() {
   let BPlateInfo = {
     breakfast: "",
@@ -34,6 +34,18 @@ function RT_DeNeveData() {
       level: "",
       percentage: 0
     };
+    var BCafeTime = {
+      level: "",
+      percentage: 0
+    };
+    var BPlateTime = {
+      level: "",
+      percentage: 0
+    };
+    var EpicuriaTime = {
+      level: "",
+      percentage: 0
+    };
 
    // Get data in JS objects
    get(child(dbrt, "density/De Neve/-N2wOhiL3q_o4V08Ejjl")).then((snapshot) => {
@@ -46,34 +58,66 @@ function RT_DeNeveData() {
     }).catch((error) => {
     console.error(error);
   });
-  console.log(DeNeveTime);
-  return DeNeveTime;
+  get(child(dbrt, "density/Bruin Café/-N2wOi3AybbN3xZw2osg")).then((snapshot) => {
+    if (snapshot.exists()) {
+      BCafeTime.level = snapshot.val().level;
+      BCafeTime.percentage = snapshot.val().percentage;
+    } else {
+      console.log("DEBUG: no data available");
+    }
+  })
+  get(child(dbrt, "density/Bruin Plate/-N2wOhodV2rCVEQEGLPp")).then((snapshot) => {
+    if (snapshot.exists()) {
+      BPlateTime.level = snapshot.val().level;
+      BPlateTime.percentage = snapshot.val().percentage;
+    } else {
+      console.log("DEBUG: no data available");
+    }
+  })
+  get(child(dbrt, "density/Epicuria/-N2wOhc78iSJgJIjTCHH")).then((snapshot) => {
+    if (snapshot.exists()) {
+      EpicuriaTime.level = snapshot.val().level;
+      EpicuriaTime.percentage = snapshot.val().percentage;
+    } else {
+      console.log("DEBUG: no data available");
+    }
+  })
+
+  var AllTime = {
+      DN: DeNeveTime,
+      BC: BCafeTime,
+      BP: BPlateTime,
+      EP: EpicuriaTime
+  }
+
+  return AllTime;
 }
 */
 
 // RENDERING FUNCTION DEFINITINOS
 function Square(props) {
-    return (
-      <button className="square" onClick={props.onClick}>
-        {props.value}
-      </button>
-    );
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
+
 
 export function RenderData() {
   const [name, setname] = useState("");
-  const [teststr, setteststr2] = useState("Click to load user input");
-  const [dataLoaded, setdataLoaded] = useState(false);
+  const [teststr, setteststr] = useState("");
+  const [dataLoaded, setdataLoaded] = useState(false);  // true after one load
   const [BPlateInfo, setBPlateInfo] = useState("");
   const [AllTime, setAllTime] = useState("");
-  const [BCTime, setBCTime] = useState({level: "", percentage: 0});
-  const [BPTime, setBPTime] = useState({level: "", percentage: 0});
-  const [DNTime, setDNTime] = useState({level: "", percentage: 0});
-  const [EPTime, setEPTime] = useState({level: "", percentage: 0});
+  const [BCTime, setBCTime] = useState("");
+  const [BPTime, setBPTime] = useState("");
+  const [DNTime, setDNTime] = useState("");
+  const [EPTime, setEPTime] = useState("");
 
   function NameChange(e) {
     setname(e.target.value);
-    setteststr2(name);
+    setteststr(name);
   }
 
   function loadData() {
@@ -105,40 +149,42 @@ export function RenderData() {
         percentage: 5
       };
       let AllTimeData = {
-        DN: DeNeveTime,
-        BC: BCafeTime,
-        BP: BPlateTime,
-        EP: EpicuriaTime
+        DN: DeNeveTime.level,
+        BC: BCafeTime.level,
+        BP: BPlateTime.level,
+        EP: EpicuriaTime.level
       }
       setAllTime(AllTimeData);
-      setBCTime(AllTimeData.BC)
-      setBPTime(AllTimeData.BP)
-      setDNTime(AllTimeData.DN)
-      setEPTime(AllTimeData.EP)
+      setBCTime("Bruin Café is " + AllTimeData.BC)
+      setBPTime("Bruin Plate is " + AllTimeData.BP)
+      setDNTime("DeNeve is " + AllTimeData.DN)
+      setEPTime("Epicuria is " + AllTimeData.EP)
       setdataLoaded(true);
     }
     console.log(AllTime);
   }
   
-// Click on first box to display all wait times
+// Click on first box to display all capacity data/wait times
 function renderSquares() {
   return (
     <dir>
+      
     <Square 
-      value = {"Bruin Café is " + BCTime.level}
+      value = {BCTime}
       onClick={() => loadData()}
     />
     <dir>
     <Square 
-      value = {"Bruin Plate is " + BPTime.level}
+      value = {BPTime}
     />
     <Square 
-      value = {"DeNeve is " + DNTime.level}
+      value = {DNTime}
     />
     <Square 
-      value = {"Epicuria is " + EPTime.level}
+      value = {EPTime}
     />
     </dir>
+
     </dir>
   );
 }
@@ -151,7 +197,8 @@ function renderInput() {
   );
 }
 
-return (
+  // Render all time data
+  return (
   <div>
     <input 
       value = {name}
@@ -162,33 +209,5 @@ return (
     </div>
     
   </div>
-)
+  )
 }
-
-
-
-
-
-// ButtonGroup formatting
-export const ButtonGroup = ({ buttons, doSomethingAfterClick }) => {
-  const [clickedId, setClickedId] = useState(-1);
-
-  const handleClick = (event, id) => {
-    setClickedId(id);
-  };
-
-  return (
-    <>
-      {buttons.map((buttonLabel, i) => (
-        <button
-          key={i}
-          name={buttonLabel}
-          onClick={(event) => handleClick(event, i)}
-          className={i === clickedId ? "customButton active" : "customButton"}
-        >
-          {buttonLabel}
-        </button>
-      ))}
-    </>
-  );
-};
