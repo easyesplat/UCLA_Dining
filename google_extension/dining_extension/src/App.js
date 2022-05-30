@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom/client'
 import "./css/App.css";
 import "./css/body_style.css";
 import "./css/header_style.css";
-//import { Link, animateScroll as scroll } from "react-scroll";
 
 import {ButtonGroup, RenderData} from "./renderFuncs/renderData";
 import {UserInput} from "./renderFuncs/userInput";
-//import { Link, animateScroll as scroll } from "react-scroll";
 
 
 // ----------------- Functions for main page rendering --------------------
