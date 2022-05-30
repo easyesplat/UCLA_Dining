@@ -5,6 +5,7 @@ import {
 	View,
 	FlatList,
 	SafeAreaView,
+	Image, 
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ExternalLink, SmallHeart } from "../assets/icons/icons";
@@ -59,37 +60,66 @@ const Item = ({ name, diningHall, link, time, itemLiked, area }) => {
 
 // the filter
 const List = (props) => {
-	const renderItem = ({ item }) => {
+	let listData = [];
+	const splitText = props.searchPhrase.split(" ");
+	let phrase = props.searchPhrase.toUpperCase().trim().replace(/\s/g, "");
 
-		let phrase = props.searchPhrase.toUpperCase().trim().replace(/\s/g, "");
-		// when no input, show none
-		if (props.searchPhrase === "") {
-			return <></>
-		}
-
+	for (let x in props.data) {
+		let item = props.data[x];
 		let condensedString = (item.itemName.toUpperCase() + item.diningHall.toUpperCase() + item.area.toUpperCase() + item.time.toUpperCase()).trim().replace(/\s/g, "");
-
-		// filter of the name
+		let all = true;
+		for (let i in splitText) {
+			//ignorable words
+			if (splitText[i] === "for" || splitText[i] === "at") {
+				continue; 
+			}
+			if (!condensedString.includes(splitText[i].toUpperCase().trim().replace(/\s/g, ""))) {
+				all = false; 
+				break; 
+			}
+		}
+		if (all) {
+			listData.push(props.data[x]);
+			continue;
+		}
 		if (item.itemName.toUpperCase().includes(phrase)) {
-			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
+			listData.push(props.data[x]);
+			continue; 
 		}
-		// filter of the dining hall
 		if (item.diningHall.toUpperCase().includes(phrase)) {
-			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
+			listData.push(props.data[x]);
+			continue; 
 		}
-		//Area
 		if (item.area.toUpperCase().includes(phrase)) {
-			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
+			listData.push(props.data[x]);
+			continue; 
 		}
-		//meal Period
 		if (item.time.toUpperCase().includes(phrase)) {
-			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
+			listData.push(props.data[x]);
+			continue; 
 		}
-		//condensedString
 		if (condensedString.includes(phrase)) {
-			return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
+			listData.push(props.data[x]);
+			continue; 
 		}
+	}
 
+
+	if (props.searchPhrase === "") {
+		return <Text style={{ fontFamily: "publica-sans-l", width: "100%", textAlign: 'center', paddingTop: 30, fontSize: 16, color: "grey"}}>Type something to start searching{"\n"}Try "Harvest lunch"</Text>
+	}
+
+	if (listData.length === 0) {
+		return (
+			<View style={{marginTop: 30}}>
+				<Image style={{ width: 100, height: 100, alignSelf: "center" }} source={require("../assets/animojis/supriseBear.png")} />
+				<Text style={{ fontFamily: "publica-sans-l", width: "100%", textAlign: 'center', fontSize: 16, color: "grey"}}>Oh no! Looks like nothing matched your search</Text>
+			</View>
+		);
+	}
+
+	const renderItem = ({ item }) => {
+		return <Item name={item.itemName} diningHall={item.diningHall} area={item.area} link={item.link} time={item.time} itemLiked={item.liked} />;
 	};
 
 	return (
@@ -101,7 +131,7 @@ const List = (props) => {
 			>
 				<View>
 					<FlatList
-						data={props.data}
+						data={listData}
 						renderItem={renderItem}
 						keyExtractor={(item) => item.id}
 						style={{ marginHorizontal: -20, paddingHorizontal: 20, paddingTop: 20, paddingBottom: 200 }}

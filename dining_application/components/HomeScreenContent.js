@@ -15,6 +15,8 @@ import { auth, db } from '../Core/Config';
 import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
 import * as Haptics from 'expo-haptics';
+import diningLocationInformation from "../Core/findNearest"
+import LocationComponent from "./LocationComponent"
 
 let hours = new Date().getHours();
 
@@ -68,6 +70,8 @@ function HomeScreenContent() {
         greeting = "Night";
     }
 
+    console.log(diningLocationInformation(34.073708263616695, -118.44982356793035))
+//34.072321369903726, -118.45315185458992
     signOutUser = async () => {
         try {
             await signOut(auth);
@@ -115,10 +119,11 @@ function HomeScreenContent() {
                     </View>
                 </View>
                 <ActiveDiningHalls/>
+                <LocationComponent/>
                 <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <GreenHeart style={{ marginRight: 10 }} />
-                        <Text style={{ fontFamily: "publica-sans-s", fontSize: 15, flex: 1, flexWrap: 'wrap', marginRight: 15, }} >Take your COVID-19 clearance survey and protect others</Text>
+                        <Text style={{ fontFamily: "publica-sans-s", fontSize: 16, flex: 1, flexWrap: 'wrap', marginRight: 15, }} >Take your COVID-19 clearance survey and protect others</Text>
                     </View>
                     <SimpleButton style={{ alignSelf: "flex-end", marginTop: 10, }} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync} />
                 </Block>

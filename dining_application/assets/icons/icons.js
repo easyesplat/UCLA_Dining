@@ -1,5 +1,5 @@
 import * as React from "react"
-import Svg, { Circle, Path } from "react-native-svg"
+import Svg, { Circle, Path, Defs, LinearGradient, Stop } from "react-native-svg"
 
 const SignOut = (props) => (
     <Svg
@@ -336,5 +336,56 @@ const Search = (props) => (
     </Svg>
 )
 
+const MapIcon = (props) => (
+    <Svg
+        width={43}
+        height={43}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Circle cx={21.5} cy={21.5} r={21.5} fill="url(#a)" />
+        <Path
+            d="M10 16v16l7-4 8 4 7-4V12l-7 4-8-4-7 4Z"
+            fill="url(#b)"
+            stroke="#fff"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <Path
+            d="M17 12v16M25 16v16"
+            stroke="#fff"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <Defs>
+            <LinearGradient
+                id="a"
+                x1={5.5}
+                y1={37}
+                x2={57.5}
+                y2={1}
+                gradientUnits="userSpaceOnUse"
+            >
+                <Stop stopColor="#3778F5" />
+                <Stop offset={1} stopColor="#32F480" />
+            </LinearGradient>
+            <LinearGradient
+                id="b"
+                x1={12.814}
+                y1={29.209}
+                x2={37.724}
+                y2={10.239}
+                gradientUnits="userSpaceOnUse"
+            >
+                <Stop stopColor="#3778F5" />
+                <Stop offset={1} stopColor="#32F480" />
+            </LinearGradient>
+        </Defs>
+    </Svg>
+)
 
-export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info, X, SmallHeart, VegetarianIcon, VeganIcon, HalalIcon, LikedIcon, ExternalLink, GreenHeart, BigLikedIcon, TabLikedIcon, Search }; 
+
+export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info, X, SmallHeart, VegetarianIcon, VeganIcon, HalalIcon, LikedIcon, ExternalLink, GreenHeart, BigLikedIcon, TabLikedIcon, Search, MapIcon }; 

@@ -100,8 +100,8 @@ const SearchComponent = () => {
 function Search() {
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
-            <Gradient style={styles.gradientPosition} color1="#2774AE" color2="#FFD100" />
-            <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer, { flex: 1 }]}></BlurView>
+            {/* <Gradient style={styles.gradientPosition} color1="#2774AE" color2="#FFD100" />
+            <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer, { flex: 1 }]}></BlurView> */}
             <SearchComponent />
         </View>
     )

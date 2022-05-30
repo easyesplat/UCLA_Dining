@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStackNavigator } from './StackNavigator';
 import { Food, PersonFill, Feed, TabLikedIcon } from './assets/icons/icons'; 
 import LikedItems from './screens/LikedItems';
-import LocationPage from './screens/Location';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +20,7 @@ const TabNavigator = () => {
                     <TabLikedIcon color={tabInfo.focused ? "#007AFF" : "rgba(60, 60, 67, 0.60)"}/>
                 )
             }}}/>
-            <Tab.Screen name="Feed" component={LocationPage} options={{tabBarActiveTintColor: "#007AFF", tabBarIcon: (tabInfo) => { 
+            <Tab.Screen name="Feed" component={LikedItems} options={{tabBarActiveTintColor: "#007AFF", tabBarIcon: (tabInfo) => { 
                 return (
                     <Feed color={tabInfo.focused ? "#007AFF" : "rgba(60, 60, 67, 0.60)"}/>
                 )
