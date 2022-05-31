@@ -48,7 +48,7 @@ function App() {
             </div>
         </div>
         <p> <br></br> <br></br> </p>
-        <div style={bodyStyles}>
+        <div>
           <p> Click 'Home' to refresh page & reload data</p>
           <p> Click on the first box to display realtime capacity data:</p>
           <p> We could show wait times on the back of the flip cards </p>
