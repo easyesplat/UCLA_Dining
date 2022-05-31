@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import Gradient from '../assets/gradient.js'
 import { BlurView } from 'expo-blur';
 import React, { useEffect, useState } from 'react'
@@ -10,10 +10,10 @@ import readAllItems from "../Core/allItemsDatabse"
 import { getDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../Core/Config';
 import { onAuthStateChanged } from "firebase/auth";
-import AppLoading from 'expo-app-loading';
 import List from "../components/List";
 import SearchBar from "../components/SearchBar";
 import { useFonts } from 'expo-font';
+import Loading from '../components/loading.js';
 
 const SearchComponent = () => {
     const [menuMap, setMenuMap] = useState(null);
@@ -53,10 +53,10 @@ const SearchComponent = () => {
         return null;
     }
 
-    if (initializing || userDoc === null) return <AppLoading />;
+    if (initializing || userDoc === null) return <Loading/>;
 
     if (menuMap == null || userDoc == null) {
-        return <AppLoading />;
+        return <Loading/> 
     }
 
     let likedItemsList = [];

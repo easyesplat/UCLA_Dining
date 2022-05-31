@@ -70,8 +70,7 @@ function HomeScreenContent() {
         greeting = "Night";
     }
 
-    console.log(diningLocationInformation(34.073708263616695, -118.44982356793035))
-//34.072321369903726, -118.45315185458992
+    
     signOutUser = async () => {
         try {
             await signOut(auth);
@@ -119,7 +118,6 @@ function HomeScreenContent() {
                     </View>
                 </View>
                 <ActiveDiningHalls/>
-                <LocationComponent/>
                 <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <GreenHeart style={{ marginRight: 10 }} />

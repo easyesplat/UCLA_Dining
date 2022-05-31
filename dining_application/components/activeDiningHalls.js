@@ -11,6 +11,7 @@ import * as Haptics from 'expo-haptics';
 //TODO: Uncomment:
 import readTimes from "../Core/timeDatabase";
 import AppLoading from 'expo-app-loading';
+import LocationComponent from './LocationComponent';
 
 function ActiveDiningHalls(props) {
     //TODO: Uncomment:
@@ -18,7 +19,7 @@ function ActiveDiningHalls(props) {
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    hours = 12;
+    // hours = 12;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
@@ -114,6 +115,8 @@ function ActiveDiningHalls(props) {
 
     let renderDiningHalls = [];
     let sortedData = DATA.slice();
+    let open = []; 
+
     sortedData.sort(function (a, b) {
         return a.waitTime - b.waitTime;
     });
@@ -124,6 +127,7 @@ function ActiveDiningHalls(props) {
                 navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             }} />);
+            open.push(sortedData[i].name); 
         }
     }
 
@@ -140,6 +144,7 @@ function ActiveDiningHalls(props) {
                     navigation.navigate("All Dining Halls", { /*data: timeMap*/ });
                     }} />
             </View>
+            <LocationComponent open={open}/> 
         </View>
     );
 }

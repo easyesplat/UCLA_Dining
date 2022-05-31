@@ -17,15 +17,19 @@ function findDistance(lat1, lon1, lat2, lon2) {
     return d; 
 }
 
-export default function diningLocationInformation(userLat, userLong) {
+export default function diningLocationInformation(userLat, userLong, openDiningHall) {
     let minDistance = 400; 
     let closestDiningHall = ""; 
     let closeEnoughForSurvey = false; 
     let distances = []; 
 
     for (let i in LOCATION_DATA) {
+        if (!openDiningHall.includes(LOCATION_DATA[i].name)) {
+            continue; 
+        }
+
         let distance = findDistance(userLat, userLong, LOCATION_DATA[i].latitude, LOCATION_DATA[i].longitude);
-        // console.log(distance); 
+
         if (distance < minDistance) {
             minDistance = distance; 
             closestDiningHall = LOCATION_DATA[i].name;

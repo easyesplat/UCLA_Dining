@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Animated } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -6,13 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { useRoute } from "@react-navigation/native"
 import DiningLogo from '../assets/icons/diningLogo';
-import AppLoading from 'expo-app-loading';
 import readMenus from '../Core/menuDatabase';
 import { MenuItem, MenuHeader, MenuBlock } from '../components/menuItem';
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from '../Core/Config';
 import AtAGlanceItem from '../components/atAGlanceItem';
+import Loading from '../components/loading';
 
 function DiningHall() {
     const routes = useRoute();
@@ -56,10 +56,10 @@ function DiningHall() {
         return subscriber; // unsubscribe on unmount
     }, []);
 
-    if (initializing || userDoc === null) return <AppLoading />;
+    if (initializing || userDoc === null) return <Loading/>;
 
     if (menuMap == null || userDoc == null) {
-        return <AppLoading />;
+        return <Loading/>;
     }
 
     if (!loaded) {

@@ -10,7 +10,7 @@ import readAllItems from "../Core/allItemsDatabse"
 import { getDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../Core/Config';
 import { onAuthStateChanged } from "firebase/auth";
-import AppLoading from 'expo-app-loading';
+import Loading from '../components/loading.js';
 
 const LikedItemsComponent = () => {
     const [menuMap, setMenuMap] = useState(null);
@@ -39,10 +39,10 @@ const LikedItemsComponent = () => {
         return subscriber; // unsubscribe on unmount
     }, []);
 
-    if (initializing || userDoc === null) return <AppLoading />;
+    if (initializing || userDoc === null) return <Loading/>;
 
     if (menuMap == null || userDoc == null) {
-        return <AppLoading />;
+        return <Loading/>;
     }
 
     let likedItemsList = [];
@@ -54,7 +54,6 @@ const LikedItemsComponent = () => {
         for (let [key1, value1] of value) {
             for (let [key2, value2] of value1) {
                 for (let item in value2["food"]) {
-                    // likedItemsList.push({ diningHall: key, time: key1, area: key2, itemName: item });
                     if (userDoc.likedItems.includes(item)) {
                         likedItemsList.push({ id: count.toString(), diningHall: key, time: key1, area: key2, itemName: item });
                     }
