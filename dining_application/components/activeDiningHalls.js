@@ -19,7 +19,7 @@ function ActiveDiningHalls(props) {
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    // hours = 12;
+    hours = 9;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
@@ -27,11 +27,11 @@ function ActiveDiningHalls(props) {
     useEffect(() => {
         readTimes().then(result => {
             setTimeMap(result);
-        }).catch(error => console.log('error', error)); 
+        }).catch(error => console.log('error', error));
     }, []);
 
     if (timeMap == null) {
-        return <AppLoading/>;
+        return <AppLoading />;
     }
 
 
@@ -110,12 +110,12 @@ function ActiveDiningHalls(props) {
     }
 
     //TODO: Uncomment: Get open dining halls
-    let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants; 
-    
+    let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants;
+
 
     let renderDiningHalls = [];
     let sortedData = DATA.slice();
-    let open = []; 
+    let open = [];
 
     sortedData.sort(function (a, b) {
         return a.waitTime - b.waitTime;
@@ -127,7 +127,7 @@ function ActiveDiningHalls(props) {
                 navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             }} />);
-            open.push(sortedData[i].name); 
+            open.push(sortedData[i].name);
         }
     }
 
@@ -142,9 +142,9 @@ function ActiveDiningHalls(props) {
                 <SimpleButton text="See all dining halls" onPress={() => {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                     navigation.navigate("All Dining Halls", { /*data: timeMap*/ });
-                    }} />
+                }} />
             </View>
-            <LocationComponent open={open}/> 
+            <LocationComponent open={open} />
         </View>
     );
 }

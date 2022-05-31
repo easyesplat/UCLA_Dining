@@ -15,8 +15,6 @@ import { auth, db } from '../Core/Config';
 import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
 import * as Haptics from 'expo-haptics';
-import diningLocationInformation from "../Core/findNearest"
-import LocationComponent from "./LocationComponent"
 
 let hours = new Date().getHours();
 
@@ -104,7 +102,10 @@ function HomeScreenContent() {
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Good {greeting},{'\n'}{userDoc.fname}</Text>
                     <View style={styles.iconRow}>
-                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate("Search")}>
+                        <TouchableOpacity style={styles.icon} onPress={() => {
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                            navigation.navigate("Search")
+                            }}>
                             <Search/>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.icon}>
