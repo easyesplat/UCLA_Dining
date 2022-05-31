@@ -106,7 +106,7 @@ const List = (props) => {
 
 
 	if (props.searchPhrase === "") {
-		return <Text style={{ fontFamily: "publica-sans-l", width: "100%", textAlign: 'center', paddingTop: 30, fontSize: 16, color: "grey"}}>Type something to start searching{"\n"}Try "Harvest lunch"</Text>
+		return <Text style={{ fontFamily: "publica-sans-l", width: "100%", textAlign: 'center', paddingTop: 30, fontSize: 16, color: "grey"}}>Type something to start searching{"\n"}Try "Pizza for lunch at Epicuria"</Text>
 	}
 
 	if (listData.length === 0) {

@@ -10,7 +10,6 @@ import WelcomeScreen from './screens/WelcomeScreen'
 import SignupScreen from './screens/SignupScreen';
 import Search from './screens/Search';
 
-
 const Stack = createNativeStackNavigator(); 
 
 const StackNavigator = () => {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import * as Location from "expo-location"
 import diningLocationInformation from '../Core/findNearest';
@@ -6,9 +6,18 @@ import AppLoading from 'expo-app-loading';
 import { MapIcon } from '../assets/icons/icons';
 import GradientText from './GradientText';
 import SimpleButton from './simpleButton';
+import * as Haptics from 'expo-haptics';
+import { useNavigation } from '@react-navigation/native';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { BlurView } from 'expo-blur';
+import RateDiningHall from './RateDiningHall';
 
-function LocationComponent() {
-    const [position, setPosition] = useState(null)
+
+function LocationComponent(props) {
+    const navigation = useNavigation();
+    const [position, setPosition] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+
 
     // Request permissions right after starting the app
     useEffect(() => {
@@ -38,8 +47,8 @@ function LocationComponent() {
         return <AppLoading />;
     }
 
-    const data = diningLocationInformation(position.latitude, position.longitude)
-    // const data = diningLocationInformation(34.07314134370782, -118.45212143862375)
+    const data = diningLocationInformation(position.latitude, position.longitude, props.open)
+    // const data = diningLocationInformation(34.07292685768086, -118.45000250420831, props.open)
     // console.log(data)
 
     let message = "Your nearest open dining hall is "
@@ -72,6 +81,28 @@ function LocationComponent() {
 
     return (
         <View style={styles.block}>
+            <GestureRecognizer
+                onSwipeDown={() => {
+                    setModalVisible(!modalVisible);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }}
+            >
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.5)", alignItems: "flex-start", justifyContent: "flex-start", borderRadius: 20, }]}>
+                        <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
+                        <RateDiningHall name={data.closest}/> 
+                    </View>
+                </Modal>
+            </GestureRecognizer>
+
+
             <View style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 15, marginHorizontal: 15 }}>
                 <MapIcon style={{ marginRight: 10 }} />
                 <View style={{ flexDirection: 'row', flex: 1, flexWrap: 'wrap', marginRight: 60 }}>
@@ -81,7 +112,11 @@ function LocationComponent() {
             </View>
             {
                 data.survey &&
-                <SimpleButton style={{ alignSelf: "flex-end", marginRight: 10, marginTop: 10 }} background="true" text={"Rate " + data.closest} />
+                <SimpleButton style={{ alignSelf: "flex-end", marginRight: 10, marginTop: 10 }} background="true" text={"Rate " + data.closest} onPress={ () => {
+                    //navigation.navigate("Rate Dining Hall", { name: data.closest }); 
+                    setModalVisible(!modalVisible);
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
+                }} />
             }
             {/* {<View style={{ width: "100%", backgroundColor: "#F0F2F5", height: 2, marginVertical: 20, alignSelf: 'center' }}></View>} */}
             <View style={{ 

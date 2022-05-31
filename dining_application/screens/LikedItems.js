@@ -1,16 +1,54 @@
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView, TouchableOpacity } from 'react-native'
 import Gradient from '../assets/gradient.js'
 import { BlurView } from 'expo-blur';
 import React, { useEffect, useState } from 'react'
 import { useRoute } from "@react-navigation/native"
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { LikedIcon } from '../assets/icons/icons.js';
+import { LikedIcon, ExternalLink } from '../assets/icons/icons.js';
 import readAllItems from "../Core/allItemsDatabse"
 import { getDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../Core/Config';
 import { onAuthStateChanged } from "firebase/auth";
-import AppLoading from 'expo-app-loading';
+import Loading from '../components/loading.js';
+import * as WebBrowser from 'expo-web-browser';
+import * as Haptics from 'expo-haptics';
+
+const Item = ({ name, diningHall, link, time, itemLiked, area }) => {
+
+    const [result, setResult] = useState(null);
+
+    const _handlePressButtonAsync = async () => {
+        let result = await WebBrowser.openBrowserAsync(link);
+        setResult(result);
+    };
+
+    if (time === "late_night") {
+        time = "late night";
+    }
+
+    return (
+        <TouchableOpacity
+            onPress={() => {
+                _handlePressButtonAsync();
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            }}
+        >
+            <View style={styles.item}>
+                <View style={{ maxWidth: 200 }}>
+                    <Text style={styles.title}>{name}</Text>
+                    <Text style={styles.subHeading}>at <Text style={styles.important}>{area}</Text> at <Text style={styles.important}>{diningHall}</Text> for <Text style={styles.important}>{time}</Text></Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                    <View style={{ marginLeft: 10, }} hitSlop={{ top: 20, left: 20, bottom: 20, right: 20 }}>
+                        <ExternalLink />
+                    </View>
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+
+
+};
 
 const LikedItemsComponent = () => {
     const [menuMap, setMenuMap] = useState(null);
@@ -39,13 +77,14 @@ const LikedItemsComponent = () => {
         return subscriber; // unsubscribe on unmount
     }, []);
 
-    if (initializing || userDoc === null) return <AppLoading />;
+    if (initializing || userDoc === null) return <Loading />;
 
     if (menuMap == null || userDoc == null) {
-        return <AppLoading />;
+        return <Loading />;
     }
 
     let likedItemsList = [];
+    let likedItemsItems = [];
 
     let count = 0;
 
@@ -54,9 +93,11 @@ const LikedItemsComponent = () => {
         for (let [key1, value1] of value) {
             for (let [key2, value2] of value1) {
                 for (let item in value2["food"]) {
-                    // likedItemsList.push({ diningHall: key, time: key1, area: key2, itemName: item });
                     if (userDoc.likedItems.includes(item)) {
-                        likedItemsList.push({ id: count.toString(), diningHall: key, time: key1, area: key2, itemName: item });
+                        likedItemsList.push({ diningHall: key, time: key1, area: key2, itemName: item, link: value2["food"][item][0] });
+                        likedItemsItems.push(
+                            <Item name={item} diningHall={key} area={key2} link={value2["food"][item][0]} time={key1} itemLiked={false} />
+                        )
                     }
                     count++;
                 }
@@ -75,11 +116,7 @@ const LikedItemsComponent = () => {
                     <Text style={styles.headerText}>Your liked items</Text>
                     <LikedIcon />
                 </View>
-                {/* <FlatList
-                    data={likedItemsList}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                /> */}
+                {likedItemsItems}
             </ScrollView>
         </SafeAreaView>
     )
@@ -135,6 +172,31 @@ const styles = StyleSheet.create({
     list: {
         overflow: "visible"
     },
+    item: {
+		marginBottom: 15,
+		paddingHorizontal: 20,
+		paddingVertical: 20,
+		borderRadius: 15,
+		shadowColor: 'rgba(100,100,110, 0.18)', // IOS
+		shadowOpacity: 1, // IOS
+		shadowRadius: 29, //IOS
+		backgroundColor: "white",
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: "space-between",
+	},
+	title: {
+		fontSize: 20,
+		marginBottom: 3,
+		fontFamily: "publica-sans-m"
+	},
+	subHeading: {
+		fontSize: 16,
+		fontFamily: "publica-sans-l",
+	},
+	important: {
+		fontFamily: "publica-sans-s",
+	},
 })
 
 export default LikedItems
