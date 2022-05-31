@@ -15,8 +15,6 @@ import { auth, db } from '../Core/Config';
 import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
 import * as Haptics from 'expo-haptics';
-import diningLocationInformation from "../Core/findNearest"
-import LocationComponent from "./LocationComponent"
 
 let hours = new Date().getHours();
 
@@ -70,8 +68,7 @@ function HomeScreenContent() {
         greeting = "Night";
     }
 
-    console.log(diningLocationInformation(34.073708263616695, -118.44982356793035))
-//34.072321369903726, -118.45315185458992
+    
     signOutUser = async () => {
         try {
             await signOut(auth);
@@ -105,7 +102,10 @@ function HomeScreenContent() {
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Good {greeting},{'\n'}{userDoc.fname}</Text>
                     <View style={styles.iconRow}>
-                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate("Search")}>
+                        <TouchableOpacity style={styles.icon} onPress={() => {
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                            navigation.navigate("Search")
+                            }}>
                             <Search/>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.icon}>
@@ -119,7 +119,6 @@ function HomeScreenContent() {
                     </View>
                 </View>
                 <ActiveDiningHalls/>
-                <LocationComponent/>
                 <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <GreenHeart style={{ marginRight: 10 }} />

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Modal } from 'react-native'
 import React, { useState } from 'react'
 import { Heart, Info, X, SmallHeart, ExternalLink } from '../assets/icons/icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
