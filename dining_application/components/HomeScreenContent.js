@@ -3,19 +3,20 @@ import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } fr
 import Block from './block';
 import Refresh from '../assets/icons/refresh';
 import SimpleButton from './simpleButton';
-import BellNotification from '../assets/icons/bell_notification';
 import MealPlan from './mealPlan';
 import ActiveDiningHalls from './activeDiningHalls';
 import { useFonts } from 'expo-font';
 import FoodTrucks from './foodTrucks';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
-import { GreenHeart, SignOut } from '../assets/icons/icons';
+import { GreenHeart, SignOut, Search } from '../assets/icons/icons';
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from '../Core/Config';
 import { doc, getDoc } from "firebase/firestore";
 import AppLoading from 'expo-app-loading';
 import * as Haptics from 'expo-haptics';
+import diningLocationInformation from "../Core/findNearest"
+import LocationComponent from "./LocationComponent"
 
 let hours = new Date().getHours();
 
@@ -69,6 +70,8 @@ function HomeScreenContent() {
         greeting = "Night";
     }
 
+    console.log(diningLocationInformation(34.073708263616695, -118.44982356793035))
+//34.072321369903726, -118.45315185458992
     signOutUser = async () => {
         try {
             await signOut(auth);
@@ -102,13 +105,13 @@ function HomeScreenContent() {
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Good {greeting},{'\n'}{userDoc.fname}</Text>
                     <View style={styles.iconRow}>
+                        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate("Search")}>
+                            <Search/>
+                        </TouchableOpacity>
                         <TouchableOpacity style={styles.icon}>
-                            <Refresh />
+                            <Refresh/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.icon, { position: "relative", bottom: 5 }]}>
-                            <BellNotification />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.icon]}>
+                        <TouchableOpacity style={styles.icon}>
                             <SignOut onPress={() => {
                                 signOutUser();
                             }} />
@@ -116,10 +119,11 @@ function HomeScreenContent() {
                     </View>
                 </View>
                 <ActiveDiningHalls/>
+                <LocationComponent/>
                 <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <GreenHeart style={{ marginRight: 10 }} />
-                        <Text style={{ fontFamily: "publica-sans-s", fontSize: 15, flex: 1, flexWrap: 'wrap', marginRight: 15, }} >Take your COVID-19 clearance survey and protect others</Text>
+                        <Text style={{ fontFamily: "publica-sans-s", fontSize: 16, flex: 1, flexWrap: 'wrap', marginRight: 15, }} >Take your COVID-19 clearance survey and protect others</Text>
                     </View>
                     <SimpleButton style={{ alignSelf: "flex-end", marginTop: 10, }} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync} />
                 </Block>

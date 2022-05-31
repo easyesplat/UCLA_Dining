@@ -20,7 +20,7 @@ const TabNavigator = () => {
                     <TabLikedIcon color={tabInfo.focused ? "#007AFF" : "rgba(60, 60, 67, 0.60)"}/>
                 )
             }}}/>
-            <Tab.Screen name="Feed" component={AllDiningHalls} options={{tabBarActiveTintColor: "#007AFF", tabBarIcon: (tabInfo) => { 
+            <Tab.Screen name="Feed" component={LikedItems} options={{tabBarActiveTintColor: "#007AFF", tabBarIcon: (tabInfo) => { 
                 return (
                     <Feed color={tabInfo.focused ? "#007AFF" : "rgba(60, 60, 67, 0.60)"}/>
                 )

@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import TabNavigator from './TabNavigator';
 import WelcomeScreen from './screens/WelcomeScreen'
 import SignupScreen from './screens/SignupScreen';
+import Search from './screens/Search';
 
 
 const Stack = createNativeStackNavigator(); 
@@ -32,6 +33,7 @@ const HomeStackNavigator = () => {
         <HomeStack.Navigator screenOptions={{headerShown: false}}>
             <HomeStack.Group>
                 <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+                <Stack.Screen name="Search" component={Search}/>
                 <Stack.Screen name="Dining Halls" component={DiningHall}/>
                 <Stack.Screen name="All Dining Halls" component={AllDiningHalls}/>
             </HomeStack.Group>

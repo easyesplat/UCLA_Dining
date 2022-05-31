@@ -1,5 +1,5 @@
 import * as React from "react"
-import Svg, { Circle, Path } from "react-native-svg"
+import Svg, { Circle, Path, Defs, LinearGradient, Stop } from "react-native-svg"
 
 const SignOut = (props) => (
     <Svg
@@ -266,26 +266,6 @@ const BigLikedIcon = (props) => (
     </Svg>
 )
 
-// const TabLikedIcon = (props) => (
-//     <Svg
-//         width={24}
-//         height={24}
-//         fill="none"
-//         xmlns="http://www.w3.org/2000/svg"
-//         {...props}
-//     >
-//         <Circle cx={12} cy={12} r={12} fill={props.color} />
-//         <Path
-//             d="M15.383 8.619a2.104 2.104 0 0 0-2.294-.458 2.104 2.104 0 0 0-.683.458L12 9.026l-.406-.407a2.102 2.102 0 0 0-2.977 0 2.116 2.116 0 0 0 0 2.987l.405.407L12 15l2.977-2.987.406-.407a2.112 2.112 0 0 0 .457-2.302 2.113 2.113 0 0 0-.457-.685Z"
-//             fill="#fff"
-//             stroke="#fff"
-//             strokeWidth={2}
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//         />
-//     </Svg>
-// )
-
 const TabLikedIcon = (props) => (
     <Svg
         width={26}
@@ -338,5 +318,74 @@ const GreenHeart = (props) => (
     </Svg>
 )
 
+const Search = (props) => (
+    <Svg
+        width={24}
+        height={24}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Path
+            d="M10.778 20.556c5.4 0 9.778-4.378 9.778-9.778S16.178 1 10.778 1 1 5.378 1 10.778s4.378 9.778 9.778 9.778ZM23 23l-5.317-5.317"
+            stroke="#000"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </Svg>
+)
 
-export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info, X, SmallHeart, VegetarianIcon, VeganIcon, HalalIcon, LikedIcon, ExternalLink, GreenHeart, BigLikedIcon, TabLikedIcon }; 
+const MapIcon = (props) => (
+    <Svg
+        width={43}
+        height={43}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <Circle cx={21.5} cy={21.5} r={21.5} fill="url(#a)" />
+        <Path
+            d="M10 16v16l7-4 8 4 7-4V12l-7 4-8-4-7 4Z"
+            fill="url(#b)"
+            stroke="#fff"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <Path
+            d="M17 12v16M25 16v16"
+            stroke="#fff"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <Defs>
+            <LinearGradient
+                id="a"
+                x1={5.5}
+                y1={37}
+                x2={57.5}
+                y2={1}
+                gradientUnits="userSpaceOnUse"
+            >
+                <Stop stopColor="#3778F5" />
+                <Stop offset={1} stopColor="#32F480" />
+            </LinearGradient>
+            <LinearGradient
+                id="b"
+                x1={12.814}
+                y1={29.209}
+                x2={37.724}
+                y2={10.239}
+                gradientUnits="userSpaceOnUse"
+            >
+                <Stop stopColor="#3778F5" />
+                <Stop offset={1} stopColor="#32F480" />
+            </LinearGradient>
+        </Defs>
+    </Svg>
+)
+
+
+export { SignOut, PersonFill, Food, Feed, Bell, Heart, Info, X, SmallHeart, VegetarianIcon, VeganIcon, HalalIcon, LikedIcon, ExternalLink, GreenHeart, BigLikedIcon, TabLikedIcon, Search, MapIcon }; 

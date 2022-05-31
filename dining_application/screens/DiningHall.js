@@ -28,13 +28,13 @@ function DiningHall() {
         'publica-sans-l': require('dining_application/assets/fonts/PublicaSans-Light.otf'),
     });
 
-    let menuSupported = true; 
-    let dietaryRestriction = true; 
+    let menuSupported = true;
+    let dietaryRestriction = true;
 
     if (routes.params.name === "The Study at Hedrick") {
-        menuSupported = false; 
+        menuSupported = false;
     } else if (routes.params.name === "Bruin Café" || routes.params.name === "The Drey") {
-        dietaryRestriction = false; 
+        dietaryRestriction = false;
     }
 
     function authStateChanged(user) {
@@ -66,43 +66,40 @@ function DiningHall() {
         return null;
     }
 
-    const menu = []; 
-    let vegetarianItems = 0; 
-    let veganItems = 0; 
-    let halalItems = 0; 
+    const menu = [];
+    let vegetarianItems = 0;
+    let veganItems = 0;
+    let halalItems = 0;
     let likedItems = 0;
-    
-    let vegetarianItemsList = []; 
+
+    let vegetarianItemsList = [];
     let veganItemsList = [];
     let halalItemsList = [];
     let likedItemsList = [];
 
-    for(let [key, value] of menuMap.get(routes.params.period))
-    {
-        menu.push(<MenuHeader header={key}/>)
-        const subMenu = []; 
-        for(let item in value["food"])
-        {
-            let alreadyLiked = false; 
-            if(userDoc.likedItems.includes(item)) {
+    for (let [key, value] of menuMap.get(routes.params.period)) {
+        menu.push(<MenuHeader header={key} />)
+        const subMenu = [];
+        for (let item in value["food"]) {
+            let alreadyLiked = false;
+            if (userDoc.likedItems.includes(item)) {
                 alreadyLiked = true;
-                likedItems++;  
-                likedItemsList.push({parent: key, itemName: item, liked: null}); 
+                likedItems++;
+                likedItemsList.push({ parent: key, itemName: item, liked: null });
             }
-            for(let x in (value["food"])[item])
-            {
+            for (let x in (value["food"])[item]) {
                 if (value["food"][item][x] == " Vegetarian Menu Option") {
-                    vegetarianItems++; 
-                    vegetarianItemsList.push({parent: key, itemName: item, liked: alreadyLiked}); 
+                    vegetarianItems++;
+                    vegetarianItemsList.push({ parent: key, itemName: item, liked: alreadyLiked });
                 } else if (value["food"][item][x] == " Vegan Menu Option") {
-                    veganItems++; 
-                    veganItemsList.push({parent: key, itemName: item, liked: alreadyLiked}); 
+                    veganItems++;
+                    veganItemsList.push({ parent: key, itemName: item, liked: alreadyLiked });
                 } else if (value["food"][item][x] == " Halal Menu Option") {
-                    halalItems++; 
-                    halalItemsList.push({parent: key, itemName: item, liked: alreadyLiked}); 
+                    halalItems++;
+                    halalItemsList.push({ parent: key, itemName: item, liked: alreadyLiked });
                 }
             }
-            subMenu.push(<MenuItem itemName={item} liked={alreadyLiked} uid={user.uid} parent={key} information={(value["food"])[item]}/>)
+            subMenu.push(<MenuItem itemName={item} liked={alreadyLiked} uid={user.uid} parent={key} information={(value["food"])[item]} />)
         }
         menu.push(<MenuBlock>{subMenu}</MenuBlock>)
     }
@@ -115,8 +112,8 @@ function DiningHall() {
                         fontSize: 15,
                         lineHeight: 20,
                         fontFamily: "publica-sans-l",
-                        margin: 5, 
-                        marginBottom: 15, 
+                        margin: 5,
+                        marginBottom: 15,
                         textAlign: 'center',
                     }}>Looks like we don't support menus for this dining hall yet!</Text>
                 </MenuBlock>
@@ -125,9 +122,9 @@ function DiningHall() {
     }
 
 
-    let mealPeriod = routes.params.period; 
+    let mealPeriod = routes.params.period;
     if (routes.params.period === "late_night") {
-        mealPeriod = "late night"; 
+        mealPeriod = "late night";
     }
 
     return (
@@ -149,14 +146,14 @@ function DiningHall() {
                                 menuSupported &&
                                 <View style={styles.glanceView}>
                                     {
-                                        dietaryRestriction && 
+                                        dietaryRestriction &&
                                         <>
-                                            <AtAGlanceItem number={vegetarianItems} type="vegetarian" list={vegetarianItemsList}/>
-                                            <AtAGlanceItem number={veganItems} type="vegan" list={veganItemsList}/>
-                                            <AtAGlanceItem number={halalItems} type="halal" list={halalItemsList}/>
+                                            <AtAGlanceItem number={vegetarianItems} type="vegetarian" list={vegetarianItemsList} />
+                                            <AtAGlanceItem number={veganItems} type="vegan" list={veganItemsList} />
+                                            <AtAGlanceItem number={halalItems} type="halal" list={halalItemsList} />
                                         </>
                                     }
-                                    <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList}/>
+                                    <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList} />
                                 </View>
                             }
                         </View>
@@ -177,12 +174,12 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     mainHeading: {
-        paddingTop: 20, 
-        paddingHorizontal: 20, 
+        paddingTop: 20,
+        paddingHorizontal: 20,
         fontSize: 28,
         lineHeight: 36,
         fontFamily: "publica-sans-s",
-        marginBottom: 20, 
+        marginBottom: 20,
     },
     headerText: {
         fontFamily: 'sf-pro-sb',
@@ -212,7 +209,7 @@ const styles = StyleSheet.create({
         shadowRadius: 29, //IOS
         backgroundColor: "white",
         marginBottom: 20,
-    }, 
+    },
     glanceView: {
         flexDirection: 'row',
         justifyContent: 'space-between',

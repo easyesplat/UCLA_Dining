@@ -103,7 +103,7 @@ function MealPlan(props) {
             <Block style={{flexDirection: "column", alignItems: "flex-end"}}>
                 <View style={{flexDirection: "row", alignItems: "center", width: "100%", margin: 5}}>
                     <MealPlanIcon style={{marginRight: 10}} mealPlan={props.mealPlan + props.type}/>
-                    <Text style={{fontFamily: "publica-sans-s", fontSize: 15, flex: 1, flexWrap: 'wrap'}}>You should have <Text style={{color: "#005587"}} >{number}</Text> meal swipes remaining for the {word}</Text>
+                    <Text style={{fontFamily: "publica-sans-s", fontSize: 16, flex: 1, flexWrap: 'wrap'}}>You should have <Text style={{color: "#005587"}} >{number}</Text> meal swipes remaining for the {word}</Text>
                     <ChevronRight style={{marginRight: 10}}/>
                 </View>
             </Block>

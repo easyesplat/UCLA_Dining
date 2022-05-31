@@ -1,15 +1,3 @@
-// import { collection, getDocs, getDoc, doc } from "firebase/firestore";
-// import { db } from "./Config";
-
-// export default function readMenus() {
-//     const menuArray = []; 
-//     console.log("Hello"); 
-//     getDoc(doc(db, "Chicken", "Hello")).then((querySnapShot) => {
-//         console.log(querySnapShot.data()); 
-//     }).catch((e) => alert(e))
-//     return menuArray; 
-// }
-
 import { collection, getDoc, getDocs,  } from "firebase/firestore";
 import { db } from "./Config";
 

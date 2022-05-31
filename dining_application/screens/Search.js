@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, FlatList, ActivityIndicator } from 'react-native'
 import Gradient from '../assets/gradient.js'
 import { BlurView } from 'expo-blur';
 import React, { useEffect, useState } from 'react'
@@ -11,12 +11,17 @@ import { getDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../Core/Config';
 import { onAuthStateChanged } from "firebase/auth";
 import AppLoading from 'expo-app-loading';
+import List from "../components/List";
+import SearchBar from "../components/SearchBar";
+import { useFonts } from 'expo-font';
 
-const LikedItemsComponent = () => {
+const SearchComponent = () => {
     const [menuMap, setMenuMap] = useState(null);
     const [userDoc, setUserDoc] = useState(null);
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
+    const [searchPhrase, setSearchPhrase] = useState("");
+    const [clicked, setClicked] = useState(false);
     const routes = useRoute();
     const navigation = useNavigation();
 
@@ -39,6 +44,15 @@ const LikedItemsComponent = () => {
         return subscriber; // unsubscribe on unmount
     }, []);
 
+    const [loaded] = useFonts({
+        'publica-sans-m': require('dining_application/assets/fonts/PublicaSans-Medium.otf'),
+        'publica-sans-l': require('dining_application/assets/fonts/PublicaSans-Light.otf'),
+    });
+
+    if (!loaded) {
+        return null;
+    }
+
     if (initializing || userDoc === null) return <AppLoading />;
 
     if (menuMap == null || userDoc == null) {
@@ -46,53 +60,49 @@ const LikedItemsComponent = () => {
     }
 
     let likedItemsList = [];
-
     let count = 0;
-
-
     for (let [key, value] of menuMap) {
         for (let [key1, value1] of value) {
             for (let [key2, value2] of value1) {
                 for (let item in value2["food"]) {
-                    // likedItemsList.push({ diningHall: key, time: key1, area: key2, itemName: item });
+                    let ifLiked = false;
                     if (userDoc.likedItems.includes(item)) {
-                        likedItemsList.push({ id: count.toString(), diningHall: key, time: key1, area: key2, itemName: item });
+                        ifLiked = true;
                     }
+                    likedItemsList.push({ diningHall: key, time: key1, area: key2, itemName: item, liked: ifLiked, link: value2["food"][item][0] });
                     count++;
                 }
             }
         }
     }
 
-    console.log(likedItemsList);
-
 
 
     return (
-        <SafeAreaView>
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
-                <View style={styles.header}>
-                    <Text style={styles.headerText}>Your liked items</Text>
-                    <LikedIcon />
-                </View>
-                {/* <FlatList
-                    data={likedItemsList}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                /> */}
-            </ScrollView>
+        <SafeAreaView style={{ padding: 20, }}>
+            {!clicked && <Text style={styles.headerText}>Search today's menu</Text>}
+
+            <SearchBar
+                searchPhrase={searchPhrase}
+                setSearchPhrase={setSearchPhrase}
+                clicked={clicked}
+                setClicked={setClicked}
+            />
+            <List
+                searchPhrase={searchPhrase}
+                data={likedItemsList}
+                setClicked={setClicked}
+            />
         </SafeAreaView>
     )
 }
 
-function LikedItems() {
+function Search() {
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
-            {
-                <Gradient style={styles.gradientPosition} color1="#D24040" color2="#F5ABAB" />
-            }
-            <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer, { flex: 1 }]}></BlurView>
-            <LikedItemsComponent />
+            {/* <Gradient style={styles.gradientPosition} color1="#2774AE" color2="#FFD100" />
+            <BlurView intensity={90} style={[StyleSheet.absoluteFill, styles.blurContainer, { flex: 1 }]}></BlurView> */}
+            <SearchComponent />
         </View>
     )
 }
@@ -137,4 +147,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default LikedItems
+export default Search
