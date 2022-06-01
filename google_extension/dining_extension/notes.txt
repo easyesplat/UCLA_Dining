@@ -1,6 +1,7 @@
 
 To test the app/extension:
 - First run "npm install" in the dining_extension directory.
+- Run "npm install react-router-dom@5" for React web redirections.
 - After node modules are loaded, run "npm run build" in the dining_extension
 directory, which creates/updates the "build" folder.
 - In Chrome extension manager, "load unpacked" the "build" folder.

@@ -1,11 +1,12 @@
 import React from 'react';
 import '../css/flipcards.css';
+import {RenderData} from "../renderFuncs/renderTimeData";
 
 // Styles
 const bodyStyles = {
   background: "#CFEAF9",
   width: "100%",
-  height: "350px",
+  height: "400px",
   overflowX: "hidden"
 }
 
@@ -58,7 +59,7 @@ const subTitleStyles = {
   color: "#000000",
   position: "relative",
   top: "-75px",
-  left: "95px",
+  left: "100px",
   textAlign: "center",
   fontWeight: "100"
 };
@@ -83,11 +84,11 @@ const iconStyles = {
 }
 const cardBackStyles = {
   height: 60,
-  width: 180,
+  width: 170,
   position: "absolute",
   top: "0",
   bottom: "0",
-  left: "0",
+  left: "-10px",
   right: "0",
   margin: "auto",
   borderRadius: "10px",
@@ -181,18 +182,42 @@ class CardBack extends React.Component {
   constructor(props){
     super(props);
   }
-
   render(){
     return (
     <div>
       <div style={cardBackStyles}>
         <p> <br></br></p>
         <p> Current wait time: </p>
+        <RenderData />
+        {/*<a href={this.props.menu_url}
+          className="App-link"
+          target="_blank"
+          onClick = {() => {window.open("http://menu.dining.ucla.edu/Menus/BruinPlate/Today", "_blank") }}
+        rel="noopener noreferrer">Menu</a>*/}
       </div> 
     </div>
     )
   }
 }
+class BPCardBack extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
+    <div>
+      <div style={cardBackStyles}>
+        <p href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today"> Current wait time: </p>
+        <a href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
+          className="App-link"
+          target="_blank"
+          rel="noopener noreferrer">Menu</a>
+      </div> 
+    </div>
+    )
+  }
+}
+
 
 class Card extends React.Component {
    constructor(props){
@@ -201,7 +226,8 @@ class Card extends React.Component {
        title : "Bruin Café",
        subTitle: "Casual",
        bio: "",
-       direction: "forwards"
+       direction: "forwards",
+       menu_url: "http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
      }
    }
    componentWillMount(){
@@ -209,7 +235,8 @@ class Card extends React.Component {
      this.setState({
        title: "Bruin Plate",
        subTitle: "Healthy",
-       bio: ""
+       bio: "",
+       menu_url: "http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
      });
      } else if (this.props.type == "dn"){
        this.setState({
@@ -283,9 +310,14 @@ class Card extends React.Component {
       <div style={bodyStyles} className="body">
         <div className="flex">
            
-          <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")}  cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} targetId="navi" />
+          <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")}  
+            cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} 
+            targetId="navi"
+            onClick = {() => {console.log("hello")}}
+          />
            
-          <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")}  cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
+          <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")}  
+            cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
                      
         </div>
         <div className="flex">

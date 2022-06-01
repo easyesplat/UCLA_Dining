@@ -1,33 +1,15 @@
 import React, { useEffect, useState } from 'react'
+
 //import firebase from "firebase/compat/app";
 //import {firebaseConfig, firebaseInit} from '../firebase.config.js';
 //import "firebase/compat/firestore";
 //import { DataSnapshot, getDatabase, ref, child, get } from "firebase/database";
 
 // ------------- Initialize Firestore & Realtime DB data ----------------
-//const firebaseApp = firebase.initializeApp(firebaseInit);
-//let db = firebase.firestore();
-//let dbrt = ref(getDatabase(firebaseApp));
-
 /*
-function BPlateData() {
-  let BPlateInfo = {
-    breakfast: "",
-    lunch: "",
-    dinner: "",
-    late_night: ""
-  };
-
-  db.collection("time")
-		.get()
-		.then((querySnapshot) => {
-      let BPlateBreakfast = querySnapshot.docs[1].data().breakfast;
-      BPlateInfo.breakfast = BPlateBreakfast;      
-		});
-
-  return BPlateInfo;
-}
-
+const firebaseApp = firebase.initializeApp(firebaseInit);
+let db = firebase.firestore();
+let dbrt = ref(getDatabase(firebaseApp));
 
 function RT_DeNeveData() {
     var DeNeveTime = {
@@ -91,6 +73,25 @@ function RT_DeNeveData() {
   }
 
   return AllTime;
+}
+
+
+function BPlateData() {
+  let BPlateInfo = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    late_night: ""
+  };
+
+  db.collection("time")
+		.get()
+		.then((querySnapshot) => {
+      let BPlateBreakfast = querySnapshot.docs[1].data().breakfast;
+      BPlateInfo.breakfast = BPlateBreakfast;      
+		});
+
+  return BPlateInfo;
 }
 */
 
@@ -168,46 +169,18 @@ export function RenderData() {
 function renderSquares() {
   return (
     <dir>
-      
-    <Square 
-      value = {BCTime}
-      onClick={() => loadData()}
-    />
-    <dir>
-    <Square 
-      value = {BPTime}
-    />
-    <Square 
-      value = {DNTime}
-    />
-    <Square 
-      value = {EPTime}
-    />
+      <Square 
+        value = {BCTime}
+        onClick={() => loadData()}
+      />
     </dir>
-
-    </dir>
-  );
-}
-function renderInput() {
-  return (
-    <Square 
-      value = {teststr}
-      onClick={() => NameChange()}
-    />
   );
 }
 
   // Render all time data
   return (
   <div>
-    <input 
-      value = {name}
-      onChange = {NameChange}
-    />
-    <div className="board-row"> 
       {renderSquares()} 
-    </div>
-    
   </div>
   )
 }

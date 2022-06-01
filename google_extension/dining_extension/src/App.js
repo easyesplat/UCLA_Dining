@@ -9,27 +9,40 @@ import {RenderData} from "./renderFuncs/renderTimeData";
 import {UserInput} from "./renderFuncs/userInput";
 import Greeting from './renderFuncs/userGreeting.js';
 
+import { BrowserRouter as Router, 
+        Switch, 
+        Route, 
+        Link, 
+        Redirect,} from "react-router-dom";
+
+import Home from "./Home";
+// import About component
+import About from "./About";
+// import ContactUs component
+import ContactUs from "./ContactUs";
+
 // ------------------ Main rendering class component ------------------
 function App() {  
 
   return (
       <div>
-        <div className="topbar">
-            <h1> BruinDish </h1>
-            <div className="navbar">
-                <a href="index.html"
-                   className="App-link"
-                   target="_blank"
-                   rel="noopener noreferrer"> Home </a>
-                <a href="https://menu.dining.ucla.edu/hours/"
-                   className="App-link"
-                   target="_blank"
-                   rel="noopener noreferrer">Hours</a>
-            </div>
-        </div>
         
-        <h2> <Greeting /> </h2>
-        <CardContainer />
+      <Router>        
+        <Switch>
+          {/* This route is for home component 
+          with exact path "/", in component props 
+          we passes the imported component*/}
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/contactus" component={ContactUs} />
+            
+          {/* If any route mismatches the upper 
+          route endpoints then, redirect triggers 
+          and redirects app to home component with to="/" */}
+          <Redirect to="/" />
+          </Switch>
+      </Router>
+
         {/*
 		
 		<div>
