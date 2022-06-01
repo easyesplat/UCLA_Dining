@@ -38,7 +38,7 @@ for list in foodlist:
             dict[food].append(link)
             if info.find('span', class_='menu-item-description'):
                 description = info.find('span', class_='menu-item-description').text
-                dict[food].append(description.strip())
+                dict[food].append(description.strip().lstrip())
             else:
                 dict[food].append('')
         col1.set({
