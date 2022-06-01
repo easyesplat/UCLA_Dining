@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen as uReq
-from firebase import firebase
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 from numpy import less_equal
 
 #not too busy, getting busy, very busy, do not come here, covid farm
@@ -10,7 +12,13 @@ links = ['http://menu.dining.ucla.edu/Menus/BruinCafe'
 'http://menu.dining.ucla.edu/Menus/Drey']
 names = ['Bruin Café', 'Rendezvous', 'The Study at Hedrick', 'The Drey']
 
-firebase = firebase.FirebaseApplication('https://ucla-dining-default-rtdb.firebaseio.com', None)
+#initializing firebase
+cred = credentials.Certificate("./serviceAccountKey.json")
+firebase_admin.initialize_app(cred, {
+  'projectId': "ucla-dining",
+})
+db = firestore.client()
+#db.collection('density').delete()
 
 #grabbing the page
 html_link = 'http://menu.dining.ucla.edu/Menus/Today'
@@ -31,10 +39,11 @@ def level_placer(dining_hall, percentage):
         level_line = 'Do not come here'
     else:
         level_line = 'COVID Farm'
-    data = {'level': level_line,
-            'percentage': percentage}
-    firebase.delete('/density/'+dining_hall, None)
-    firebase.post('/density/'+dining_hall, data)
+    #db.collection('density').document(dining_hall).delete()
+    db.collection('density').document(dining_hall).set({
+        'level': level_line,
+        'percentage': percentage
+    })
     return 0
 
 for i in foodlist:
