@@ -13,10 +13,9 @@ import Greeting from './renderFuncs/userGreeting.js';
 function App() {  
 
   return (
-      <div className="body">
+      <div>
         <div className="topbar">
-            <h1> Bear Food Extension </h1>
-            <h2> <Greeting /> </h2>
+            <h1> BruinDish </h1>
             <div className="navbar">
                 <a href="index.html"
                    className="App-link"
@@ -26,36 +25,17 @@ function App() {
                    className="App-link"
                    target="_blank"
                    rel="noopener noreferrer">Hours</a>
-            <div className="dropdown">
-                <button className="dropbtn">Dining Hall Links &#x25BE;
-                    <i className="fa fa-caret-down"></i>
-                </button>
-                <div className="dropdown-content">
-                    <a href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today" 
-                       className="App-link"
-                       target="_blank"
-                       rel="noopener noreferrer">BruinPlate</a>
-                    <a href="https://menu.dining.ucla.edu/Menus/DeNeve/Today"
-                       className="App-link"
-                       target="_blank"
-                       rel="noopener noreferrer"> De Neve </a>
-                    <a href="https://menu.dining.ucla.edu/Menus/Epicuria/Today"
-                       className="App-link"
-                       target="_blank"
-                       rel="noopener noreferrer">Epicuria</a>
-                </div>
-            </div>
             </div>
         </div>
-        <p> <br></br> <br></br> </p>
+        
+        <h2> <Greeting /> </h2>
+        <CardContainer />
         <div>
-          <p> Click 'Home' to refresh page & reload data</p>
           <p> Click on the first box to display realtime capacity data:</p>
           <p> We could show wait times on the back of the flip cards </p>
           <RenderData /> 
           <p> <br></br> </p>
         </div>
-        <CardContainer />
       </div>
   )
 }

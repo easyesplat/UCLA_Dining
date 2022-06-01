@@ -11,11 +11,10 @@ run "npm run build" first to update the "build" folder and reload the extension.
 
 
 Current problems:
-- Is there a way we can use the data in Firebase as well? I only have the extension
-display the capacity directly on the webpage. If we don't have access to more data 
-then I think we're good.
 - Starting at line #8 of renderFuncs/renderTimeData.js, I left the firebase codes 
 commented out to test the website without over-reading the database. 
-- I put some flipcards in the app for demo/better visuals. Feel free to change it 
-or add any other styles. 
+- More dining places to be added, but just the same boxes.
+- Need to figure out how to click on the boxes & go to another extension page
+as shown in Marina's Figma page. Or probably we just show them when 
+"flipped" if we can't figure out.
 

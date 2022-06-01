@@ -3,8 +3,50 @@
   font-family: Raleway, sans-serif;
 }
 
-/* The following are only used in flipcards.js, not in main webpage*/
+/* Rectangle 13 */
+.rect13{
+position: absolute;
+left: 69.91%;
+right: 2.84%;
+top: 13.34%;
+bottom: 43.89%;
 
+background: #CFEAF9;
+border-radius: 15px 0px 15px 15px;
+}
+
+/* Epicuria */ 
+.epicuria{
+  position: absolute; 
+  width: 56px; 
+  height: 17px; 
+  left: 61px; 
+  top: 10px; 
+  font-family: 'SF Pro'; 
+  font-style: normal; 
+  font-weight: 590; 
+  font-size: 14px; 
+  line-height: 17px; 
+  /* identical to box height */ 
+  color: #000000
+  }
+  
+  /* Dining Hall */
+  .dining_hall{
+  position: absolute;
+  width: 171.67px;
+  height: 50px;
+  left: 202.33px;
+  top: 380px;
+  
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 7px 29px rgba(100, 100, 111, 0.18);
+  backdrop-filter: blur(30px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 10px;
+  }
+
+/* The following are old styles for flipcards.js*/
 .cardContainer {
 }
 .cardBack {
@@ -17,10 +59,10 @@
 .flipperContainer, .cardFront, .cardBack {
   -webkit-perspective: 1000px;
           perspective: 1000px;
-	width: 300px;
-	height: 500px;
+	width: 180px;
+	height: 70px;
   position: relative;
-  margin: 0 auto;
+  margin: 5px;
 }
 .flipperContainer:hover .flipper, .flipperContainer.hover .flipper {
 		-webkit-transform: rotateY(180deg);
@@ -60,11 +102,9 @@
 	        transform: rotateY(180deg);
 }
 
-
-
 .flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 10px;
+  margin: 5px;
 }
