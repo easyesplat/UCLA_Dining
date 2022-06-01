@@ -7,7 +7,7 @@
   left: 1089px;
   top: 213px;
 
-  font-family: 'SF Pro';
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 590;
   font-size: 18px;
@@ -20,7 +20,7 @@ body{
     margin: 0;
     background: #CFEAF9;
     display: flex;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans serif;
     flex-direction: column;
     overflow: scroll;
 }
@@ -79,7 +79,7 @@ h1 {
   top: 157px;
   color:#000000;
   
-  font-family: "Public Sans";
+  
   font-style: normal;
   font-weight: 800;
   font-size: 25px;
@@ -88,7 +88,7 @@ h1 {
 
 img{ 
     display: block;
-    border: 3px solid rgb(238, 141, 37); 
+    
     
 }
 

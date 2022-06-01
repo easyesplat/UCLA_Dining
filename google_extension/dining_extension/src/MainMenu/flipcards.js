@@ -17,7 +17,8 @@ const cardContainerStyles = {
   borderRadius: 10
 };
 const imgStyles = {
-  width: 80,
+  width: 85,
+  height: 60,
   borderTopRightRadius: 10,
   borderTopLeftRadius: 10
 }
@@ -28,22 +29,21 @@ const imgContainerStyles = {
   backgroundSize: "cover"
 }
 const avatarContainerStyles = {
-  width: "40px",
-  height: "40px",
+  width: "50px",
+  height: "50px",
   zIndex: "9",
   position: "relative",
   top: "-15px",
-  left: "25px",
+  left: "12px",
   right: "0",
-  border: "5px solid #fff",
   backgroundSize: "cover",
   textAlign: "center",
   borderRadius: "50%"
 };
 const titleStyles = {
   color: "#000000",
-  fontFamily: "SF Pro",
-  fontWeight: "590",
+  fontFamily: "Roboto",
+  fontWeight: "900",
   outline: "none",
   margin: "0px",
   /* display: "inline-block", */
@@ -67,7 +67,7 @@ const bioContainerStyles = {
   top: "-95px"
 };
 const bioStyles = {
-  color: "#444",
+  color: "#fff",
   padding: "0 30px",
   textAlign: "center"
 };
@@ -199,7 +199,7 @@ class Card extends React.Component {
      super(props);
      this.state = {
        title : "Bruin Café",
-       subTitle: "@Casual",
+       subTitle: "Casual",
        bio: "",
        direction: "forwards"
      }
@@ -208,22 +208,49 @@ class Card extends React.Component {
      if (this.props.type == "bp"){
      this.setState({
        title: "Bruin Plate",
-       subTitle: "@Healthy",
+       subTitle: "Healthy",
        bio: ""
      });
      } else if (this.props.type == "dn"){
        this.setState({
          title: "De Neve",
-         subTitle: "@American",
+         subTitle: "American",
          bio: ""
        })
      } else if (this.props.type == "ep"){
        this.setState({
          title: "Epicuria",
-         subTitle: "@Medit.",
+         subTitle: "Medit.",
          bio: ""
        })
-     }
+     } else if (this.props.type == "rw"){
+		 this.setState({
+			 title: "Rende West",
+			 subTitle: "Mexican",
+			 bio: ""
+		 })
+	 } else if (this.props.type == "re"){
+		 this.setState({
+			 title: "Rende East",
+			 subTitle: "Asian",
+			 bio: ""
+		 })
+	 }
+	 else if (this.props.type == "fe"){
+		 this.setState({
+			 title: "Feast",
+			 subTitle: "Asian",
+			 bio: ""
+		 })
+	 } else if (this.props.type == "st"){
+		 this.setState({
+			 title: "The Study",
+			 subTitle: "Takeout",
+			 bio: ""
+		 })
+	 }
+
+	 
    }
    render(){
      
@@ -256,25 +283,33 @@ class Card extends React.Component {
       <div style={bodyStyles} className="body">
         <div className="flex">
            
-          <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")} avatarSrc="https://menu.dining.ucla.edu/Content/Images/Menus/BruinCafe/bruincafe-logo.png" cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} targetId="navi" />
+          <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")}  cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} targetId="navi" />
            
-          <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")} avatarSrc="https://tse1.mm.bing.net/th?id=OIP.AAMn3VdyUcUhKq89mvUaKAHaFK&pid=Api&P=0&w=246&h=172" cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
+          <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")}  cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
                      
         </div>
         <div className="flex">
 
-         <Card type="dn" imgSrc={require("../assets/diningHallImages/deneve.jpg")} avatarSrc="https://tse4.mm.bing.net/th?id=OIP.JzKeok1YeHygJY39vwYoEQHaBy&pid=Api&P=0&w=588&h=142" cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
+         <Card type="dn" imgSrc={require("../assets/diningHallImages/deneve.jpg")} cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
            
-         <Card type="ep" imgSrc={require("../assets/diningHallImages/epicimage.jpeg")} avatarSrc="https://portal.housing.ucla.edu/sites/default/files/media/images/Logo_Epicuria%20at%20Covel_300x300.png" cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+         <Card type="ep" imgSrc={require("../assets/diningHallImages/epicimage.jpeg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
          
         </div>
         <div className="flex">
 
-         <Card type="dn" imgSrc={require("../assets/diningHallImages/deneve.jpg")} avatarSrc="https://tse4.mm.bing.net/th?id=OIP.JzKeok1YeHygJY39vwYoEQHaBy&pid=Api&P=0&w=588&h=142" cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
+         <Card type="rw" imgSrc={require("../assets/diningHallImages/rende2.jpg")}  cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
            
-         <Card type="ep" imgSrc={require("../assets/diningHallImages/epicimage.jpeg")} avatarSrc="https://portal.housing.ucla.edu/sites/default/files/media/images/Logo_Epicuria%20at%20Covel_300x300.png" cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+         <Card type="re" imgSrc={require("../assets/diningHallImages/bowl2.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
          
         </div>
+		<div className = "flex">
+		
+		<Card type="fe" imgSrc={require("../assets/diningHallImages/feast2.jpg")}  cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
+           
+         <Card type="st" imgSrc={require("../assets/diningHallImages/study.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+		
+		
+		</div>
       </div>
      )
    }

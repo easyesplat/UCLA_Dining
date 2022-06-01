@@ -30,12 +30,19 @@ function App() {
         
         <h2> <Greeting /> </h2>
         <CardContainer />
-        <div>
+        {/*
+		
+		<div>
           <p> Click on the first box to display realtime capacity data:</p>
           <p> We could show wait times on the back of the flip cards </p>
           <RenderData /> 
           <p> <br></br> </p>
         </div>
+		
+		*/}
+		
+		
+		
       </div>
   )
 }

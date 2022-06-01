@@ -4,11 +4,11 @@
     overflow: hidden;
     background: linear-gradient(to right, rgb(239, 212, 102), rgb(238, 141, 37));
     opacity: 0.92;
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-family: 'Roboto', sans-serif;
 }
 .navbar a {
     float: left;
-    font-family: 'SF Pro';
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: 590;
     font-size: 18px;
