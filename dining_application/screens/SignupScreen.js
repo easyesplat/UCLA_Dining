@@ -255,7 +255,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        //old color: 007AFF
         backgroundColor: '#2774AE',
         width: '100%',
         padding: 15,

@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Modal } from 'react-native'
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import * as Location from "expo-location"
 import diningLocationInformation from '../Core/findNearest';
 import AppLoading from 'expo-app-loading';
-import { MapIcon } from '../assets/icons/icons';
+import { MapIcon, X } from '../assets/icons/icons';
 import GradientText from './GradientText';
 import SimpleButton from './simpleButton';
 import * as Haptics from 'expo-haptics';
@@ -47,8 +47,8 @@ function LocationComponent(props) {
         return <AppLoading />;
     }
 
-    const data = diningLocationInformation(position.latitude, position.longitude, props.open)
-    // const data = diningLocationInformation(34.07292685768086, -118.45000250420831, props.open)
+    // const data = diningLocationInformation(position.latitude, position.longitude, props.open)
+    const data = diningLocationInformation(34.072596961211374, -118.4519303818121, props.open)
     // console.log(data)
 
     let message = "Your nearest open dining hall is "
@@ -97,7 +97,17 @@ function LocationComponent(props) {
                 >
                     <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.5)", alignItems: "flex-start", justifyContent: "flex-start", borderRadius: 20, }]}>
                         <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
-                        <RateDiningHall name={data.closest}/> 
+                        <RateDiningHall name={data.closest} />
+                        <TouchableOpacity
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                            }}
+                            style={styles.closingButton}
+                        >
+                            <Text style={{ color: "white", fontFamily: "publica-sans-s", paddingRight: 5 }}>Swipe down to close</Text>
+                            <X />
+                        </TouchableOpacity>
                     </View>
                 </Modal>
             </GestureRecognizer>
@@ -112,23 +122,23 @@ function LocationComponent(props) {
             </View>
             {
                 data.survey &&
-                <SimpleButton style={{ alignSelf: "flex-end", marginRight: 10, marginTop: 10 }} background="true" text={"Rate " + data.closest} onPress={ () => {
+                <SimpleButton style={{ alignSelf: "flex-end", marginRight: 10, marginTop: 10 }} background="true" text={"Rate " + data.closest} onPress={() => {
                     //navigation.navigate("Rate Dining Hall", { name: data.closest }); 
                     setModalVisible(!modalVisible);
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                 }} />
             }
             {/* {<View style={{ width: "100%", backgroundColor: "#F0F2F5", height: 2, marginVertical: 20, alignSelf: 'center' }}></View>} */}
-            <View style={{ 
+            <View style={{
                 marginHorizontal: 15,
-                marginBottom: 15, 
-                marginTop: 15, 
-                backgroundColor: "rgba(240, 242, 245, 0.63)", 
-                borderBottomLeftRadius: 12, 
-                borderBottomRightRadius: 12, 
-                borderRadius: 12, 
-                padding: 15, 
-                }}>
+                marginBottom: 15,
+                marginTop: 15,
+                backgroundColor: "rgba(240, 242, 245, 0.63)",
+                borderBottomLeftRadius: 12,
+                borderBottomRightRadius: 12,
+                borderRadius: 12,
+                padding: 15,
+            }}>
                 <Text style={{ fontFamily: "publica-sans-s", fontSize: 18, marginBottom: 12 }} >Other Dining Halls</Text>
                 {
                     otherHalls
@@ -150,5 +160,16 @@ const styles = StyleSheet.create({
         shadowOpacity: 1, // IOS
         shadowRadius: 29, //IOS
         backgroundColor: "white",
+    },
+    closingButton: {
+        paddingVertical: 8,
+        borderRadius: 10,
+        paddingHorizontal: 12,
+        flexDirection: "row",
+        alignItems: "center",
+        borderColor: "white",
+        borderWidth: 2,
+        alignSelf: "center",
+        marginTop: -20, 
     },
 })
