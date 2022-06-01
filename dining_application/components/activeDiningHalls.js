@@ -4,9 +4,11 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import Menubutton from '../components/menubutton';
 import Block from '../components/block';
 import SimpleButton from '../components/simpleButton';
-import { useNavigation } from '@react-navigation/native';
+import { DarkTheme, useNavigation } from '@react-navigation/native';
 import DATA from '../data/diningData';
 import * as Haptics from 'expo-haptics';
+import { database } from 'firebase/database';
+import { ref, child, get, onValue } from "firebase/database";
 
 //TODO: Uncomment:
 import readTimes from "../Core/timeDatabase";
@@ -19,7 +21,7 @@ function ActiveDiningHalls(props) {
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    hours = 9;
+    hours = 17;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
@@ -28,6 +30,13 @@ function ActiveDiningHalls(props) {
         readTimes().then(result => {
             setTimeMap(result);
         }).catch(error => console.log('error', error));
+
+        const starCountRef = ref(database, 'density/');
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+        });
+
+
     }, []);
 
     if (timeMap == null) {

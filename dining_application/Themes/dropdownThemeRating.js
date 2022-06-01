@@ -24,7 +24,7 @@ export default StyleSheet.create({
         borderColor: "#D8D8D8",
         padding: 18,
         marginTop: 5, 
-        backgroundColor: "rgba(240, 242, 245, 0.63)"
+        backgroundColor: "rgb(240, 242, 245)"
     },
     label: {
         flex: 1,
@@ -84,7 +84,7 @@ export default StyleSheet.create({
         overflow: 'hidden',
         zIndex: 1000,
         marginTop: 5, 
-        backgroundColor: "rgba(240, 242, 245, 0.63)"
+        backgroundColor: "rgb(240, 242, 245)"
     },
     modalContentContainer: {
         flexGrow: 1,
