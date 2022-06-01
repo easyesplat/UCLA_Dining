@@ -1,76 +1,74 @@
 import React from 'react';
 import '../css/flipcards.css';
+import {RenderData} from "../renderFuncs/renderTimeData";
 
 // Styles
 const bodyStyles = {
-  background: "-webkit-gradient(linear, left top, right top, color-stop(0%, transparent), color-stop(50%,red), color-stop(100%,transparent))",
-  background: "-webkit-linear-gradient(left, transparent 0%,red 50%,transparent 100%)", /* Chrome10+, Safari5.1+ */
-  background: "-moz-linear-gradient(left, transparent 0%,red 50%,transparent 100%)",    /* FF3.6+ */
-  background: "linear-gradient(to bottom right,#ff5555 40%,#5555ff 100%)",
+  background: "#CFEAF9",
   width: "100%",
-  height: "120vh",
+  height: "400px",
   overflowX: "hidden"
 }
-const headerStyles = {
-  textAlign: "center",
-  color:"#fff",
-}
+
+/* Change box sizes */
 const cardContainerStyles = {
-  width: "300px",
-  height: "500px",
+  width: "180px",
+  height: "60px",
   background: "#fff",
-  borderRadius: 35,
-  boxShadow: "1px 1px 35px #444"
+  borderRadius: 10
 };
+const imgStyles = {
+  width: 85,
+  height: 60,
+  borderTopRightRadius: 10,
+  borderTopLeftRadius: 10
+}
 const imgContainerStyles = {
-  backgroundColor:"#fff",
   height: "35%",
-  margin: 0,
-  borderTopRightRadius: 35,
-  borderTopLeftRadius: 35,
-  background: "#444",
+  borderTopRightRadius: 10,
+  borderTopLeftRadius: 10,
   backgroundSize: "cover"
 }
 const avatarContainerStyles = {
-  width: "150px",
-  height: "150px",
+  width: "50px",
+  height: "50px",
   zIndex: "9",
   position: "relative",
-  top: "-85px",
-  left: "65px",
+  top: "-15px",
+  left: "12px",
   right: "0",
-  margin: "0 auto",
-  border: "10px solid #fff",
-  /* background: "#000", */
   backgroundSize: "cover",
-  display: "inline-block",
   textAlign: "center",
   borderRadius: "50%"
 };
 const titleStyles = {
-  color:"#555",
-  fontWeight: "100",
+  color: "#000000",
+  fontFamily: "Roboto",
+  fontWeight: "900",
   outline: "none",
   margin: "0px",
-  display: "inline-block",
-  width: "100%",
+  /* display: "inline-block", */
+  width: "76px",
+  height: "17px",
+  left: "90px",
+  top: "-60px",
   textAlign: "center",
-  position: "relative",
-  top: "-75px"
+  position: "relative"
 };
 const subTitleStyles = {
+  color: "#000000",
   position: "relative",
-  top: "-95px",
+  top: "-75px",
+  left: "100px",
   textAlign: "center",
-  fontWeight: "100",
-  color: "#888"
+  fontWeight: "100"
 };
 const bioContainerStyles = {
   position: "relative",
   top: "-95px"
 };
 const bioStyles = {
-  color: "#444",
+  color: "#fff",
   padding: "0 30px",
   textAlign: "center"
 };
@@ -85,31 +83,18 @@ const iconStyles = {
   fontSize: "24px"
 }
 const cardBackStyles = {
-  height: 500,
-  width: 300,
+  height: 60,
+  width: 170,
   position: "absolute",
   top: "0",
   bottom: "0",
-  left: "0",
+  left: "-10px",
   right: "0",
   margin: "auto",
-  borderRadius: "35px",
-  boxShadow: "1px 1px 35px #444",
-  background: "')",
+  borderRadius: "10px",
+  background: "#FFF",
   backgroundSize: "cover",
   backgroundPosition: "right"
-}
-const madeByStyles = {
-  color: "#fff",
-  opacity: ".5",
-  textAlign: "center",
-  padding: "0px"
-}
-
-const imgStyles = {
-  width: 300,
-  borderTopRightRadius: 35,
-  borderTopLeftRadius: 35
 }
 
 const avatarImgStyles = {
@@ -122,13 +107,11 @@ const avatarImgStyles = {
   margin: "auto",
   borderRadius: "50%"
 }
-
 const cardBackImgStyles = {
-  height: "100%",
-  width: "100%",
-  borderRadius: 35,
+  height: "0%",
+  width: "0%",
+  borderRadius: 10,
   position: "absolute"
-  
 }
 
 // Components
@@ -163,8 +146,8 @@ class CardTitle extends React.Component {
   render(){
     return (
       <div className="titleDiv">
-        <h1 id={this.props.targetId} style={titleStyles} className="title">{this.props.title}</h1>
-        <h4 style={subTitleStyles} className="subTitle">{this.props.subTitle}</h4>
+        <h1 id={this.props.targetId} style={titleStyles} className="epicuria">{this.props.title}</h1>
+        <h4 style={subTitleStyles} className="epicuria">{this.props.subTitle}</h4>
       </div>
     )
   }
@@ -199,51 +182,102 @@ class CardBack extends React.Component {
   constructor(props){
     super(props);
   }
-
-  // <img className="cardBackImg" style={cardBackImgStyles} src={this.props.cardBackImgSrc}/>
   render(){
     return (
     <div>
-      <img className="cardBackImg" style={cardBackImgStyles} src={this.props.cardBackImgSrc}/>
       <div style={cardBackStyles}>
-        <p> <br></br> <br></br> </p>
+        <p> <br></br></p>
         <p> Current wait time: </p>
+        <RenderData />
+        {/*<a href={this.props.menu_url}
+          className="App-link"
+          target="_blank"
+          onClick = {() => {window.open("http://menu.dining.ucla.edu/Menus/BruinPlate/Today", "_blank") }}
+        rel="noopener noreferrer">Menu</a>*/}
+      </div> 
+    </div>
+    )
+  }
+}
+class BPCardBack extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
+    <div>
+      <div style={cardBackStyles}>
+        <p href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today"> Current wait time: </p>
+        <a href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
+          className="App-link"
+          target="_blank"
+          rel="noopener noreferrer">Menu</a>
       </div> 
     </div>
     )
   }
 }
 
+
 class Card extends React.Component {
    constructor(props){
      super(props);
      this.state = {
        title : "Bruin Café",
-       subTitle: "@Casual",
-       bio: "Offers a versatile menu of fresh, quick, and convenient food and beverage options.",
-       direction: "forwards"
+       subTitle: "Casual",
+       bio: "",
+       direction: "forwards",
+       menu_url: "http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
      }
    }
    componentWillMount(){
      if (this.props.type == "bp"){
      this.setState({
        title: "Bruin Plate",
-       subTitle: "@Healthy Food",
-       bio: "A creative, honest and responsible eatery that provides seasonal, innovative and sustainable cuisine with mouth-watering results."
+       subTitle: "Healthy",
+       bio: "",
+       menu_url: "http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
      });
      } else if (this.props.type == "dn"){
        this.setState({
          title: "De Neve",
-         subTitle: "@American",
-         bio: "Celebrates the amazing diversity of foods inspired by North, Central, and South America."
+         subTitle: "American",
+         bio: ""
        })
      } else if (this.props.type == "ep"){
        this.setState({
          title: "Epicuria",
-         subTitle: "@Mediterranean",
-         bio: "Fresh California products inspired by the cuisines of Cyprus, France, Greece, Israel, Italy, Lebanon, Spain, Turkey."
+         subTitle: "Medit.",
+         bio: ""
        })
-     }
+     } else if (this.props.type == "rw"){
+		 this.setState({
+			 title: "Rende West",
+			 subTitle: "Mexican",
+			 bio: ""
+		 })
+	 } else if (this.props.type == "re"){
+		 this.setState({
+			 title: "Rende East",
+			 subTitle: "Asian",
+			 bio: ""
+		 })
+	 }
+	 else if (this.props.type == "fe"){
+		 this.setState({
+			 title: "Feast",
+			 subTitle: "Asian",
+			 bio: ""
+		 })
+	 } else if (this.props.type == "st"){
+		 this.setState({
+			 title: "The Study",
+			 subTitle: "Takeout",
+			 bio: ""
+		 })
+	 }
+
+	 
    }
    render(){
      
@@ -266,6 +300,7 @@ class Card extends React.Component {
    }
  }
 
+ // Main rendering function for boxes
  class CardContainer extends React.Component {
    constructor(props){
      super(props);
@@ -273,17 +308,40 @@ class Card extends React.Component {
    render(){
      return (
       <div style={bodyStyles} className="body">
-         <h1 style={headerStyles} className="header">Hover to flip</h1>
-         <div className="flex">
+        <div className="flex">
            
-          <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")} avatarSrc="https://menu.dining.ucla.edu/Content/Images/Menus/BruinCafe/bruincafe-logo.png" cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} targetId="navi" />
+          <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")}  
+            cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} 
+            targetId="navi"
+            onClick = {() => {console.log("hello")}}
+          />
            
-          <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")} avatarSrc="https://tse1.mm.bing.net/th?id=OIP.AAMn3VdyUcUhKq89mvUaKAHaFK&pid=Api&P=0&w=246&h=172" cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
+          <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")}  
+            cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
+                     
+        </div>
+        <div className="flex">
+
+         <Card type="dn" imgSrc={require("../assets/diningHallImages/deneve.jpg")} cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
            
-          <Card type="dn" imgSrc={require("../assets/diningHallImages/deneve.jpg")} avatarSrc="https://tse4.mm.bing.net/th?id=OIP.JzKeok1YeHygJY39vwYoEQHaBy&pid=Api&P=0&w=588&h=142" cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
+         <Card type="ep" imgSrc={require("../assets/diningHallImages/epicimage.jpeg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+         
+        </div>
+        <div className="flex">
+
+         <Card type="rw" imgSrc={require("../assets/diningHallImages/rende2.jpg")}  cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
            
-          <Card type="ep" imgSrc={require("../assets/diningHallImages/epicimage.jpeg")} avatarSrc="https://portal.housing.ucla.edu/sites/default/files/media/images/Logo_Epicuria%20at%20Covel_300x300.png" cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
-         </div>
+         <Card type="re" imgSrc={require("../assets/diningHallImages/bowl2.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+         
+        </div>
+		<div className = "flex">
+		
+		<Card type="fe" imgSrc={require("../assets/diningHallImages/feast2.jpg")}  cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
+           
+         <Card type="st" imgSrc={require("../assets/diningHallImages/study.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+		
+		
+		</div>
       </div>
      )
    }

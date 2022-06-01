@@ -1,16 +1,32 @@
+
+/* New styles */
+/* Dining halls open for breakfast/lunch/dinner or closed */
+.dining_hall_open{
+  width: 301px;
+  height: 21px;
+  left: 1089px;
+  top: 213px;
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 590;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+}
+
+/* Previous styles */
 body{
     margin: 0;
-    background-image: linear-gradient(to left,rgb(68, 117, 208),rgb(30, 195, 246));
+    background: #CFEAF9;
     display: flex;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans serif;
     flex-direction: column;
     overflow: scroll;
 }
-
 .flex{
     display: flex;
 }
-
 .flex > *{
     font-size: 25px;
 }
@@ -30,12 +46,12 @@ p {
     font-size: 14px;
     font-weight: bold;
     line-height: 18px;
-    height: 100px;
+    height: 20px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 220px;
+    width: 200px;
     box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(209, 23, 23, 0.09) 0px 32px 16px;;
   }
   
@@ -57,14 +73,22 @@ p {
   }
 
 h1 {
-    color:rgb(218, 205, 205);
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    text-shadow: rgb(128, 121, 158) 1px 0 5px;    
+  width: 248px;
+  height: 29px;
+  left: 1089px;
+  top: 157px;
+  color:#000000;
+  
+  
+  font-style: normal;
+  font-weight: 800;
+  font-size: 25px;
+  line-height: 29px; 
 }
 
 img{ 
     display: block;
-    border: 3px solid rgb(238, 141, 37); 
+    
     
 }
 
