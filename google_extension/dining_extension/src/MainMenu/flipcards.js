@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/flipcards.css';
 import {RenderData} from "../renderFuncs/renderTimeData";
+import { Link } from "react-router-dom";
 
 // Styles
 const bodyStyles = {
@@ -187,31 +188,8 @@ class CardBack extends React.Component {
     <div>
       <div style={cardBackStyles}>
         <p> <br></br></p>
-        <p> Current wait time: </p>
-        <RenderData />
-        {/*<a href={this.props.menu_url}
-          className="App-link"
-          target="_blank"
-          onClick = {() => {window.open("http://menu.dining.ucla.edu/Menus/BruinPlate/Today", "_blank") }}
-        rel="noopener noreferrer">Menu</a>*/}
-      </div> 
-    </div>
-    )
-  }
-}
-class BPCardBack extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  render(){
-    return (
-    <div>
-      <div style={cardBackStyles}>
-        <p href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today"> Current wait time: </p>
-        <a href="http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
-          className="App-link"
-          target="_blank"
-          rel="noopener noreferrer">Menu</a>
+        <Link to={this.props.detail_url} className='epicuria'>Details</Link> 
+        <RenderData />       
       </div> 
     </div>
     )
@@ -227,7 +205,7 @@ class Card extends React.Component {
        subTitle: "Casual",
        bio: "",
        direction: "forwards",
-       menu_url: "http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
+       detail_url: "/BCafeCard"
      }
    }
    componentWillMount(){
@@ -236,19 +214,21 @@ class Card extends React.Component {
        title: "Bruin Plate",
        subTitle: "Healthy",
        bio: "",
-       menu_url: "http://menu.dining.ucla.edu/Menus/BruinPlate/Today"
+       detail_url: "/BPlateCard"
      });
      } else if (this.props.type == "dn"){
        this.setState({
          title: "De Neve",
          subTitle: "American",
-         bio: ""
+         bio: "",
+         detail_url:"/DeNeveCard"
        })
      } else if (this.props.type == "ep"){
        this.setState({
          title: "Epicuria",
          subTitle: "Medit.",
-         bio: ""
+         bio: "",
+         detail_url:"/EpicuriaCard"
        })
      } else if (this.props.type == "rw"){
 		 this.setState({
@@ -292,7 +272,7 @@ class Card extends React.Component {
                   <CardSocialIcons />
               </div>
              <div style={cardBackStyles} className="cardBack">
-                <CardBack /> 
+                <CardBack detail_url={this.state.detail_url}/> 
              </div>
             </div>
        </div>
@@ -313,7 +293,6 @@ class Card extends React.Component {
           <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")}  
             cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} 
             targetId="navi"
-            onClick = {() => {console.log("hello")}}
           />
            
           <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")}  
