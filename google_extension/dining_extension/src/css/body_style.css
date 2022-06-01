@@ -1,16 +1,32 @@
+
+/* New styles */
+/* Dining halls open for breakfast/lunch/dinner or closed */
+.dining_hall_open{
+  width: 301px;
+  height: 21px;
+  left: 1089px;
+  top: 213px;
+
+  font-family: 'SF Pro';
+  font-style: normal;
+  font-weight: 590;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+}
+
+/* Previous styles */
 body{
     margin: 0;
-    background-image: linear-gradient(to left,rgb(68, 117, 208),rgb(30, 195, 246));
+    background: #CFEAF9;
     display: flex;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-direction: column;
     overflow: scroll;
 }
-
 .flex{
     display: flex;
 }
-
 .flex > *{
     font-size: 25px;
 }
@@ -57,9 +73,17 @@ p {
   }
 
 h1 {
-    color:rgb(218, 205, 205);
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    text-shadow: rgb(128, 121, 158) 1px 0 5px;    
+  width: 248px;
+  height: 29px;
+  left: 1089px;
+  top: 157px;
+  color:#000000;
+  
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 25px;
+  line-height: 29px; 
 }
 
 img{ 
