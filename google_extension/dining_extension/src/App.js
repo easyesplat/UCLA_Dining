@@ -1,3 +1,6 @@
+// This file does not include the layout for the main website.
+// "App" rendering function defaults to display the imported "Home" webpage.
+
 import React, { useEffect, useRef, useState, Component } from 'react'
 import ReactDOM from 'react-dom/client'
 import "./css/App.css";
@@ -16,10 +19,11 @@ import { BrowserRouter as Router,
         Redirect,} from "react-router-dom";
 
 import Home from "./Home";
-// import About component
-import About from "./About";
-// import ContactUs component
-import ContactUs from "./ContactUs";
+// import card backs
+import BCafeBack from "./cardBacks/BCafeCard";
+import BPlateBack from "./cardBacks/BPlateCard";
+import DeNeveBack from './cardBacks/DeNeveCard';
+import EpicuriaBack from './cardBacks/EpicuriaCard';
 
 // ------------------ Main rendering class component ------------------
 function App() {  
@@ -33,8 +37,10 @@ function App() {
           with exact path "/", in component props 
           we passes the imported component*/}
           <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/contactus" component={ContactUs} />
+          <Route path="/BCafeCard" component={BCafeBack} />
+          <Route path="/BPlateCard" component={BPlateBack} />
+          <Route path="/DeNeveCard" component={DeNeveBack} />
+          <Route path="/EpicuriaCard" component={EpicuriaBack} />
             
           {/* If any route mismatches the upper 
           route endpoints then, redirect triggers 

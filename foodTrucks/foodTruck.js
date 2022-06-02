@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
+import {
+  Button,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  Linking,
+} from 'react-native';
 import { useFonts } from 'expo-font';
 import ChevronRight from "dining_application/assets/icons/chevron-right.js";
 
@@ -12,71 +20,46 @@ const [loaded] = useFonts({
 });
 
 function FoodTruckCard(props) {
-    return (
+  return (
+    <View>
+      <ImageBackground
+        style={styles.foodTruckImage}
+        resizeMode="cover"
+        source={require('./assets/perro.jpeg')}>
+
       <TouchableOpacity>
-          <View>
-            <ImageBackground
-              style={styles.foodTruckImage}
-              resizeMode="cover"
-              source={require('./assets/perro.jpeg')}>
-  
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 10, 
-                  left: 12, 
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  backgroundColor: 'white', 
-                  padding: 5, 
-                  paddingTop: 7,
-                  borderRadius: 8, 
-  
-                  
-                }}>
-  
-                <Text
-                  style={{
-                    fontFamily: 'publica-sans-m',
-                    fontSize: 15,
-                    lineHeight: 15, 
-                    flexWrap: 'wrap',
-                    justifyContent: 'flex-end'}}>
-                  {"Creamy Boys"}
-                </Text>
-                <ChevronRight/>
-  
-              </View>
-  
-  
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 10,
-                  right: 12,
-                  backgroundColor: '#FFE475',
-                  padding: 5,
-                  borderRadius: 8 
-                }}>
-  
-                <Text
-                  style={{
-                    fontFamily: 'publica-sans-m',
-                    fontSize: 12,
-                    flexWrap: 'wrap'}}>
-                  {"Sproul"}
-                </Text>
-  
-              </View>
-  
-  
-            </ImageBackground>
-          </View>
+        <Button
+          uppercase= {false}
+          title = {<Text style={styles.buttonText} onPress={() => Linking.openURL('http://google.com')}> 
+          Perro <ChevronRight/> 
+          </Text>}
+          color = '#00000'
+          >
+        </Button>
       </TouchableOpacity>
-    );
-  }
-  
+
+        <View
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 12,
+            backgroundColor: '#FFE475',
+            padding: 5,
+            borderRadius: 8 
+          }}>
+          <Text
+            style={{
+              font: 'publica-sans-s',
+              fontSize: 12,
+              flexWrap: 'wrap'}}>
+            Sproul
+          </Text>
+        </View>
+
+      </ImageBackground>
+    </View>
+  );
+}
   
   const styles = StyleSheet.create({
       foodTruckImage : {
@@ -92,7 +75,23 @@ function FoodTruckCard(props) {
             marginBottom: 10, 
             marginRight: 10, 
             overflow: "hidden" 
-      }
+      },
+      buttonText : {
+        position: 'absolute',
+        top: 130,
+        left: 10,
+        backgroundColor: 'white',
+        padding: 5,
+        paddingTop: 6,
+        borderRadius: 8,
+        color: 'black',
+        font: 'publica-sans-m',
+        fontSize: 15,
+        lineHeight: 15, 
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+  }
   })
 
 export default FoodTruckCard;

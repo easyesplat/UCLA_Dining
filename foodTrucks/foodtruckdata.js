@@ -1,3 +1,6 @@
+//list of all food trucks, the most appropriate link, and a picture of each
+//sproul or reiber data will come from the webscraping, as will the meal period
+
 const DATA = [
     {
         id: 1,
@@ -172,7 +175,31 @@ const DATA = [
       name: "Perro",
       link: "https://www.tacoperro.com",
       imagueUri: require('./assets/foodTruck_images/perro.jpeg'),
-    }
+    },
+    {
+      id: 30,
+      name: "Cerda Vega Tacos",
+      link: "https://www.cerdavegatacos.com",
+      imageUri: require('./assets/foodTruck_images/cerdavega.jpeg'),
+    },
+    {
+      id: 31,
+      name: "Flamin Hot Chicken",
+      link: "https://www.flaminhotchicken.com",
+      imageUri: require('./assets/foodTruck_images/flaminchk.png'),
+    },
+    {
+      id: 32,
+      name: "Trapiyaki",
+      link: "https://www.trapiyaki.com/menu",
+      imageUri: require('./assets/foodTruck_images/trap.jpeg'),
+    },
+    {
+      id: 33,
+      name: "The Taco Cartel",
+      link: "https://roaminghunger.com/the-taco-cartel/",
+      imageUri: require('./assets/foodTruck_images/tacocartel.jpeg'),
+    },
 ];
 
 
