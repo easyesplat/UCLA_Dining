@@ -68,32 +68,26 @@ function HomeScreenContent() {
         greeting = "Night";
     }
 
-    
+
     signOutUser = async () => {
         try {
             await signOut(auth);
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Welcome' }]
-            });
         }
         catch (error) {
             alert(error);
         }
     }
 
-    let mealPlanNumber = 19; 
-    let mealPlanPremium = "P"; 
+    let mealPlanNumber = 19;
+    let mealPlanPremium = "P";
 
-    if(userDoc.mealPlan.charAt(2) === "R")
-    {
-        mealPlanPremium = "R"; 
+    if (userDoc.mealPlan.charAt(2) === "R") {
+        mealPlanPremium = "R";
     }
-    if(userDoc.mealPlan.charAt(1) === "4")
-    {
-        mealPlanNumber = 14; 
+    if (userDoc.mealPlan.charAt(1) === "4") {
+        mealPlanNumber = 14;
     } else if (userDoc.mealPlan.charAt(1) === "1") {
-        mealPlanNumber = 11; 
+        mealPlanNumber = 11;
     }
 
     return (
@@ -105,20 +99,31 @@ function HomeScreenContent() {
                         <TouchableOpacity style={styles.icon} onPress={() => {
                             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                             navigation.navigate("Search")
-                            }}>
-                            <Search/>
+                        }}>
+                            <Search />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.icon}>
-                            <Refresh/>
+                        <TouchableOpacity style={styles.icon} onPress={() => {
+                            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'HomeScreen' }]
+                            });
+                        }}>
+                            <Refresh />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.icon}>
                             <SignOut onPress={() => {
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                                navigation.reset({
+                                    index: 0,
+                                    routes: [{ name: 'Welcome' }]
+                                });
                                 signOutUser();
                             }} />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ActiveDiningHalls/>
+                <ActiveDiningHalls userId={user.uid} userAnswered={userDoc.answered}/>
                 <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <GreenHeart style={{ marginRight: 10 }} />
@@ -127,7 +132,7 @@ function HomeScreenContent() {
                     <SimpleButton style={{ alignSelf: "flex-end", marginTop: 10, }} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync} />
                 </Block>
                 <MealPlan mealPlan={mealPlanNumber} type={mealPlanPremium} />
-                <FoodTrucks/>
+                <FoodTrucks />
             </ScrollView>
         </SafeAreaView>
     );

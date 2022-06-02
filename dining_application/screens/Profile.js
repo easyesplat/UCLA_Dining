@@ -1,22 +1,19 @@
 import { useNavigation } from '@react-navigation/core';
+import { useRoute } from "@react-navigation/native"
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { auth, db } from '../Core/Config';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { BlurView } from 'expo-blur';
 import Gradient from 'dining_application/assets/gradient.js';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Loading from '../components/loading.js';
 
 
 
-const SignupScreen = () => {
-    const [state, setState] = useState({});
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [border1, setBorder1] = useState('#D8D8D8');
-    const [border2, setBorder2] = useState('#D8D8D8');
+const ProfileScreen = () => {
+    const [name, setName] = useState("");
     const [border3, setBorder3] = useState('#D8D8D8');
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState();
@@ -28,58 +25,61 @@ const SignupScreen = () => {
         { label: '11P', value: '11P' },
         { label: '11R', value: '11R' },
     ]);
-    const [open2, setOpen2] = useState(false);
-    const [value2, setValue2] = useState([]);
-    const [dietaryRestriction, setDietaryRestriction] = useState([
-        { label: 'Vegan', value: '1' },
-        { label: 'Gluten Free', value: '3' },
-        { label: 'Pescatarian', value: '2' },
-        { label: 'Vegetarian', value: '4' },
-        { label: 'Halal', value: '5' },
-    ]);
+    const [userDoc, setUserDoc] = useState(null);
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+    const routes = useRoute();
+    const navigation = useNavigation();
 
     const myTheme = require("../Themes/dropdownTheme.js");
 
     DropDownPicker.addTheme("MyThemeName", myTheme);
     DropDownPicker.setTheme("MyThemeName");
 
-    const navigation = useNavigation();
+    function authStateChanged(user) {
+        setUser(user);
+        if (user != null) {
+            getDoc(doc(db, "users", user.uid)).then((snapShot) => {
+                setUserDoc(snapShot.data())
+            }).catch((e) => alert(e))
+        }
+        if (initializing) setInitializing(false);
+    }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'HomeScreen' }]
-                });
-            }
-        })
-        setState({});
-        return unsubscribe
-    }, [])
+        const subscriber = onAuthStateChanged(auth, authStateChanged);
+        if (userDoc != null) {
+            console.log(userDoc)
+            // setName(userDoc.fname)
+        }
+        return subscriber; // unsubscribe on unmount
+    }, []);
+
+    if (initializing || userDoc === null) return <Loading />;
+
+    if (userDoc == null) {
+        return <Loading />;
+    }
+
+    // if (userDoc !== null) {
+    //     setName(userDoc.fname)
+    // }
 
 
     const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredentials) => {
-                const user = userCredentials.user;
-                const data = {
-                    fname: name,
-                    email: email,
-                    likedItems: [],
-                    mealPlan: value,
-                    dietaryRestrictions: value2,
-                    userImg: null,
-                    answered: [],
-                }
-                setDoc(doc(db, "users", user.uid), data)
-                    .then(() => {
-                        // alert("Welcome to Bruin Dine");
-                        // navigation.replace("Signup");
-                    })
-                    .catch((error) => alert(error.message));
-            })
-            .catch((error) => alert(error.message))
+        let finalName = name; 
+        let finalMealPlan = value; 
+        if (name == "") finalName = userDoc.fname;
+        if (value == "") finalMealPlan = userDoc.mealPlan;
+        updateDoc(doc(db, "users", user.uid), {
+            fname: finalName,
+            mealPlan: finalMealPlan,
+        }).then(() => {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'HomeScreen' }]
+            });
+        }).catch((e) => console.log(e));
     }
 
     return (
@@ -92,30 +92,12 @@ const SignupScreen = () => {
                     behavior="padding"
                 >
                     <View style={{ width: "100%" }}>
-                        <Text style={styles.headerText}>Welcome</Text>
-                        <Text style={styles.subHeaderText}>Let's set up your account and {'\n'}get you on your way</Text>
+                        <Text style={styles.headerText}>Update Your {"\n"}Profile</Text>
                     </View>
                     <View style={styles.inputContainer}>
-                        <Text style={styles.subtext}>Sign up</Text>
+                        <Text style={styles.formTitle}>Change First Name</Text>
                         <TextInput
-                            placeholder="Email"
-                            value={email}
-                            onChangeText={text => setEmail(text)}
-                            style={[styles.input, { borderColor: border1 }]}
-                            onFocus={() => setBorder1("#2774AE")}
-                            onBlur={() => setBorder1("#D8D8D8")}
-                        />
-                        <TextInput
-                            placeholder="Password"
-                            value={password}
-                            onChangeText={text => setPassword(text)}
-                            style={[styles.input, { borderColor: border2 }]}
-                            secureTextEntry
-                            onFocus={() => setBorder2("#2774AE")}
-                            onBlur={() => setBorder2("#D8D8D8")}
-                        />
-                        <TextInput
-                            placeholder="First Name"
+                            placeholder={userDoc.fname}
                             value={name}
                             onChangeText={text => setName(text)}
                             style={[styles.input, { borderColor: border3 }]}
@@ -123,6 +105,7 @@ const SignupScreen = () => {
                             onBlur={() => setBorder3("#D8D8D8")}
                         />
                         <>
+                            <Text style={styles.formTitle}>Change Meal Plan</Text>
                             <DropDownPicker
                                 open={open}
                                 value={value}
@@ -133,7 +116,7 @@ const SignupScreen = () => {
                                 theme="MyThemeName"
                                 multiple={false}
                                 mode="BADGE"
-                                placeholder="Meal Plan"
+                                placeholder={userDoc.mealPlan}
                                 placeholderStyle={{
                                     color: "#D8D8D8",
                                     fontFamily: "publica-sans-l",
@@ -146,29 +129,7 @@ const SignupScreen = () => {
                             />
                         </>
                         <View style={{ height: 10 }}></View>
-                        <>
-                            <DropDownPicker
-                                open={open2}
-                                value={value2}
-                                items={dietaryRestriction}
-                                setOpen={setOpen2}
-                                setValue={setValue2}
-                                setItems={setDietaryRestriction}
-                                theme="MyThemeName"
-                                multiple={true}
-                                mode="BADGE"
-                                placeholder="Dietary Restrictions"
-                                placeholderStyle={{
-                                    color: "#D8D8D8",
-                                    fontFamily: "publica-sans-l",
-                                    fontSize: 13,
-                                }}
-                                onPress={() => { Keyboard.dismiss() }}
-                                zIndex={1000}
-                                zIndexInverse={2000}
-                                badgeDotColors={["#34C759", "#27AE60", "#FF2D55", "#FF9500" ]}
-                            />
-                        </>
+                        
                     </View>
 
                     <View style={[styles.buttonContainer, {zIndex: 500,}]}>
@@ -176,15 +137,8 @@ const SignupScreen = () => {
                             onPress={handleSignUp}
                             style={[styles.button, styles.buttonOutline]}
                         >
-                            <Text style={styles.buttonOutlineText}>Sign Up</Text>
+                            <Text style={styles.buttonOutlineText}>Update your account</Text>
                         </TouchableOpacity>
-                        <Text style={{
-                            marginTop: 10, 
-                            fontFamily: "publica-sans-l", 
-                            fontSize: 14, 
-                            marginTop: 6,
-                        }}>Already have an account?</Text>
-                        <TouchableOpacity onPress={() => {navigation.replace('Log in')}} style={{marginTop: 4,}}><Text style={{ color: "#2774AE",fontFamily: "publica-sans-l" }}>Log in</Text></TouchableOpacity>
                     </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
@@ -192,13 +146,13 @@ const SignupScreen = () => {
     )
 }
 
-export default SignupScreen
+export default ProfileScreen
 
 const styles = StyleSheet.create({
     headerText: {
         fontFamily: "publica-sans-m",
         fontSize: 33,
-        lineHeight: 36,
+        lineHeight: 40,
         alignSelf: 'flex-start',
         paddingTop: 40,
     },
@@ -207,6 +161,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         alignSelf: 'flex-start',
         marginBottom: 8,
+    },
+    formTitle: {
+        fontFamily: "publica-sans-m",
+        fontSize: 15,
+        alignSelf: 'flex-start',
+        marginBottom: 8,
+        marginTop: 10, 
     },
     subHeaderText: {
         fontFamily: "publica-sans-m",

@@ -47,13 +47,17 @@ function LocationComponent(props) {
         return <AppLoading />;
     }
 
-    // const data = diningLocationInformation(position.latitude, position.longitude, props.open)
-    const data = diningLocationInformation(34.072596961211374, -118.4519303818121, props.open)
+    const data = diningLocationInformation(position.latitude, position.longitude, props.open)
+    // const data = diningLocationInformation(34.07190257151363, -118.4497362187541, props.open)
     // console.log(data)
 
     let message = "Your nearest open dining hall is "
     if (data.survey) {
         message = "Looks like you are at ";
+    }
+    // alert(data.notOnHill)
+    if (!data.notOnHill) {
+        message = "Looks like you aren't on the hill";
     }
 
     let otherHalls = [];
@@ -79,6 +83,17 @@ function LocationComponent(props) {
         )
     }
 
+    const d = new Date(); 
+    let date = d.getFullYear().toString() + (d.getMonth() + 1).toString() + d.getDate().toString(); 
+    let docName = (data.closest) + date + props.time;
+
+    let showSurvey = true; 
+    if (props.userAnswered.includes(docName)) {
+        showSurvey = false; 
+    }
+
+    showSurvey = data.survey && showSurvey; 
+
     return (
         <View style={styles.block}>
             <GestureRecognizer
@@ -97,7 +112,7 @@ function LocationComponent(props) {
                 >
                     <View style={[StyleSheet.absoluteFill, { width: "100%", padding: 40, backgroundColor: "rgba(0, 0, 0, 0.5)", alignItems: "flex-start", justifyContent: "flex-start", borderRadius: 20, }]}>
                         <BlurView intensity={25} style={[StyleSheet.absoluteFill, styles.blurContainer]}></BlurView>
-                        <RateDiningHall name={data.closest} />
+                        <RateDiningHall name={data.closest} time={props.time} userId={props.userId}/>
                         <TouchableOpacity
                             onPress={() => {
                                 setModalVisible(!modalVisible);
@@ -121,14 +136,12 @@ function LocationComponent(props) {
                 </View>
             </View>
             {
-                data.survey &&
+                showSurvey &&
                 <SimpleButton style={{ alignSelf: "flex-end", marginRight: 10, marginTop: 10 }} background="true" text={"Rate " + data.closest} onPress={() => {
-                    //navigation.navigate("Rate Dining Hall", { name: data.closest }); 
                     setModalVisible(!modalVisible);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                 }} />
             }
-            {/* {<View style={{ width: "100%", backgroundColor: "#F0F2F5", height: 2, marginVertical: 20, alignSelf: 'center' }}></View>} */}
             <View style={{
                 marginHorizontal: 15,
                 marginBottom: 15,

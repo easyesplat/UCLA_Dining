@@ -76,7 +76,7 @@ function DiningLogo(props) {
                 />
             </Svg>
         ); 
-    } else if (props.name === "The Feast") {
+    } else if (props.name === "Spice Kitchen at Feast") {
         return (
             <Svg
                 width={74}

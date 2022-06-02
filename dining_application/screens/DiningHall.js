@@ -13,13 +13,16 @@ import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from '../Core/Config';
 import AtAGlanceItem from '../components/atAGlanceItem';
 import Loading from '../components/loading';
+import { SmallStar, SmallStarNoFill } from '../assets/icons/icons';
 
 function DiningHall() {
     const routes = useRoute();
     const [menuMap, setMenuMap] = useState(null);
     const [userDoc, setUserDoc] = useState(null);
+    const [showSurvey, setShowSurvey] = useState(null);
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
+    const [ratingsDoc, setRatingsDoc] = useState(null);
     const [loaded] = useFonts({
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
         'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
@@ -30,12 +33,19 @@ function DiningHall() {
 
     let menuSupported = true;
     let dietaryRestriction = true;
+    let showLocker = false;
 
     if (routes.params.name === "The Study at Hedrick") {
         menuSupported = false;
     } else if (routes.params.name === "Bruin Café" || routes.params.name === "The Drey") {
         dietaryRestriction = false;
     }
+
+    if (routes.params.name == "De Neve" || routes.params.name == "Epicuria" || routes.params.name == "Bruin Plate" || routes.params.name == "The Feast") showLocker = true;
+
+    const d = new Date();
+    let date = d.getFullYear().toString() + (d.getMonth() + 1).toString() + d.getDate().toString();
+    let docName = (routes.params.name) + date + routes.params.period;
 
     function authStateChanged(user) {
         setUser(user);
@@ -52,14 +62,27 @@ function DiningHall() {
             setMenuMap(result);
         }).catch((error) => console.log('error', error));
 
+        getDoc(doc(db, "Ratings", (docName))).then((document) => {
+            if (document.exists()) {
+                // alert("Found Ratings");
+                setRatingsDoc(document.data());
+                // console.log(document);
+                setShowSurvey(true)
+            } else {
+                // alert("Did not find Ratings");
+                setShowSurvey(false);
+                setRatingsDoc(false);
+            }
+        }).catch((e) => alert(e))
+
         const subscriber = onAuthStateChanged(auth, authStateChanged);
         return subscriber; // unsubscribe on unmount
     }, []);
 
-    if (initializing || userDoc === null) return <Loading/>;
+    if (initializing || userDoc === null) return <Loading />;
 
-    if (menuMap == null || userDoc == null) {
-        return <Loading/>;
+    if (menuMap == null || userDoc == null || showSurvey == null || ratingsDoc == null) {
+        return <Loading />;
     }
 
     if (!loaded) {
@@ -127,6 +150,79 @@ function DiningHall() {
         mealPeriod = "late night";
     }
 
+    let busyAverage;
+    let busyMessage;
+    let busyColor;
+    let linesAverage;
+    let linesMessage;
+    let linesColor
+    let lockerAverage;
+    let lockerMessage; 
+    let lockersColor
+    let overallAverage;
+    let stars = [];
+    // if (busyAverage < 1.5) {
+    //     busyMessage = routes.params.name + " is empty";
+    //     busyColor = '#37B96B';
+    // } else
+    if (showSurvey) {
+        busyAverage = Math.round((ratingsDoc.totalBusy / ratingsDoc.numberOfResponders) * 2) / 2;
+        if (busyAverage < 1.5) {
+            busyMessage = routes.params.name + " is not very busy";
+            busyColor = '#37B96B';
+        } else if (busyAverage < 2.5) {
+            busyMessage = routes.params.name + " is getting busy";
+            busyColor = '#EFC42B';
+        } else {
+            busyMessage = routes.params.name + " is packed";
+            busyColor = '#D24040';
+        }
+        linesAverage = Math.round((ratingsDoc.totalLines / ratingsDoc.numberOfResponders) * 2) / 2;
+        if (linesAverage < 0.5) {
+            linesMessage = "No long lines";
+            linesColor = '#37B96B';
+        } else {
+            linesMessage = "Long lines";
+            linesColor = '#D24040';
+        }
+        if (showLocker) {
+            lockerAverage = Math.round((ratingsDoc.totalLocker / ratingsDoc.numberOfResponders) * 2) / 2;
+            if (lockerAverage < 1.5) {
+                lockerMessage = "Plenty of lockers";
+                lockersColor = '#37B96B';
+            } else if (lockerAverage < 2.5) {
+                lockerMessage = "Some lockers available";
+                lockersColor = '#EFC42B';
+            } else if (lockerAverage < 3.5) {
+                lockerMessage = "Many broken/locked lockers";
+                lockersColor = '#dc4d01';
+            } else {
+                lockerMessage = "No lockers";
+                lockersColor = '#D24040';
+            }
+
+        }
+        overallAverage = Math.round((ratingsDoc.totalRating / ratingsDoc.numberOfResponders) * 2) / 2;
+        for (let i = 0; i < 5; i++) {
+            if (overallAverage >= 1) {
+                stars.push(
+                    <View style={{paddingRight: 2, }}>
+                        <SmallStar/>
+                    </View>)
+                overallAverage--; 
+            } else {
+                stars.push(
+                    <View style={{paddingRight: 2}}>
+                        <SmallStarNoFill/>
+                    </View>)
+                overallAverage--;
+            }
+        }
+    }
+
+    let activityLevel = (routes.params.data.percentage).toString() + "%"; 
+
+
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView>
@@ -155,6 +251,38 @@ function DiningHall() {
                                     }
                                     <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList} />
                                 </View>
+
+                            }
+                            <View style={{width: "100%", marginTop: 15, backgroundColor: "#F0F2F5", padding: 8, borderRadius: 8, flexDirection: 'row', alignItems: 'center'}}>
+                                <Text style={{paddingRight: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>Activity Level</Text>
+                                <View style={{width: "100%", height: 10, backgroundColor: "#CDD0D4", flex: 1, borderRadius: 5, overflow: 'hidden'}}>
+                                    <View style={{width: activityLevel, backgroundColor: '#37B96B', height: 10,}}></View>
+                                </View>
+                                <Text style={{paddingLeft: 5, fontFamily: "publica-sans-s", fontSize: 14,}}>{activityLevel}</Text>
+                            </View>
+                            {
+                                showSurvey &&
+                                <>
+                                    <Text style={styles.subHeading}>What others think:</Text>
+                                    <View style={{ backgroundColor: 'white', flexWrap: 'wrap', flexDirection: 'row' }}>
+                                        <View style={{ backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, marginRight: 5, marginTop: 5 }}>
+                                            <Text style={{ color: busyColor, fontFamily: "publica-sans-s", textAlign: 'center' }}>{busyMessage} </Text>
+                                        </View>
+                                        <View style={{ backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, marginRight: 5, marginTop: 5 }}>
+                                            <Text style={{ color: linesColor, fontFamily: "publica-sans-s", textAlign: 'center' }}>{linesMessage} </Text>
+                                        </View>
+                                        {
+                                            showLocker &&
+                                            <View style={{ backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, marginRight: 5, marginTop: 5 }}>
+                                                <Text style={{ color: lockersColor, fontFamily: "publica-sans-s", textAlign: 'center' }}>{lockerMessage} </Text>
+                                            </View>
+                                        }
+                                        <View style={{ backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, marginRight: 5, marginTop: 5, flexDirection: 'row', alignItems: 'center'}}>
+                                            <Text style={{ color: 'black', fontFamily: "publica-sans-s", textAlign: 'center', }}>Overall Rating: </Text>
+                                            {stars}
+                                        </View>
+                                    </View>
+                                </>
                             }
                         </View>
                     </View>
@@ -194,11 +322,22 @@ const styles = StyleSheet.create({
     insightsHeaderText: {
         fontFamily: 'publica-sans-s',
         fontSize: 18,
-        marginBottom: 20,
+    },
+    subHeading: {
+        fontFamily: 'publica-sans-s',
+        fontSize: 16,
+        marginBottom: 5,
+        marginTop: 20,
+    },
+    surveyText: {
+        fontFamily: 'publica-sans-s',
+        fontSize: 14,
+        marginBottom: 10,
     },
     items: {
         paddingHorizontal: 20,
         marginTop: -45,
+
     },
     block: {
         padding: 10,
@@ -213,6 +352,7 @@ const styles = StyleSheet.create({
     glanceView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: 15, 
     }
 });
 

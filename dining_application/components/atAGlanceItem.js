@@ -98,7 +98,7 @@ export default AtAGlanceItem
 
 const styles = StyleSheet.create({
     glanceItem: {
-        width: 80,
+        width: (Dimensions.get('window').width - 85)/4,
         // justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#F0F2F5",

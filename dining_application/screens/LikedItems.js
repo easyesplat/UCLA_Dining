@@ -69,12 +69,16 @@ const LikedItemsComponent = () => {
     }
 
     useEffect(() => {
-        readAllItems().then((result) => {
-            setMenuMap(result);
-        }).catch((error) => console.log('error', error));
+        const unsubscribe = navigation.addListener('focus', () => {
+            readAllItems().then((result) => {
+                setMenuMap(result);
+            }).catch((error) => console.log('error', error));
+    
+            const subscriber = onAuthStateChanged(auth, authStateChanged);
+            return subscriber; // unsubscribe on unmount
+        });
 
-        const subscriber = onAuthStateChanged(auth, authStateChanged);
-        return subscriber; // unsubscribe on unmount
+        return unsubscribe;
     }, []);
 
     if (initializing || userDoc === null) return <Loading />;
@@ -110,12 +114,13 @@ const LikedItemsComponent = () => {
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
                 <View style={styles.header}>
-                    <Text style={styles.headerText}>Your liked items</Text>
+                    <Text style={styles.headerText}>Liked items</Text>
                     <LikedIcon />
                 </View>
+                <Text style={styles.subheading}>Your liked items here today</Text>
                 {likedItemsItems}
             </ScrollView>
         </SafeAreaView>
@@ -157,11 +162,17 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontFamily: "publica-sans-m",
-        lineHeight: 30,
+        lineHeight: 40,
         fontSize: 28,
     },
     scrollView: {
         paddingHorizontal: 20,
+    },
+    subheading: {
+        fontSize: 22,
+        lineHeight: 36,
+        marginBottom: 5,
+        fontFamily: "publica-sans-s",
     },
     iconRow: {
         flexDirection: "row",
