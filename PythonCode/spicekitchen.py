@@ -33,7 +33,7 @@ for food_block in foodlist:
     dict = {}
     menu_items = food_block.find_all("li", class_="menu-item")
     for item in menu_items:
-        current_food = item.a.text
+        current_food = item.a.text.strip()
         dict[current_food] = []
         diet_link = item.find("a", class_="recipelink")['href']
         description = ''
