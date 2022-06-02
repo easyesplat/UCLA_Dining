@@ -1,5 +1,5 @@
 # Bruin Dine
-<img src="https://github.com/easyesplat/UCLA_Dining/blob/main/dining_application/assets/animojis/bearWfood.png" align="right" alt="Bruin Dine Logo" width="280" height="280">
+<img src="https://github.com/easyesplat/UCLA_Dining/blob/main/dining_application/assets/animojis/starbear.png" align="right" alt="Bruin Dine Logo" width="280" height="280">
 
 Bruin Dine provides users with UCLA Dining menu information for menu items that the user likes. This full-stack application helps students in many ways - UCLA’s dining menu can often be complicated, and this way, students who have dietary restrictions or other preferences can more easily navigate menu options.  
 
