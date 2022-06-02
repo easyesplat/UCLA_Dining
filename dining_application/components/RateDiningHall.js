@@ -1,7 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
 import StarRating from 'react-native-star-rating-widget';
+import { getDoc, doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db } from '../Core/Config.js';
+import { useNavigation } from '@react-navigation/core';
+import AppLoading from 'expo-app-loading';
 
 
 function RateDiningHall(props) {
@@ -9,11 +13,11 @@ function RateDiningHall(props) {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState();
     const [activity, setActivity] = useState([
-        { label: "I don't feel safe", value: 5 },
         { label: 'Crowded', value: 4 },
         { label: 'A little busy', value: 3 },
-        { label: 'Not very busy', value: 2 },
+        { label: 'A little busy', value: 2 },
         { label: 'Empty', value: 1 },
+        //1-1.5 2-2.5, 3-3.5 4
     ]);
     const [open2, setOpen2] = useState(false);
     const [value2, setValue2] = useState();
@@ -29,17 +33,67 @@ function RateDiningHall(props) {
         { label: 'A lot of broken/locked lockers', value: 2 },
         { label: 'Lockers GALORE', value: 1 },
     ]);
+    const [ratingDoc, setRatingDoc] = useState(null); 
+    const navigation = useNavigation();
 
     const myTheme = require("../Themes/dropdownThemeRating.js");
 
     let allowLocker = false;
-    if (props.name == "De Neve" || props.name == "Epicuria" || props.name == "Bruin Plate" || props.name == "The Feast") allowLocker = true
+    if (props.name == "De Neve" || props.name == "Epicuria" || props.name == "Bruin Plate" || props.name == "The Feast") allowLocker = true;
+
+    const d = new Date(); 
+    let date = d.getFullYear().toString() + (d.getMonth() + 1).toString() + d.getDate().toString(); 
+    let docName = (props.name) + date + props.time;
+    // console.log(props.userId); 
+
+    // console.log(docName)
+    useEffect(() => {
+        getDoc(doc(db, "Ratings", (docName))).then((result) => {
+            if (!result.exists()) {
+                const data = {
+                    numberOfResponders: 0,
+                    totalBusy: 0, 
+                    totalLines: 0,
+                    totalLocker: 0,
+                    totalRating: 0, 
+                }
+                setDoc(doc(db, "Ratings", docName), data)
+                .then((newDoc) => {
+                    setRatingDoc(result.data()); 
+                })
+                .catch((error) => alert(error.message));
+            } else {
+                setRatingDoc(result.data()); 
+            }
+        }).catch((e) => alert(e))
+    }, [])
+
+
+    const handleSubmission = () => {
+        updateDoc(doc(db, "Ratings", docName), {
+            numberOfResponders: ratingDoc.numberOfResponders + 1,
+            totalBusy: ratingDoc.totalBusy + value, 
+            totalLines: ratingDoc.totalLines + value2,
+            totalLocker: ratingDoc.totalLocker + value3,
+            totalRating: ratingDoc.totalRating + rating, 
+        }).then(() => {
+            alert("Thank you for responding!");
+            updateDoc(doc(db, "users", props.userId), {
+                answered: arrayUnion(docName),
+            })
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'HomeScreen' }]
+            });
+        }).catch((e) => {alert(e)})
+    }
 
     DropDownPicker.addTheme("MyThemeName", myTheme);
     DropDownPicker.setTheme("MyThemeName");
     return (
         <SafeAreaView>
-            <View style={{ width: "100%", flex: 1 }}>
+            <View style={{ width: "100%", flex: 1, alignItems: 'center' }}>
                 <Text style={styles.header}>Rate {props.name}</Text>
                 <>
                     <Text style={styles.subheading}>How busy is {props.name}</Text>
@@ -120,6 +174,8 @@ function RateDiningHall(props) {
                 </View>
                 <TouchableOpacity
                     style={styles.button}
+                    onPress={handleSubmission}
+                    
                 >
                     <Text style={styles.buttonOutlineText}>Submit</Text>
                 </TouchableOpacity>
@@ -158,7 +214,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 80,
         marginBottom: 20,
-        alignSelf: "flex-end"
+        alignSelf: "center"
     },
     buttonOutlineText: {
         color: 'white',

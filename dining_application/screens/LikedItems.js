@@ -69,12 +69,16 @@ const LikedItemsComponent = () => {
     }
 
     useEffect(() => {
-        readAllItems().then((result) => {
-            setMenuMap(result);
-        }).catch((error) => console.log('error', error));
-
-        const subscriber = onAuthStateChanged(auth, authStateChanged);
-        return subscriber; // unsubscribe on unmount
+        const unsubscribe = navigation.addListener('focus', () => {
+            readAllItems().then((result) => {
+                setMenuMap(result);
+            }).catch((error) => console.log('error', error));
+    
+            const subscriber = onAuthStateChanged(auth, authStateChanged);
+            return subscriber; // unsubscribe on unmount
+        });
+        
+        return unsubscribe;
     }, []);
 
     if (initializing || userDoc === null) return <Loading />;
