@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  Button,
   View,
   Text,
   StyleSheet,
@@ -27,16 +26,10 @@ function FoodTruckCard(props) {
         resizeMode="cover"
         source={require('./assets/perro.jpeg')}>
 
-      <TouchableOpacity>
-        <Button
-          uppercase= {false}
-          title = {<Text style={styles.buttonText} onPress={() => Linking.openURL('http://google.com')}> 
-          Perro <ChevronRight/> 
-          </Text>}
-          color = '#00000'
-          >
-        </Button>
-      </TouchableOpacity>
+        <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.buttonText} onPress={() => Linking.openURL('http://google.com')}> 
+          Perro <ChevronRight/> </Text>
+        </TouchableOpacity>
 
         <View
           style={{
