@@ -4,11 +4,9 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import Menubutton from '../components/menubutton';
 import Block from '../components/block';
 import SimpleButton from '../components/simpleButton';
-import { DarkTheme, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import DATA from '../data/diningData';
 import * as Haptics from 'expo-haptics';
-import { database } from 'firebase/database';
-import { ref, child, get, onValue } from "firebase/database";
 
 //TODO: Uncomment:
 import readTimes from "../Core/timeDatabase";
@@ -30,13 +28,6 @@ function ActiveDiningHalls(props) {
         readTimes().then(result => {
             setTimeMap(result);
         }).catch(error => console.log('error', error));
-
-        const starCountRef = ref(database, 'density/');
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-        });
-
-
     }, []);
 
     if (timeMap == null) {
@@ -153,7 +144,7 @@ function ActiveDiningHalls(props) {
                     navigation.navigate("All Dining Halls", { /*data: timeMap*/ });
                 }} />
             </View>
-            <LocationComponent open={open} />
+            <LocationComponent open={open} time={mealPeriod} userId={props.userId} userAnswered={props.userAnswered}/>
         </View>
     );
 }

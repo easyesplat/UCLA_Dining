@@ -1,5 +1,0 @@
-1. How busy is the dining hall (Crowded, a little busy, not very busy, empty)
-2. Long lines? (Yes, No)
-3. How's the food? (1, 2, 3, 4, 5)
-4. Locker Availability (Plenty of Lockers, Have to search a little, A lot of broken/locked lockers, No lockers available)
-

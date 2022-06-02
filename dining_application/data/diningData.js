@@ -31,7 +31,7 @@ const DATA = [
     },
     {
         id: 6,
-        name: "The Feast", 
+        name: "Spice Kitchen at Feast", 
         waitTime: 34, 
         imageUri: require('../assets/diningHallImages/feast.jpg'), 
     },

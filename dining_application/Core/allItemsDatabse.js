@@ -2,7 +2,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./Config";
 
 export default async function readAllItems() {
-    const diningHall = ["Epicuria", "Bruin Plate", "De Neve", "Rendezvous", "Bruin Café", "The Feast", "Bruin Bowl", "The Study at Hedrick", "The Drey"];
+    const diningHall = ["Epicuria", "Bruin Plate", "De Neve", "Rendezvous", "Bruin Café", "Spice Kitchen at Feast", "Bruin Bowl", "The Study at Hedrick", "The Drey"];
     const allMenuArray = new Map();
     for (let name in diningHall) {
         const mealTimes = ["breakfast", "lunch", "dinner", "late_night"];
