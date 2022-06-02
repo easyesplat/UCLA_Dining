@@ -58,8 +58,8 @@ function RateDiningHall(props) {
                     totalRating: 0, 
                 }
                 setDoc(doc(db, "Ratings", docName), data)
-                .then((newDoc) => {
-                    setRatingDoc(result.data()); 
+                .then(() => {
+                    setRatingDoc(data); 
                 })
                 .catch((error) => alert(error.message));
             } else {

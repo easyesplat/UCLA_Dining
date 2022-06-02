@@ -151,19 +151,24 @@ function DiningHall() {
 
     let busyAverage;
     let busyMessage; 
+    let busyColor; 
     let linesAverage;
     let lockerAverage; 
     let overallAverage; 
     if (showSurvey) {
         busyAverage = Math.round((ratingsDoc.totalBusy / ratingsDoc.numberOfResponders)*2)/2;
         if (busyAverage < 1.5) {
-            busyMessage = routes.params.name + "is empty";
+            busyMessage = routes.params.name + " is empty";
+            busyColor = '#37B96B'; 
         } else if (busyAverage < 2.5) {
-            busyMessage = routes.params.name + "not very busy";
+            busyMessage = routes.params.name + " not very busy";
+            busyColor = '#EFC42B'; 
         } else if (busyAverage < 3.5) {
-
+            busyMessage = routes.params.name + " is getting busy";
+            busyColor = '#dc4d01'; 
         } else {
-
+            busyMessage = routes.params.name + " is packed";
+            busyColor = '#D24040'; 
         }
         linesAverage = Math.round((ratingsDoc.totalLines / ratingsDoc.numberOfResponders)*2)/2;
         if (showLocker) lockerAverage = Math.round((ratingsDoc.totalLocker / ratingsDoc.numberOfResponders)*2)/2;
@@ -204,9 +209,9 @@ function DiningHall() {
                                 showSurvey &&
                                 <>
                                     <Text style={styles.subHeading}>What other's think:</Text>
-                                    <View style={{ backgroundColor: 'red', flexWrap: 'wrap', flexDirection: 'row' }}>
-                                        <View>
-                                            <Text>{busyAverage} </Text>
+                                    <View style={{ backgroundColor: 'white', flexWrap: 'wrap', flexDirection: 'row' }}>
+                                        <View style={{backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, }}>
+                                            <Text style={{color: busyColor, fontFamily: "publica-sans-s", textAlign: 'center'}}>{busyMessage} </Text>
                                         </View>
                                         <View>
                                             <Text>{linesAverage} </Text>
@@ -218,9 +223,6 @@ function DiningHall() {
                                             <Text>{overallAverage} </Text>
                                         </View>
                                     </View>
-                                    <Text style={styles.surveyText}>How busy is {routes.params.name}: {ratingsDoc.totalBusy}</Text>
-                                    <Text style={styles.surveyText}>How busy is {routes.params.name}: {ratingsDoc.totalBusy}</Text>
-                                    <Text style={styles.surveyText}>How busy is {routes.params.name}: {ratingsDoc.totalBusy}</Text>
                                 </>
                             }
                         </View>
