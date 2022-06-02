@@ -14,4 +14,3 @@ db = firestore.client()
 # creating collection for front-end
 db.collection('Ratings').document('Test Person').set({'Test': 'Test'})
 db.collection('users').document('Test Person').set({'Test': 'Test'})
-
