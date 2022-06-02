@@ -40,7 +40,7 @@ function ActiveDiningHalls(props) {
         return <AppLoading />;
     }
 
-    console.log(timeMap); 
+    // console.log(timeMap); 
 
     //Meal Period 
     const openingTimes = [17, 11, 7];
