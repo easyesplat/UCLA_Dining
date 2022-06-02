@@ -21,6 +21,7 @@ export default function diningLocationInformation(userLat, userLong, openDiningH
     let minDistance = 400; 
     let closestDiningHall = ""; 
     let closeEnoughForSurvey = false; 
+    let OnHill = true;
     let distances = []; 
 
     for (let i in LOCATION_DATA) {
@@ -44,8 +45,9 @@ export default function diningLocationInformation(userLat, userLong, openDiningH
         return a.distance - b.distance; 
     })
 
-    if (minDistance === 600) {
-        closestDiningHall = "Looks like you aren't on the hill"
+    if (minDistance === 400) {
+        closestDiningHall = ""
+        OnHill = false; 
     }
 
     if (minDistance < 35) {
@@ -57,5 +59,6 @@ export default function diningLocationInformation(userLat, userLong, openDiningH
         distance: minDistance,
         survey: closeEnoughForSurvey,
         all: distances, 
+        notOnHill: OnHill, 
     }; 
 }

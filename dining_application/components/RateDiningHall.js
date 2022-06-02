@@ -11,26 +11,25 @@ import AppLoading from 'expo-app-loading';
 function RateDiningHall(props) {
     const [rating, setRating] = useState(0);
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(null);
     const [activity, setActivity] = useState([
-        { label: 'Crowded', value: 4 },
-        { label: 'A little busy', value: 3 },
-        { label: 'A little busy', value: 2 },
-        { label: 'Empty', value: 1 },
+        { label: 'Packed', value: 3 },
+        { label: 'Getting busy', value: 2 },
+        { label: 'A little busy', value: 1 },
         //1-1.5 2-2.5, 3-3.5 4
     ]);
     const [open2, setOpen2] = useState(false);
-    const [value2, setValue2] = useState();
+    const [value2, setValue2] = useState(null);
     const [lines, setLines] = useState([
         { label: 'Yes', value: 1 },
         { label: 'No', value: 0 },
     ]);
     const [open3, setOpen3] = useState(false);
-    const [value3, setValue3] = useState();
+    const [value3, setValue3] = useState(null);
     const [locker, setLocker] = useState([
         { label: 'No lockers available', value: 4 },
-        { label: 'Have to search a little', value: 3 },
-        { label: 'A lot of broken/locked lockers', value: 2 },
+        { label: 'A lot of broken/locked lockers', value: 3 },
+        { label: 'Have to search a little', value: 2 },
         { label: 'Lockers GALORE', value: 1 },
     ]);
     const [ratingDoc, setRatingDoc] = useState(null); 
@@ -70,6 +69,10 @@ function RateDiningHall(props) {
 
 
     const handleSubmission = () => {
+        if (value == null || value2 == null || value3 == null) {
+            alert("Please answer all fields");
+            return; 
+        }
         updateDoc(doc(db, "Ratings", docName), {
             numberOfResponders: ratingDoc.numberOfResponders + 1,
             totalBusy: ratingDoc.totalBusy + value, 
@@ -77,7 +80,7 @@ function RateDiningHall(props) {
             totalLocker: ratingDoc.totalLocker + value3,
             totalRating: ratingDoc.totalRating + rating, 
         }).then(() => {
-            alert("Thank you for responding!");
+            // alert("Thank you for responding!");
             updateDoc(doc(db, "users", props.userId), {
                 answered: arrayUnion(docName),
             })

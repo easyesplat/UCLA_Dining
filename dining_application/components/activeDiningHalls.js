@@ -12,10 +12,12 @@ import * as Haptics from 'expo-haptics';
 import readTimes from "../Core/timeDatabase";
 import AppLoading from 'expo-app-loading';
 import LocationComponent from './LocationComponent';
+import readDensity from '../Core/density';
 
 function ActiveDiningHalls(props) {
     //TODO: Uncomment:
     const [timeMap, setTimeMap] = useState(null);
+    const [densityMap, setDensityMap] = useState(null);
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
@@ -28,12 +30,17 @@ function ActiveDiningHalls(props) {
         readTimes().then(result => {
             setTimeMap(result);
         }).catch(error => console.log('error', error));
+
+        readDensity().then(result => {
+            setDensityMap(result);
+        }).catch(error => console.log('error', error));
     }, []);
 
-    if (timeMap == null) {
+    if (timeMap == null || densityMap == null) {
         return <AppLoading />;
     }
 
+    console.log(timeMap); 
 
     //Meal Period 
     const openingTimes = [17, 11, 7];
@@ -117,13 +124,23 @@ function ActiveDiningHalls(props) {
     let sortedData = DATA.slice();
     let open = [];
 
+    for (let i = 0; i < sortedData.length; i++) {
+        const searchIndex = densityMap.findIndex((hall) => hall.name == sortedData[i].name);
+        if (searchIndex !== -1) {
+            sortedData[i].level = densityMap[searchIndex].data.level;
+            sortedData[i].percentage = densityMap[searchIndex].data.percentage; 
+        }
+    }
+
     sortedData.sort(function (a, b) {
-        return a.waitTime - b.waitTime;
+        return a.percentage - b.percentage;
     });
+    
+
     for (let i = 0; i < sortedData.length; i++) {
         //TODO: Uncomment:
-        if (openDiningHalls.includes(sortedData[i].name)) {
-            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].waitTime} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => {
+        if (sortedData[i].percentage != -1) {
+            renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].percentage} level={sortedData[i].level} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => {
                 navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             }} />);

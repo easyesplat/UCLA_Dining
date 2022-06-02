@@ -31,7 +31,7 @@ const LOCATION_DATA = [
     },
     {
         id: 6,
-        name: "The Feast", 
+        name: "Spice Kitchen at Feast", 
         latitude: 34.071755129381685,
         longitude: -118.45139639772286,
     },
