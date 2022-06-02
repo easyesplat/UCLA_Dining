@@ -29,15 +29,41 @@ cd ./UCLA_Dining
 ```
 
 Installation steps for the NodeJS dining hall app, Python web-scrape script, and NodeJS chrome extension will be outlined below.
-
-## Dining Hall Application
-### Requirements
-
 ## Web-Scrape Script 
 ### Requirements
 * Python (3.9.7)
 * Anaconda3
 * pip
+
+### Google Firebase Setup
+* If you haven't already, sign up for a firebase account in [Firebase](https://firebase.google.com/) and create a new project. If you already have an account, log in to your Firebase console and add a new project. 
+
+<p align="center">
+<img src="http://mariechatfield.com/tutorials/assets/firebase/screenshot_new_account.png"
+  alt="Creating New Project"
+  width="686">
+</p>
+
+* Name your project and go click on the **Firestore** section. Follow the Firestore database workflow accordingly.
+* Add the Firebase Admin SDK to the Python application with the following command:
+
+```shell
+pip install --upgrade firebase-admin
+```
+* In [IAM & Admin > Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), create a new private key for your newly created firebase project and save the JSON file with the "PythonCode" directory; the file must be name "serviceAccountKey.json" and be placed in the correct location for the Python scripts to correctly push data to Firestore
+
+<p align="center">
+<img src="https://i.imgur.com/7w2c4A5.png"
+  alt="IAM & Admin"
+  width="686">
+</p>
+
+** Note ** Normally, your private key should not be shared to the public due to security concerns; however, for simplicity and practical purposes, I have added my own "serviceACcountKey.json" under the "PythonCode" directory.
+
+### Python Script Setup
+
+## Dining Hall Application
+### Requirements
 
 ## Chrome Extension
 ### Requirements
