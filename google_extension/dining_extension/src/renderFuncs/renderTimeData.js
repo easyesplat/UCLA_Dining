@@ -95,7 +95,8 @@ function BPlateData() {
 }
 */
 
-// RENDERING FUNCTION DEFINITINOS
+// ------------------- Rendering functions -------------------------
+// style "square" is in css/body_style.css
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -105,24 +106,26 @@ function Square(props) {
 }
 
 
-export function RenderData() {
-  const [name, setname] = useState("");
+export function RenderData(props) {
+  const [classType] = useState(props.class_type);
   const [teststr, setteststr] = useState("");
   const [dataLoaded, setdataLoaded] = useState(false);  // true after one load
   const [BPlateInfo, setBPlateInfo] = useState("");
+
   const [AllTime, setAllTime] = useState("");
   const [BCTime, setBCTime] = useState("");
   const [BPTime, setBPTime] = useState("");
   const [DNTime, setDNTime] = useState("");
   const [EPTime, setEPTime] = useState("");
+  const [RWTime, setRWTime] = useState("");
+  const [RETime, setRETime] = useState("");
+  const [FETime, setFETime] = useState("");
+  const [STTime, setSTTime] = useState("");
 
-  function NameChange(e) {
-    setname(e.target.value);
-    setteststr(name);
-  }
+  const [displayTime, setdisplayTime] = useState("");  // display on card back based on classType
 
   function loadData() {
-    if (dataLoaded === false) {
+    if (dataLoaded == false) {
       // Hard-coded Firestore data for testing
       let BPlateInfoData = {
         breakfast: "7-10",
@@ -132,55 +135,97 @@ export function RenderData() {
       };
       setBPlateInfo(BPlateInfoData);
 
-      // Hard-coded Realtime data for testing
+      // Capacity data
       let DeNeveTime = {
         level: 'slightly busy: 10%',
         percentage: 10
       };
-      var BCafeTime = {
+      let BCafeTime = {
         level: 'getting busy: 30%',
         percentage: 30
       };
-      var BPlateTime = {
+      let BPlateTime = {
         level: 'not too busy: 8%',
         percentage: 8
       };
-      var EpicuriaTime = {
+      let EpicuriaTime = {
         level: 'not too busy: 5%',
         percentage: 5
+      };
+      let RendeWestTime = {
+        level: 'not too busy: 15%',
+        percentage: 15
+      };
+      let RendeEastTime = {
+        level: 'not too busy: 16%',
+        percentage: 16
+      };
+      let FeastTime = {
+        level: 'not too busy: 17%',
+        percentage: 17
+      };
+      let StudyTime = {
+        level: 'not too busy: 18%',
+        percentage: 18
       };
       let AllTimeData = {
         DN: DeNeveTime.level,
         BC: BCafeTime.level,
         BP: BPlateTime.level,
-        EP: EpicuriaTime.level
+        EP: EpicuriaTime.level,
+        RW: RendeWestTime.level,
+        RE: RendeEastTime.level,
+        FE: FeastTime.level,
+        ST: StudyTime.level
       }
       setAllTime(AllTimeData);
-      setBCTime("Bruin Café is " + AllTimeData.BC)
-      setBPTime("Bruin Plate is " + AllTimeData.BP)
-      setDNTime("DeNeve is " + AllTimeData.DN)
-      setEPTime("Epicuria is " + AllTimeData.EP)
+      setBCTime(AllTimeData.BC)
+      setBPTime(AllTimeData.BP)
+      setDNTime(AllTimeData.DN)
+      setEPTime(AllTimeData.EP)
+      setRWTime(AllTimeData.RW)
+      setRETime(AllTimeData.RE)
+      setFETime(AllTimeData.FE)
+      setSTTime(AllTimeData.ST)
       setdataLoaded(true);
+
+      // Assign display based on which card
+      if (classType == 'bc') {
+        setdisplayTime(AllTimeData.BC);
+      } else if (classType == 'bp') {
+        setdisplayTime(AllTimeData.BP);
+      } else if (classType == 'dn') {
+        setdisplayTime(AllTimeData.DN);
+      } else if (classType == 'ep') {
+        setdisplayTime(AllTimeData.EP);
+      } else if (classType == 'rw') {
+        setdisplayTime(AllTimeData.RW);
+      } else if (classType == 're') {
+        setdisplayTime(AllTimeData.RE);
+      } else if (classType == 'fe') {
+        setdisplayTime(AllTimeData.FE);
+      } else if (classType == 'st') {
+        setdisplayTime(AllTimeData.ST);
+      }
     }
-    console.log(AllTime);
   }
   
-// Click on first box to display all capacity data/wait times
-function renderSquares() {
-  return (
-    <dir>
-      <Square 
-        value = {BCTime}
-        onClick={() => loadData()}
-      />
-    </dir>
-  );
-}
+  // Click on the box to display capacity/wait time
+  function renderSquares() {
+    return (
+      <dir>
+        <Square 
+          value = {displayTime}
+          onClick={() => loadData()}
+        />
+      </dir>
+    );
+  }
 
-  // Render all time data
+  // Render
   return (
-  <div>
+    <div>
       {renderSquares()} 
-  </div>
+    </div>
   )
 }

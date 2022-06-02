@@ -15,6 +15,73 @@ The features and implementations that **Bruin Dine** provides are:
 * **Chrome Extension** option (Additional distinct feature #3)
   * Enable users to view limited data on available dining halls in the browser with ease. 
 
+## Installation
+
+Bruin Dine is currently in beta version. 
+
+### Getting code
+
+Clone **Bruin Dine**'s repository and `cd` into the respective folders if necessary.
+
+```shell
+git clone https://github.com/easyesplat/UCLA_Dining
+cd ./UCLA_Dining
+```
+
+Installation steps for the NodeJS dining hall app, Python web-scrape script, and NodeJS chrome extension will be outlined below.
+## Web-Scrape Script 
+### Requirements
+* Python (3.9.7)
+* Anaconda3
+* pip
+
+### Google Firebase Setup
+* If you haven't already, sign up for a firebase account in [Firebase](https://firebase.google.com/) and create a new project. If you already have an account, log in to your Firebase console and add a new project. 
+
+<p align="center">
+<img src="http://mariechatfield.com/tutorials/assets/firebase/screenshot_new_account.png"
+  alt="Creating New Project"
+  width="686">
+</p>
+
+* Name your project and go click on the **Firestore** section. Follow the Firestore database workflow accordingly.
+* Add the Firebase Admin SDK to the Python application with the following command:
+
+```shell
+pip install --upgrade firebase-admin
+```
+* In [IAM & Admin > Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), create a new private key for your newly created firebase project and save the JSON file with the "PythonCode" directory; the file must be name "serviceAccountKey.json" and be placed in the correct location for the Python scripts to correctly push data to Firestore
+
+<p align="center">
+<img src="https://i.imgur.com/7w2c4A5.png"
+  alt="IAM & Admin"
+  width="686">
+</p>
+
+** Note ** Normally, your private key should not be shared to the public due to security concerns; however, for simplicity and practical purposes, I have added my own "serviceACcountKey.json" under the "PythonCode" directory.
+
+### Python Script Setup
+
+## Dining Hall Application
+### Requirements
+
+## Chrome Extension
+### Requirements
+
+### Setup
+* Open the folder containing the extension; In our repository, the file is located within "dining_extension". `cd` into the respective folder if necessary. 
+
+* Run and build chrome extension through npm
+```shell
+npm install
+npm run build
+```
+
+* In Google Chrome, open the extension settings by clicking "**Manage Extensions**" and enabling developer mode. Look into [Chrome Web Store Help](https://support.google.com/chrome_webstore/answer/2664769?hl=en) for more info.
+* Select "**Load unpacked**" and navigate to the build folder created by the npm build script. It should be in the same folder as the project. Select the build folder.
+* Run the extension as you would run any other extension
+
+** Note ** This process is for using the extension as a demo. If it were to be distributed, it would need to be uploaded to the Google store. 
 
 ## Group Members
-© Eric Choi (ericchoirr38@gmail.com), Kalyan Karamsetty (Kalyan.Karamsetty@gmail.com), Kangrui Chen (kangrui@g.ucla.edu), Marina Suh (marinasuh@g.ucla.edu), Rory O’Regan (roregan@g.ucla.edu)
+© [Eric Choi](https://github.com/easyesplat) (ericchoirr38@gmail.com), [Kalyan Karamsetty](https://github.com/kalcow) (Kalyan.Karamsetty@gmail.com), [Kangrui Chen](https://github.com/kangruichen) (kangrui@g.ucla.edu), [Marina Suh](https://github.com/marinasoo) (marinasuh@g.ucla.edu), [Rory O’Regan](https://github.com/robertcaliforya) (roregan@g.ucla.edu)

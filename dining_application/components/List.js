@@ -6,6 +6,7 @@ import {
 	FlatList,
 	SafeAreaView,
 	Image, 
+	Keyboard,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ExternalLink, SmallHeart } from "../assets/icons/icons";
@@ -136,6 +137,8 @@ const List = (props) => {
 						keyExtractor={(item) => item.id}
 						style={{ marginHorizontal: -20, paddingHorizontal: 20, paddingTop: 20, paddingBottom: 200 }}
 						showsVerticalScrollIndicator={false}
+						onScrollEndDrag={() => Keyboard.dismiss()}
+						contentContainerStyle={{ paddingBottom: 40 }}
 					/>
 				</View>
 			</View>
@@ -155,9 +158,9 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		paddingVertical: 20,
 		borderRadius: 15,
-		shadowColor: 'rgba(100,100,110, 0.18)', // IOS
+		shadowColor: 'rgba(100,100,110, 0.12)', // IOS
 		shadowOpacity: 1, // IOS
-		shadowRadius: 29, //IOS
+		shadowRadius: 10, //IOS
 		backgroundColor: "white",
 		flexDirection: 'row',
 		alignItems: 'center',

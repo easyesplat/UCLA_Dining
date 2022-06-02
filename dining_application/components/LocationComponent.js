@@ -47,13 +47,17 @@ function LocationComponent(props) {
         return <AppLoading />;
     }
 
-    // const data = diningLocationInformation(position.latitude, position.longitude, props.open)
-    const data = diningLocationInformation(34.072596961211374, -118.4519303818121, props.open)
+    const data = diningLocationInformation(position.latitude, position.longitude, props.open)
+    // const data = diningLocationInformation(34.07190257151363, -118.4497362187541, props.open)
     // console.log(data)
 
     let message = "Your nearest open dining hall is "
     if (data.survey) {
         message = "Looks like you are at ";
+    }
+    // alert(data.notOnHill)
+    if (!data.notOnHill) {
+        message = "Looks like you aren't on the hill";
     }
 
     let otherHalls = [];
