@@ -58,4 +58,4 @@ npm run build
 ** Note ** This process is for using the extension as a demo. If it were to be distributed, it would need to be uploaded to the Google store. 
 
 ## Group Members
-© Eric Choi (ericchoirr38@gmail.com), Kalyan Karamsetty (Kalyan.Karamsetty@gmail.com), Kangrui Chen (kangrui@g.ucla.edu), Marina Suh (marinasuh@g.ucla.edu), Rory O’Regan (roregan@g.ucla.edu)
+© [Eric Choi](https://github.com/easyesplat) (ericchoirr38@gmail.com), [Kalyan Karamsetty](https://github.com/kalcow) (Kalyan.Karamsetty@gmail.com), [Kangrui Chen](https://github.com/kangruichen) (kangrui@g.ucla.edu), [Marina Suh](https://github.com/marinasoo) (marinasuh@g.ucla.edu), [Rory O’Regan](https://github.com/robertcaliforya) (roregan@g.ucla.edu)
