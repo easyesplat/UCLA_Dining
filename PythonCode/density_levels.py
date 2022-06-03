@@ -11,6 +11,7 @@ links = ['http://menu.dining.ucla.edu/Menus/BruinCafe'
 , 'http://menu.dining.ucla.edu/Menus/Rendezvous', 'http://menu.dining.ucla.edu/Menus/HedrickStudy',
 'http://menu.dining.ucla.edu/Menus/Drey']
 names = ['Bruin Café', 'Rendezvous', 'The Study at Hedrick', 'The Drey']
+del_names = ['Epicuria', 'De Neve', 'Bruin Plate', 'Bruin Café', 'Rendezvous', 'The Study at Hedrick', 'The Drey', 'test']
 
 #initializing firebase
 cred = credentials.Certificate("./serviceAccountKey.json")
@@ -18,7 +19,12 @@ firebase_admin.initialize_app(cred, {
   'projectId': "ucla-dining",
 })
 db = firestore.client()
-#db.collection('density').delete()
+db.collection('density').document('test').set({
+    'test':'test'
+})
+
+for name in del_names:
+    db.collection('density').document(name).delete()
 
 #grabbing the page
 html_link = 'http://menu.dining.ucla.edu/Menus/Today'
@@ -63,6 +69,5 @@ for link in links:
         if center_region.find('span', class_="activity-level-wrapper"):
             percentage = int(center_region.text.split(' ')[-1][:-1])
             level_placer(names[count], percentage)
-        count = count+1
+    count = count+1
 uClient.close()
-
