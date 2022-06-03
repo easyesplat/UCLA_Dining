@@ -69,10 +69,18 @@ function RateDiningHall(props) {
 
 
     const handleSubmission = () => {
-        if (value == null || value2 == null || value3 == null) {
-            alert("Please answer all fields");
-            return; 
+        if (allowLocker) {
+            if (value == null || value2 == null || value3 == null) {
+                alert("Please answer all fields");
+                return; 
+            }
+        } else {
+            if (value == null || value2 == null ) {
+                alert("Please answer all fields");
+                return; 
+            }
         }
+
         updateDoc(doc(db, "Ratings", docName), {
             numberOfResponders: ratingDoc.numberOfResponders + 1,
             totalBusy: ratingDoc.totalBusy + value, 

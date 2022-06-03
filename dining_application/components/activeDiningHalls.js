@@ -120,7 +120,6 @@ function ActiveDiningHalls(props) {
 
     let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants;
 
-
     let renderDiningHalls = [];
     let sortedData = DATA.slice();
     let open = [];
@@ -140,7 +139,7 @@ function ActiveDiningHalls(props) {
 
     for (let i = 0; i < sortedData.length; i++) {
         //TODO: Uncomment:
-        if (sortedData[i].percentage != -1 || openDiningHalls.includes(sortedData[i].name)) {
+        if (sortedData[i].percentage != -1 && openDiningHalls.includes(sortedData[i].name)) {
             let dataTimes = [
                 { label: 'Breakfast', value: 'breakfast' },
                 { label: 'Lunch', value: 'lunch' },

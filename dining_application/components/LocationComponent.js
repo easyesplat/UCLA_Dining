@@ -47,8 +47,8 @@ function LocationComponent(props) {
         return <AppLoading />;
     }
 
-    // const data = diningLocationInformation(position.latitude, position.longitude, props.open)
-    const data = diningLocationInformation(34.07190257151363, -118.4497362187541, props.open)
+    const data = diningLocationInformation(position.latitude, position.longitude, props.open)
+    // const data = diningLocationInformation(34.07265769555253, -118.45027946494129, props.open)
     // console.log(data)
 
     let message = "Your nearest open dining hall is "

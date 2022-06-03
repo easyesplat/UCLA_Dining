@@ -140,7 +140,7 @@ function DiningHall() {
                         margin: 5,
                         marginBottom: 15,
                         textAlign: 'center',
-                    }}>Looks like we don't support menus for this dining hall yet!</Text>
+                    }}>We don't support menus for this dining hall yet!</Text>
                 </MenuBlock>
             </View>
         );
