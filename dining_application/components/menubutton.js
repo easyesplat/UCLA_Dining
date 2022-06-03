@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, View, Text, Image, Dimensions } from 'rea
 import ArrowRight from 'dining_application/assets/icons/chevron-right.js';
 
 function Menubutton(props) {
-
     //Need to Change Colors
     let timeColor = '#37B96B';
     let timeMessage = "Not too busy"; 
