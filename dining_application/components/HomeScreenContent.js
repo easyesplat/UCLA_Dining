@@ -132,7 +132,7 @@ function HomeScreenContent() {
                     <SimpleButton style={{ alignSelf: "flex-end", marginTop: 10, }} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync} />
                 </Block>
                 <MealPlan mealPlan={mealPlanNumber} type={mealPlanPremium} />
-                <FoodTrucks />
+                <FoodTrucks/>
             </ScrollView>
         </SafeAreaView>
     );

@@ -64,8 +64,6 @@ function FoodTruckCard(props) {
     ); 
 }
 
-//<Image style={StyleSheet.absoluteFill} source={require('dining_application/assets/foodTruckImages/278744442_1963121643860184_5426346389554097002_n.jpeg')} />
-//name={item.name} waitTime={item.waitTime} imageUri={item.imageUri}
 function FoodTrucks() {
     const renderMenuButton = ({item}) => (
         <FoodTruckCard/>
@@ -73,7 +71,7 @@ function FoodTrucks() {
 
     return (
         <View>
-            <Text style={{fontFamily: "publica-sans-s", fontSize: 18, marginTop: 20}}>Discover more with Food Trucks</Text>
+            <Text style={{fontFamily: "publica-sans-s", fontSize: 18, marginTop: 20}}>Food Trucks here today</Text>
             <FlatList
                 horizontal
                 data={DATA}
