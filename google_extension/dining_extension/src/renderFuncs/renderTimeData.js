@@ -158,7 +158,7 @@ function allTimeData() {
       ST: StudyTime
     }
 	
-	console.log(AllTime);
+	
     return AllTime;      
 }
 
