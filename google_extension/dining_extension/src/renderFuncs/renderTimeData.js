@@ -109,41 +109,57 @@ function allTimeData() {
     level: "",
     percentage: 0
   };
-
-  db.collection("density")
+  
+  
+	db.collection("density")
 		.get()
 		.then((querySnapshot) => {
-      // TODO: add time to the end of string
-	  BCafeTime.percentage = querySnapshot.docs[0].data().percentage;
-      BCafeTime.level = querySnapshot.docs[0].data().level + ": " + querySnapshot.docs[0].data().percentage.toString() + "%";
-	  
-      BPlateTime.level = querySnapshot.docs[1].data().level + ": " + querySnapshot.docs[1].data().percentage.toString() + "%";
-	  BPlateTime.percentage = querySnapshot.docs[1].data().percentage;
-	  
-      DeNeveTime.level = querySnapshot.docs[2].data().level + ": " + querySnapshot.docs[2].data().percentage.toString() + "%";
-	  DeNeveTime.percentage = querySnapshot.docs[2].data().percentage;
-	  
-      EpicuriaTime.level = querySnapshot.docs[3].data().level + ": " + querySnapshot.docs[3].data().percentage.toString() + "%";
-	  EpicuriaTime.percentage = querySnapshot.docs[3].data().percentage;
-	  
-      RendeWestTime.level = querySnapshot.docs[4].data().level + ": " + querySnapshot.docs[4].data().percentage.toString() + "%";
-	  RendeWestTime.percentage = querySnapshot.docs[4].data().percentage;
-      RendeEastTime.level = querySnapshot.docs[4].data().level + ": " + querySnapshot.docs[4].data().percentage.toString() + "%";
-	  
-      DreyTime.level = querySnapshot.docs[5].data().level + ": " + querySnapshot.docs[5].data().percentage.toString() + "%";
-	  DreyTime.percentage = querySnapshot.docs[5].data().percentage;
-	  
-	  
-      StudyTime.level = querySnapshot.docs[6].data().level + ": " + querySnapshot.docs[6].data().percentage.toString() + "%";
-	  StudyTime.percentage = querySnapshot.docs[6].data().percentage;
-	  
-	  
-	  
-							 
-	  
-	  
-	  
-    });
+			querySnapshot.forEach((doc) => {
+				
+				if(doc.id == "Bruin Café")
+				{
+					BCafeTime.percentage = doc.data().percentage;
+					BCafeTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+				}
+				else if (doc.id == "Bruin Plate")
+				{
+					BPlateTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+					BPlateTime.percentage = doc.data().percentage;
+				}
+				else if (doc.id == "De Neve")
+				{
+					 DeNeveTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+					 DeNeveTime.percentage = doc.data().percentage;
+				}
+				else if (doc.id == "Epicuria")
+				{
+					EpicuriaTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+					EpicuriaTime.percentage = doc.data().percentage;
+				}
+				else if (doc.id == "Rendezvous")
+				{
+					RendeWestTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+					RendeWestTime.percentage = doc.data().percentage;
+					RendeEastTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+				}
+				else if (doc.id == "The Drey")
+				{
+					DreyTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+					DreyTime.percentage = doc.data().percentage;
+				}
+				else if (doc.id == "The Study at Hedrick")
+				{
+					 
+					StudyTime.level = doc.data().level + ": " + doc.data().percentage.toString() + "%";
+					StudyTime.percentage = doc.data().percentage;
+				}
+				
+				
+				
+			});
+		});
+
+ 
 
 	
 	
@@ -158,7 +174,7 @@ function allTimeData() {
       ST: StudyTime
     }
 	
-	console.log(AllTime);
+	
     return AllTime;      
 }
 
@@ -395,7 +411,6 @@ export function RenderData(props) {
 				timeMessage = "Fairly busy ";
 				setdisplayTime("Fairly busy " + AllTimeData.ST.percentage.toString() + "%");
 				setColor(timeColor);
-				console.log("Test pass!");
 			} else if (AllTimeData.ST.percentage > 30) {
 				timeColor = "#EFC42B";
 				timeMessage = "Getting busy"; 
