@@ -4,16 +4,16 @@
   "description": "Chrome extension for real-time dining halls information.",
   "manifest_version": 3,
   "icons": {
-    "16": "images/square-logo.png",
-    "48": "images/square-logo.png",
-    "128": "images/square-logo.png"
+    "16": "images/starbear.png",
+    "48": "images/starbear.png",
+    "128": "images/starbear.png"
   },
   "action": {
       "default_popup": "index.html",
       "default_icon": {
-        "16": "images/square-logo.png",
-        "48": "images/square-logo.png",
-        "128": "images/square-logo.png"
+        "16": "images/starbear.png",
+        "48": "images/starbear.png",
+        "128": "images/starbear.png"
       }
   },
   "permissions": [
