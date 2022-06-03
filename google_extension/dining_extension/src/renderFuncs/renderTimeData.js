@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-//import firebase from "firebase/compat/app";
-//import {firebaseConfig, firebaseInit} from '../firebase.config.js';
-//import "firebase/compat/firestore";
-//import { DataSnapshot, getDatabase, ref, child, get } from "firebase/database";
+import firebase from "firebase/compat/app";
+import {firebaseConfig, firebaseInit} from '../firebase.config.js';
+import "firebase/compat/firestore";
+import { DataSnapshot, getDatabase, ref, child, get } from "firebase/database";
 
 // ------------- Initialize Firestore & Realtime DB data ----------------
-/*
 const firebaseApp = firebase.initializeApp(firebaseInit);
 let db = firebase.firestore();
-let dbrt = ref(getDatabase(firebaseApp));
+// let dbrt = ref(getDatabase(firebaseApp));
 
+/*
 function RT_DeNeveData() {
     var DeNeveTime = {
       level: "",
@@ -74,26 +74,69 @@ function RT_DeNeveData() {
 
   return AllTime;
 }
+*/
 
-
-function BPlateData() {
-  let BPlateInfo = {
-    breakfast: "",
-    lunch: "",
-    dinner: "",
-    late_night: ""
+function allTimeData() {
+  let BCafeTime = {
+    level: "",
+    percentage: 0
+  };
+  let BPlateTime = {
+    level: "",
+    percentage: 0
+  };
+  let DeNeveTime = {
+    level: "",
+    percentage: 0
+  };
+  let EpicuriaTime = {
+    level: "",
+    percentage: 0
+  };
+  let RendeWestTime = {
+    level: "",
+    percentage: 0
+  };
+  let RendeEastTime = {
+    level: "",
+    percentage: 0
+  };
+  let DreyTime = {
+    level: "",
+    percentage: 0
+  };
+  let StudyTime = {
+    level: "",
+    percentage: 0
   };
 
-  db.collection("time")
+  db.collection("density")
 		.get()
 		.then((querySnapshot) => {
-      let BPlateBreakfast = querySnapshot.docs[1].data().breakfast;
-      BPlateInfo.breakfast = BPlateBreakfast;      
-		});
+      // TODO: add time to the end of string
+      BCafeTime.level = querySnapshot.docs[0].data().level + ": " + querySnapshot.docs[0].data().percentage.toString() + "%";
+      BPlateTime.level = querySnapshot.docs[1].data().level + ": " + querySnapshot.docs[1].data().percentage.toString() + "%";
+      DeNeveTime.level = querySnapshot.docs[2].data().level + ": " + querySnapshot.docs[2].data().percentage.toString() + "%";
+      EpicuriaTime.level = querySnapshot.docs[3].data().level + ": " + querySnapshot.docs[3].data().percentage.toString() + "%";
+      RendeWestTime.level = querySnapshot.docs[4].data().level + ": " + querySnapshot.docs[4].data().percentage.toString() + "%";
+      RendeEastTime.level = querySnapshot.docs[4].data().level + ": " + querySnapshot.docs[4].data().percentage.toString() + "%";
+      DreyTime.level = querySnapshot.docs[5].data().level + ": " + querySnapshot.docs[5].data().percentage.toString() + "%";
+      StudyTime.level = querySnapshot.docs[6].data().level + ": " + querySnapshot.docs[6].data().percentage.toString() + "%";
+    });
 
-  return BPlateInfo;
+    var AllTime = {
+      BC: BCafeTime,
+      BP: BPlateTime,
+      DN: DeNeveTime,
+      EP: EpicuriaTime,
+      RW: RendeWestTime,
+      RE: RendeEastTime,
+      FE: DreyTime,
+      ST: StudyTime
+    }
+    return AllTime;      
 }
-*/
+
 
 // ------------------- Rendering functions -------------------------
 // style "square" is in css/body_style.css
@@ -105,107 +148,34 @@ function Square(props) {
   );
 }
 
-
 export function RenderData(props) {
   const [classType] = useState(props.class_type);
-  const [teststr, setteststr] = useState("");
+  const [AllTimeData] = useState(allTimeData);  // store data in this object
   const [dataLoaded, setdataLoaded] = useState(false);  // true after one load
-  const [BPlateInfo, setBPlateInfo] = useState("");
-
-  const [AllTime, setAllTime] = useState("");
-  const [BCTime, setBCTime] = useState("");
-  const [BPTime, setBPTime] = useState("");
-  const [DNTime, setDNTime] = useState("");
-  const [EPTime, setEPTime] = useState("");
-  const [RWTime, setRWTime] = useState("");
-  const [RETime, setRETime] = useState("");
-  const [FETime, setFETime] = useState("");
-  const [STTime, setSTTime] = useState("");
-
   const [displayTime, setdisplayTime] = useState("");  // display on card back based on classType
 
   function loadData() {
     if (dataLoaded == false) {
-      // Hard-coded Firestore data for testing
-      let BPlateInfoData = {
-        breakfast: "7-10",
-        lunch: "11-3",
-        dinner: "5-9",
-        late_night: "N/A"
-      };
-      setBPlateInfo(BPlateInfoData);
-
-      // Capacity data
-      let DeNeveTime = {
-        level: 'slightly busy: 10%',
-        percentage: 10
-      };
-      let BCafeTime = {
-        level: 'getting busy: 30%',
-        percentage: 30
-      };
-      let BPlateTime = {
-        level: 'not too busy: 8%',
-        percentage: 8
-      };
-      let EpicuriaTime = {
-        level: 'not too busy: 5%',
-        percentage: 5
-      };
-      let RendeWestTime = {
-        level: 'not too busy: 15%',
-        percentage: 15
-      };
-      let RendeEastTime = {
-        level: 'not too busy: 16%',
-        percentage: 16
-      };
-      let FeastTime = {
-        level: 'not too busy: 17%',
-        percentage: 17
-      };
-      let StudyTime = {
-        level: 'not too busy: 18%',
-        percentage: 18
-      };
-      let AllTimeData = {
-        DN: DeNeveTime.level,
-        BC: BCafeTime.level,
-        BP: BPlateTime.level,
-        EP: EpicuriaTime.level,
-        RW: RendeWestTime.level,
-        RE: RendeEastTime.level,
-        FE: FeastTime.level,
-        ST: StudyTime.level
-      }
-      setAllTime(AllTimeData);
-      setBCTime(AllTimeData.BC)
-      setBPTime(AllTimeData.BP)
-      setDNTime(AllTimeData.DN)
-      setEPTime(AllTimeData.EP)
-      setRWTime(AllTimeData.RW)
-      setRETime(AllTimeData.RE)
-      setFETime(AllTimeData.FE)
-      setSTTime(AllTimeData.ST)
+      // Avoid load again
       setdataLoaded(true);
 
       // Assign display based on which card
       if (classType == 'bc') {
-        setdisplayTime(AllTimeData.BC);
+        setdisplayTime(AllTimeData.BC.level);
       } else if (classType == 'bp') {
-        setdisplayTime(AllTimeData.BP);
+        setdisplayTime(AllTimeData.BP.level);
       } else if (classType == 'dn') {
-        setdisplayTime(AllTimeData.DN);
+        setdisplayTime(AllTimeData.DN.level);
       } else if (classType == 'ep') {
-        setdisplayTime(AllTimeData.EP);
+        setdisplayTime(AllTimeData.EP.level);
       } else if (classType == 'rw') {
-        setdisplayTime(AllTimeData.RW);
+        setdisplayTime(AllTimeData.RW.level);
       } else if (classType == 're') {
-        setdisplayTime(AllTimeData.RE);
+        setdisplayTime(AllTimeData.RE.level);
       } else if (classType == 'fe') {
-        setdisplayTime(AllTimeData.FE);
+        setdisplayTime(AllTimeData.FE.level);
       } else if (classType == 'st') {
-        setdisplayTime(AllTimeData.ST);
+        setdisplayTime(AllTimeData.ST.level);
       }
     }
   }
