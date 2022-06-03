@@ -91,7 +91,7 @@ function HomeScreenContent() {
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Good {greeting},{'\n'}{userDoc.fname}</Text>
@@ -123,7 +123,7 @@ function HomeScreenContent() {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ActiveDiningHalls userId={user.uid} userAnswered={userDoc.answered}/>
+                <ActiveDiningHalls userId={user.uid} userAnswered={userDoc.answered} />
                 <Block>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", margin: 5 }}>
                         <GreenHeart style={{ marginRight: 10 }} />
@@ -132,7 +132,7 @@ function HomeScreenContent() {
                     <SimpleButton style={{ alignSelf: "flex-end", marginTop: 10, }} background="true" text="Take Clearance Survey" onPress={_handlePressButtonAsync} />
                 </Block>
                 <MealPlan mealPlan={mealPlanNumber} type={mealPlanPremium} />
-                <FoodTrucks/>
+                <FoodTrucks />
             </ScrollView>
         </SafeAreaView>
     );
