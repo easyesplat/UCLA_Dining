@@ -7,10 +7,16 @@ function Menubutton(props) {
 
     //Need to Change Colors
     let timeColor = '#37B96B';
-    if (props.waitTime > 30) {
+    let timeMessage = "Not too busy"; 
+    if (props.waitTime > 70) {
         timeColor = "#D24040";
-    } else if (props.waitTime > 20) {
+        timeMessage = "Super busy"; 
+    } else if (props.waitTime > 50) {
+        timeColor = "#EF892B";
+        timeMessage = "Fairly busy"; 
+    } else if (props.waitTime > 30) {
         timeColor = "#EFC42B";
+        timeMessage = "Getting busy"; 
     }
 
     return (
@@ -19,7 +25,8 @@ function Menubutton(props) {
                 <Image style={styles.icon} source={props.imageUri} />
                 <View style={styles.textWrapper}>
                     <Text numberOfLines={1} style={{ fontFamily: 'publica-sans-s', paddingBottom: 2, fontSize: 14, }}>{props.name}</Text>
-                    <TextTicker
+                    <Text style={{ fontFamily: 'publica-sans-s', fontSize: 13, color: timeColor }}>{timeMessage}</Text>
+                    {/* <TextTicker
                         style={{ fontFamily: 'publica-sans-s', fontSize: 13, color: timeColor }}
                         duration={7000}
                         loop
@@ -27,8 +34,8 @@ function Menubutton(props) {
                         repeatSpacer={25}
                         marqueeDelay={6000}
                     >
-                        {props.level} - Activity Level: {props.waitTime}%
-                    </TextTicker>
+                        {timeMessage}     -     Activity Level: {props.waitTime}%
+                    </TextTicker> */}
                 </View>
             </View>
             <ArrowRight small="false" />

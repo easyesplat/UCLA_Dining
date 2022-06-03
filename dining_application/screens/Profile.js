@@ -16,7 +16,7 @@ const ProfileScreen = () => {
     const [name, setName] = useState("");
     const [border3, setBorder3] = useState('#D8D8D8');
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(null);
     const [mealPlan, setMealPlan] = useState([
         { label: '19P', value: '19P' },
         { label: '19R', value: '19R' },
@@ -48,10 +48,6 @@ const ProfileScreen = () => {
 
     useEffect(() => {
         const subscriber = onAuthStateChanged(auth, authStateChanged);
-        if (userDoc != null) {
-            console.log(userDoc)
-            // setName(userDoc.fname)
-        }
         return subscriber; // unsubscribe on unmount
     }, []);
 
@@ -61,16 +57,11 @@ const ProfileScreen = () => {
         return <Loading />;
     }
 
-    // if (userDoc !== null) {
-    //     setName(userDoc.fname)
-    // }
-
-
     const handleSignUp = () => {
         let finalName = name; 
         let finalMealPlan = value; 
         if (name == "") finalName = userDoc.fname;
-        if (value == "") finalMealPlan = userDoc.mealPlan;
+        if (value == null) finalMealPlan = userDoc.mealPlan;
         updateDoc(doc(db, "users", user.uid), {
             fname: finalName,
             mealPlan: finalMealPlan,
