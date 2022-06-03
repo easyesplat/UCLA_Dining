@@ -182,7 +182,7 @@ class CardBack extends React.Component {
     <div>
       <div style={cardBackStyles}>
         <p> <br></br> </p>
-        <a href="https://menu.dining.ucla.edu/hours/"
+        <a href= {"" + this.props.menu_url}
                    className="epicuria"
                    target="_blank"
                    rel="noopener noreferrer">Details</a>
@@ -285,7 +285,7 @@ class Card extends React.Component {
                   <CardSocialIcons />
               </div>
              <div style={cardBackStyles} className="cardBack">
-                <CardBack detail_url={this.state.detail_url} class_type={this.state.class_type}/> 
+                <CardBack detail_url={this.state.detail_url} class_type={this.state.class_type} menu_url={this.state.menu_url}/> 
              </div>
             </div>
        </div>
