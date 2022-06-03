@@ -182,7 +182,7 @@ class CardBack extends React.Component {
     <div>
       <div style={cardBackStyles}>
         <p> <br></br> </p>
-        <a href="https://menu.dining.ucla.edu/hours/"
+        <a href= {"" + this.props.menu_url}
                    className="epicuria"
                    target="_blank"
                    rel="noopener noreferrer">Details</a>
@@ -203,7 +203,8 @@ class Card extends React.Component {
        bio: "",
        direction: "forwards",
        detail_url: "/BCafeCard",
-       class_type: "bc"
+       class_type: "bc",
+	   menu_url: "https://menu.dining.ucla.edu/Menus/BruinCafe"
      }
    }
    componentWillMount(){
@@ -213,7 +214,8 @@ class Card extends React.Component {
        subTitle: "Healthy",
        bio: "",
        detail_url: "/BPlateCard",
-       class_type: "bp"
+       class_type: "bp",
+	   menu_url: "https://menu.dining.ucla.edu/Menus/BruinPlate"
      });
      } else if (this.props.type == "dn"){
        this.setState({
@@ -221,7 +223,8 @@ class Card extends React.Component {
          subTitle: "American",
          bio: "",
          detail_url:"/DeNeveCard",
-         class_type: "dn"
+         class_type: "dn",
+		 menu_url: "https://menu.dining.ucla.edu/Menus/DeNeve"
        })
      } else if (this.props.type == "ep"){
        this.setState({
@@ -229,21 +232,24 @@ class Card extends React.Component {
          subTitle: "Medit.",
          bio: "",
          detail_url:"/EpicuriaCard",
-         class_type: "ep"
+         class_type: "ep",
+		 menu_url: "https://menu.dining.ucla.edu/Menus/Epicuria"
        })
      } else if (this.props.type == "rw"){
 		 this.setState({
 			 title: "Rende West",
 			 subTitle: "Mexican",
 			 bio: "",
-       class_type: "rw"
+			 class_type: "rw",
+			 menu_url: "http://menu.dining.ucla.edu/Menus/Rendezvous"
 		 })
 	 } else if (this.props.type == "re"){
 		 this.setState({
 			 title: "Rende East",
 			 subTitle: "Asian",
 			 bio: "",
-       class_type: "re"
+			 class_type: "re",
+			 menu_url: "http://menu.dining.ucla.edu/Menus/Rendezvous"
 		 })
 	 }
 	 else if (this.props.type == "fe"){
@@ -251,14 +257,16 @@ class Card extends React.Component {
 			 title: "Feast",
 			 subTitle: "Asian",
 			 bio: "",
-       class_type: "fe"
+			 class_type: "fe",
+			 menu_url: "https://menu.dining.ucla.edu/Menus/FeastAtRieber"
 		 })
 	 } else if (this.props.type == "st"){
 		 this.setState({
 			 title: "The Study",
 			 subTitle: "Takeout",
 			 bio: "",
-       class_type: "st"
+			 class_type: "st",
+			 menu_url: "https://menu.dining.ucla.edu/Menus/HedrickStudy"
 		 })
 	 }
 
@@ -277,7 +285,7 @@ class Card extends React.Component {
                   <CardSocialIcons />
               </div>
              <div style={cardBackStyles} className="cardBack">
-                <CardBack detail_url={this.state.detail_url} class_type={this.state.class_type}/> 
+                <CardBack detail_url={this.state.detail_url} class_type={this.state.class_type} menu_url={this.state.menu_url}/> 
              </div>
             </div>
        </div>
