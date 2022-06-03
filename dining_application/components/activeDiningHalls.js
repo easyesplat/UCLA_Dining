@@ -20,8 +20,6 @@ function ActiveDiningHalls(props) {
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    // hours = 3;
-    // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
     useEffect(() => {

@@ -91,7 +91,7 @@ function HomeScreenContent() {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Good {greeting},{'\n'}{userDoc.fname}</Text>

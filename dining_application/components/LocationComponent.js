@@ -166,7 +166,6 @@ export default LocationComponent
 const styles = StyleSheet.create({
     block: {
         marginTop: 20,
-        // padding: 10,
         borderRadius: 15,
         width: "100%",
         shadowColor: 'rgba(100,100,110, 0.18)', // IOS
