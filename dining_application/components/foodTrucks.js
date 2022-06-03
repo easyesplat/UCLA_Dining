@@ -94,15 +94,15 @@ function FoodTrucks() {
         reiberArray = rieber.breakfast;
         sproulArray = sproul.breakfast;
     } else if (timeConstant >= 11 && timeConstant <= 15) {
-        mealPeriodMessage = "Food trucks here lunch";
+        mealPeriodMessage = "Food trucks here for lunch";
         reiberArray = rieber.lunch;
         sproulArray = sproul.lunch;
     } else if (timeConstant >= 17 && timeConstant <= 21) {
-        mealPeriodMessage = "Dining Halls open for dinner";
+        mealPeriodMessage = "Food trucks open for dinner";
         reiberArray = rieber.dinner;
         sproulArray = sproul.dinner;
     } else if (timeConstant >= 21) {
-        mealPeriodMessage = "Dining Halls open for late night";
+        mealPeriodMessage = "Food trucks open for late night";
         reiberArray = rieber.late_night;
         sproulArray = sproul.late_night;
     }
@@ -115,6 +115,10 @@ function FoodTrucks() {
         } else if (sproulArray.includes(FoodTruckData[i].name)) {
             finalRender.push(Object.assign(FoodTruckData[i], { color: sproulColor, location: "Sproul" }))
         }
+    }
+
+    if (finalRender.length == 0) {
+        mealPeriodMessage = "There are no food trucks open now";
     }
 
     if (finalRender.length == 0) {
