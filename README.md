@@ -15,6 +15,8 @@ The features and implementations that **Bruin Dine** provides are:
 * **Chrome Extension** option (Additional distinct feature #3)
   * Enable users to view limited data on available dining halls in the browser with ease. 
 
+See our final project presentation [here](https://docs.google.com/presentation/d/1b_PsYYbwyJW8MBMPFGY_uSG0fzU5bJxWVlWE6eg1LIM/edit?usp=sharing)
+
 ## Installation
 
 Bruin Dine is currently in beta version. 
