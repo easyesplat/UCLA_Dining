@@ -22,7 +22,9 @@ const imgStyles = {
   width: 85,
   height: 60,
   borderTopRightRadius: 10,
-  borderTopLeftRadius: 10
+  borderTopLeftRadius: 10,
+  borderBottomRightRadius: 10,
+  borderBottomLeftRadius: 10
 }
 const imgContainerStyles = {
   height: "35%",

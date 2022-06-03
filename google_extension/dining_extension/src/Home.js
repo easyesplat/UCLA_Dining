@@ -11,9 +11,9 @@ const Home = () => {
   return (
     <div>
       <div className="topbar">
-            <h1> BruinDish </h1>
+            <h1> &nbsp; BruinDish </h1>
             <div className="navbar">
-                <Link to="/">Home</Link>
+                <Link to="/Home">Home</Link>
                 <a href="https://menu.dining.ucla.edu/hours/"
                    className="App-link"
                    target="_blank"
