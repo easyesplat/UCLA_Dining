@@ -79,9 +79,16 @@ pip install --upgrade firebase-admin
 
 * Check that the whole process worked by checking your data in the firebase app within your firebase console
 
-## Dining Hall Application
-### Requirements
+### Python Script Automation 
+* Within the "PythonCode" directory, there is a Python script called "schedule_scripts.py". This script allows full local automation for the Python web-scraping scripts. To implement the "schedule" import, you must enter the following command to your terminal
 
+```shell
+pip install schedule
+```
+
+* Run the script and check if "**Completed Density Level Analysis**" prints out on the console every five minutes
+
+## Dining Hall Application
 ### Setup
 * Run the following command to install the Expo command line interface globally on your system
 
@@ -125,8 +132,6 @@ expo start
 * Now to run that application on a local device, take the device and scan the QR code in the terminal. This QR code should open the “Expo Go” application and the app should begin loading. Metro will bundle all of your files, and you should now be able to use the app freely
 
 ## Chrome Extension
-### Requirements
-
 ### Setup
 * Open the folder containing the extension; In our repository, the file is located within "dining_extension". `cd` into the respective folder if necessary. 
 
