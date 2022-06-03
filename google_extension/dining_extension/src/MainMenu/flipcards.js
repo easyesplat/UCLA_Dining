@@ -40,7 +40,7 @@ const avatarContainerStyles = {
   right: "0",
   backgroundSize: "cover",
   textAlign: "center",
-  borderRadius: "50%"
+  borderRadius: "50%",
 };
 const titleStyles = {
   color: "#000000",
@@ -107,12 +107,6 @@ const avatarImgStyles = {
   right: "0",
   margin: "auto",
   borderRadius: "50%"
-}
-const cardBackImgStyles = {
-  height: "0%",
-  width: "0%",
-  borderRadius: 10,
-  position: "absolute"
 }
 
 // Components
@@ -187,9 +181,9 @@ class CardBack extends React.Component {
     return (
     <div>
       <div style={cardBackStyles}>
-        <p> <br></br></p>
+        <p> <br></br> </p>
         <Link to={this.props.detail_url} className='epicuria'>Details</Link> 
-        <RenderData />       
+        <RenderData class_type={this.props.class_type}/>
       </div> 
     </div>
     )
@@ -205,7 +199,8 @@ class Card extends React.Component {
        subTitle: "Casual",
        bio: "",
        direction: "forwards",
-       detail_url: "/BCafeCard"
+       detail_url: "/BCafeCard",
+       class_type: "bc"
      }
    }
    componentWillMount(){
@@ -214,46 +209,53 @@ class Card extends React.Component {
        title: "Bruin Plate",
        subTitle: "Healthy",
        bio: "",
-       detail_url: "/BPlateCard"
+       detail_url: "/BPlateCard",
+       class_type: "bp"
      });
      } else if (this.props.type == "dn"){
        this.setState({
          title: "De Neve",
          subTitle: "American",
          bio: "",
-         detail_url:"/DeNeveCard"
+         detail_url:"/DeNeveCard",
+         class_type: "dn"
        })
      } else if (this.props.type == "ep"){
        this.setState({
          title: "Epicuria",
          subTitle: "Medit.",
          bio: "",
-         detail_url:"/EpicuriaCard"
+         detail_url:"/EpicuriaCard",
+         class_type: "ep"
        })
      } else if (this.props.type == "rw"){
 		 this.setState({
 			 title: "Rende West",
 			 subTitle: "Mexican",
-			 bio: ""
+			 bio: "",
+       class_type: "rw"
 		 })
 	 } else if (this.props.type == "re"){
 		 this.setState({
 			 title: "Rende East",
 			 subTitle: "Asian",
-			 bio: ""
+			 bio: "",
+       class_type: "re"
 		 })
 	 }
 	 else if (this.props.type == "fe"){
 		 this.setState({
 			 title: "Feast",
 			 subTitle: "Asian",
-			 bio: ""
+			 bio: "",
+       class_type: "fe"
 		 })
 	 } else if (this.props.type == "st"){
 		 this.setState({
 			 title: "The Study",
 			 subTitle: "Takeout",
-			 bio: ""
+			 bio: "",
+       class_type: "st"
 		 })
 	 }
 
@@ -272,7 +274,7 @@ class Card extends React.Component {
                   <CardSocialIcons />
               </div>
              <div style={cardBackStyles} className="cardBack">
-                <CardBack detail_url={this.state.detail_url}/> 
+                <CardBack detail_url={this.state.detail_url} class_type={this.state.class_type}/> 
              </div>
             </div>
        </div>
@@ -292,8 +294,7 @@ class Card extends React.Component {
            
           <Card imgSrc= {require("../assets/diningHallImages/bcafe.jpg")}  
             cardBackImgSrc={require("../assets/diningHallImages/bruincafe-logo.png")} 
-            targetId="navi"
-          />
+            targetId="navi"/>
            
           <Card type="bp" imgSrc={require("../assets/diningHallImages/bplateimage.jpg")}  
             cardBackImgSrc="https://i.pinimg.com/736x/b1/2d/9f/b12d9f259a178fc9dc7bfb6447be7a1c.jpg"/>
@@ -313,14 +314,13 @@ class Card extends React.Component {
          <Card type="re" imgSrc={require("../assets/diningHallImages/bowl2.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
          
         </div>
-		<div className = "flex">
+		    <div className = "flex">
 		
-		<Card type="fe" imgSrc={require("../assets/diningHallImages/feast2.jpg")}  cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
+		    <Card type="fe" imgSrc={require("../assets/diningHallImages/feast2.jpg")}  cardBackImgSrc="https://pre00.deviantart.net/0274/th/pre/i/2014/357/0/d/guardians_of_the_galaxy___groot_poster__acrylic__by_cybergal2013-d8aydlf.jpg"/>
            
-         <Card type="st" imgSrc={require("../assets/diningHallImages/study.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
+        <Card type="st" imgSrc={require("../assets/diningHallImages/study.jpg")}  cardBackImgSrc="https://i.pinimg.com/564x/22/f1/3e/22f13ea035bc11beeeb1349550fb3170.jpg"/>
 		
-		
-		</div>
+		    </div>
       </div>
      )
    }

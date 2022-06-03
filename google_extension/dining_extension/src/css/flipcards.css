@@ -30,27 +30,13 @@ border-radius: 15px 0px 15px 15px;
   /* identical to box height */ 
   color: #000000
 }
-  
-/* Dining Hall */
-.dining_hall{
-  position: absolute;
-  width: 171.67px;
-  height: 50px;
-  left: 202.33px;
-  top: 380px;
-  
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0px 7px 29px rgba(100, 100, 111, 0.18);
-  backdrop-filter: blur(30px);
-  /* Note: backdrop-filter has minimal browser support */
-  border-radius: 10px;
-}
 
 /* The following are old styles for flipcards.js*/
 .cardContainer {
+  box-shadow: 0px 7px 29px rgba(100, 100, 111, 0.18);
 }
 .cardBack {
-  background-image: linear-gradient(to left,rgb(68, 117, 208),rgb(30, 195, 246));
+  box-shadow: 0px 7px 29px rgba(100, 100, 111, 0.18);
 }
 
 .flipperContainer {
