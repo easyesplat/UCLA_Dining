@@ -182,9 +182,12 @@ class CardBack extends React.Component {
     <div>
       <div style={cardBackStyles}>
         <p> <br></br> </p>
-        <Link to={this.props.detail_url} className='epicuria'>Details</Link> 
+        <a href="https://menu.dining.ucla.edu/hours/"
+                   className="epicuria"
+                   target="_blank"
+                   rel="noopener noreferrer">Details</a>
         <RenderData class_type={this.props.class_type}/>
-      </div> 
+      </div>
     </div>
     )
   }
