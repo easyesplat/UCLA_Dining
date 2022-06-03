@@ -90,8 +90,6 @@ const LikedItemsComponent = () => {
     let likedItemsList = [];
     let likedItemsItems = [];
 
-    let count = 0;
-
 
     for (let [key, value] of menuMap) {
         for (let [key1, value1] of value) {
@@ -103,13 +101,10 @@ const LikedItemsComponent = () => {
                             <Item name={item} diningHall={key} area={key2} link={value2["food"][item][0]} time={key1} itemLiked={false} />
                         )
                     }
-                    count++;
                 }
             }
         }
     }
-
-    console.log(likedItemsList);
 
 
 

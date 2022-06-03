@@ -7,25 +7,23 @@ import SimpleButton from '../components/simpleButton';
 import { useNavigation } from '@react-navigation/native';
 import DATA from '../data/diningData';
 import * as Haptics from 'expo-haptics';
-
-//TODO: Uncomment:
+import * as WebBrowser from 'expo-web-browser';
 import readTimes from "../Core/timeDatabase";
 import AppLoading from 'expo-app-loading';
 import LocationComponent from './LocationComponent';
 import readDensity from '../Core/density';
 
 function ActiveDiningHalls(props) {
-    //TODO: Uncomment:
     const [timeMap, setTimeMap] = useState(null);
     const [densityMap, setDensityMap] = useState(null);
+    const [result, setResult] = useState(null);
     const navigation = useNavigation();
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
-    // hours = 17;
+    // hours = 3;
     // minutes = 59; 
     let timeConstant = hours + (minutes / 60);
 
-    //TODO: Uncomment:
     useEffect(() => {
         readTimes().then(result => {
             setTimeMap(result);
@@ -39,8 +37,6 @@ function ActiveDiningHalls(props) {
     if (timeMap == null || densityMap == null) {
         return <AppLoading />;
     }
-
-    // console.log(timeMap); 
 
     //Meal Period 
     const openingTimes = [17, 11, 7];
@@ -102,21 +98,26 @@ function ActiveDiningHalls(props) {
         }
     }
 
+    const _handlePressButtonAsync = async () => {
+        let result = await WebBrowser.openBrowserAsync("http://menu.dining.ucla.edu/Hours");
+        setResult(result);
+    };
+
     if (closed == true) {
         return (
             <View style={{ marginTop: -20 }}>
                 <Block>
                     <Image style={{ width: 100, height: 100, alignSelf: "center" }} source={bearImage} />
                     <Text style={{ fontFamily: "publica-sans-s", fontSize: 15, textAlign: "center", paddingHorizontal: 20, marginBottom: 20 }}>Dining halls are closed right now. Dining halls will re-open in {message}</Text>
-                    <SimpleButton style={{ alignSelf: "center", marginBottom: 10, }} background="true" text="See all dining halls" onPress={() => {
+                    <SimpleButton style={{ alignSelf: "center", marginBottom: 10, }} background="true" text="See dining hall hours" onPress={() => {
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                        _handlePressButtonAsync();
                     }} />
                 </Block>
             </View>
         );
     }
 
-    //TODO: Uncomment: Get open dining halls
     let openDiningHalls = timeMap[timeMap.findIndex(obj => obj.name === mealPeriod)].data.restaurants;
 
 
@@ -139,9 +140,28 @@ function ActiveDiningHalls(props) {
 
     for (let i = 0; i < sortedData.length; i++) {
         //TODO: Uncomment:
-        if (sortedData[i].percentage != -1) {
+        if (sortedData[i].percentage != -1 || openDiningHalls.includes(sortedData[i].name)) {
+            let dataTimes = [
+                { label: 'Breakfast', value: 'breakfast' },
+                { label: 'Lunch', value: 'lunch' },
+                { label: 'Dinner', value: 'dinner' },
+                { label: 'Late night', value: 'late_night' },
+            ];
+            let officialTimes = timeMap[timeMap.findIndex(obj => obj.name === sortedData[i].name)].data; 
+            if(officialTimes.breakfast == "CLOSED") {
+                dataTimes.splice(0, 1)
+            }
+            if(officialTimes.lunch == "CLOSED") {
+                dataTimes.splice(1, 1)
+            }
+            if(officialTimes.dinner == "CLOSED") {
+                dataTimes.splice(2, 1)
+            }
+            if(officialTimes.late_night == "CLOSED") {
+                dataTimes.pop()
+            }
             renderDiningHalls.push(<Menubutton name={sortedData[i].name} waitTime={sortedData[i].percentage} level={sortedData[i].level} imageUri={sortedData[i].imageUri} key={sortedData[i].id.toString()} onPress={() => {
-                navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod });
+                navigation.navigate("Dining Halls", { name: sortedData[i].name, data: sortedData[i], period: mealPeriod, times: dataTimes});
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             }} />);
             open.push(sortedData[i].name);
@@ -156,9 +176,9 @@ function ActiveDiningHalls(props) {
                 {renderDiningHalls}
             </View>
             <View style={{ flexDirection: "row", justifyContent: "flex-end", paddingTop: 5 }}>
-                <SimpleButton text="See all dining halls" onPress={() => {
+                <SimpleButton text="See dining hall hours" onPress={() => {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                    navigation.navigate("All Dining Halls", { /*data: timeMap*/ });
+                    _handlePressButtonAsync();
                 }} />
             </View>
             <LocationComponent open={open} time={mealPeriod} userId={props.userId} userAnswered={props.userAnswered}/>

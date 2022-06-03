@@ -26,12 +26,7 @@ function DiningHall() {
     const [ratingsDoc, setRatingsDoc] = useState(null);
     const [mealTime, setMealTime] = useState(routes.params.period);
     const [open, setOpen] = useState(false);
-    const [mealPlan, setMealPlan] = useState([
-        { label: 'breakfast', value: 'breakfast' },
-        { label: 'lunch', value: 'lunch' },
-        { label: 'dinner', value: 'dinner' },
-        { label: 'late night', value: 'late_night' },
-    ]);
+    const [mealPlan, setMealPlan] = useState(routes.params.times);
 
     const [loaded] = useFonts({
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
@@ -224,6 +219,17 @@ function DiningHall() {
     }
 
     let activityLevel = (routes.params.data.percentage).toString() + "%";
+    let hideActivity = false;
+    let activityLevelColor = '#37B96B';
+    if (routes.params.data.percentage > 70) {
+        activityLevelColor = "#D24040";
+    } else if (routes.params.data.percentage > 50) {
+        activityLevelColor = "#EF892B";
+    } else if (routes.params.data.percentage > 30) {
+        activityLevelColor = "#EFC42B";
+    } else if (routes.params.data.percentage < 0) {
+        hideActivity = true;
+    }
 
     const myTheme = require("../Themes/dropdownTheme.js");
 
@@ -260,36 +266,44 @@ function DiningHall() {
                                     <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList} />
                                 </View>
                             }
-                            <View style={{ width: "100%", marginTop: 15, backgroundColor: "#F0F2F5", padding: 8, borderRadius: 8, flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ paddingRight: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>Activity Level</Text>
-                                <View style={{ width: "100%", height: 10, backgroundColor: "#CDD0D4", flex: 1, borderRadius: 5, overflow: 'hidden' }}>
-                                    <View style={{ width: activityLevel, backgroundColor: '#37B96B', height: 10, }}></View>
+                            {
+                                !hideActivity &&
+                                <View style={{ width: "100%", marginTop: 15, backgroundColor: "#F0F2F5", padding: 8, borderRadius: 8, flexDirection: 'row', alignItems: 'center' }}>
+                                    <Text style={{ paddingRight: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>Activity Level</Text>
+                                    <View style={{ width: "100%", height: 10, backgroundColor: "#CDD0D4", flex: 1, borderRadius: 5, overflow: 'hidden' }}>
+                                        <View style={{ width: activityLevel, backgroundColor: activityLevelColor, height: 10, }}></View>
+                                    </View>
+                                    <Text style={{ paddingLeft: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>{activityLevel}</Text>
                                 </View>
-                                <Text style={{ paddingLeft: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>{activityLevel}</Text>
-                            </View>
-                            <View style={{ height: 10 }}></View>
-                            <>
-                                <DropDownPicker
-                                    open={open}
-                                    value={mealTime}
-                                    items={mealPlan}
-                                    setOpen={setOpen}
-                                    setValue={setMealTime}
-                                    setItems={setMealPlan}
-                                    theme="MyThemeName"
-                                    multiple={false}
-                                    mode="BADGE"
-                                    placeholder="Meal Time"
-                                    placeholderStyle={{
-                                        color: "#D8D8D8",
-                                        fontFamily: "publica-sans-l",
-                                        fontSize: 13,
-                                    }}
-                                    closeAfterSelecting={true}
-                                    onPress={() => { Keyboard.dismiss() }}
-                                    dropDownDirection="TOP"
-                                />
-                            </>
+                            }
+                            {
+                                !hideActivity &&
+                                <>
+                                    <View style={{ height: 10 }}></View>
+                                    <>
+                                        <DropDownPicker
+                                            open={open}
+                                            value={mealTime}
+                                            items={mealPlan}
+                                            setOpen={setOpen}
+                                            setValue={setMealTime}
+                                            setItems={setMealPlan}
+                                            theme="MyThemeName"
+                                            multiple={false}
+                                            mode="BADGE"
+                                            placeholder="Meal Time"
+                                            placeholderStyle={{
+                                                color: "#D8D8D8",
+                                                fontFamily: "publica-sans-l",
+                                                fontSize: 13,
+                                            }}
+                                            closeAfterSelecting={true}
+                                            onPress={() => { Keyboard.dismiss() }}
+                                            dropDownDirection="TOP"
+                                        />
+                                    </>
+                                </>
+                            }
                             {
                                 showSurvey &&
                                 <>

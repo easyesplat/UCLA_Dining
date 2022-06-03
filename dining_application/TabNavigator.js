@@ -1,5 +1,4 @@
 import React from 'react';
-import AllDiningHalls from './screens/AllDiningHalls';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStackNavigator } from './StackNavigator';
 import { Food, PersonFill, Feed, TabLikedIcon } from './assets/icons/icons'; 

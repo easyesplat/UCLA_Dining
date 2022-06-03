@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import DiningHall from './screens/DiningHall';
-import AllDiningHalls from './screens/AllDiningHalls';
 import LoginScreen from './screens/LoginScreen';
 import TabNavigator from './TabNavigator';
 import WelcomeScreen from './screens/WelcomeScreen'
@@ -36,7 +35,6 @@ const HomeStackNavigator = () => {
                 }} />
                 <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="Dining Halls" component={DiningHall} />
-                <Stack.Screen name="All Dining Halls" component={AllDiningHalls} />
             </HomeStack.Group>
         </HomeStack.Navigator>
     )
