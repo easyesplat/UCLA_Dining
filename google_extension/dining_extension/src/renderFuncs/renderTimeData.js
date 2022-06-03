@@ -161,7 +161,28 @@ export function RenderData(props) {
 
       // Assign display based on which card
       if (classType == 'bc') {
-        setdisplayTime(AllTimeData.BC.level);
+        //setdisplayTime(AllTimeData.BC.level);
+        //Need to Change Colors
+      let timeColor = '#37B96B';
+      let timeMessage = "Not too busy"; 
+      setdisplayTime("Not too busy "+ AllTimeData.BC.percentage.toString() + "%");
+      if (AllTimeData.BC.percentage > 70) {
+        timeColor = "#D24040";
+        timeMessage = "Super busy"; 
+        setdisplayTime("Super busy " + AllTimeData.BC.percentage.toString() + "%");
+      } else if (AllTimeData.BC.percentage > 50) {
+        timeColor = "#EF892B";
+        timeMessage = "Fairly busy ";
+        setdisplayTime("Fairly busy" + AllTimeData.BC.percentage.toString() + "%");
+      } else if (AllTimeData.BC.percentage > 30) {
+        timeColor = "#EFC42B";
+        timeMessage = "Getting busy"; 
+        setdisplayTime("Getting busy " + AllTimeData.BC.percentage.toString()  + "%");
+      } else if (AllTimeData.BC.percentage < 0) {
+        timeColor = "black";
+        timeMessage = "No data"; 
+        setdisplayTime("No data " + AllTimeData.BC.percentage.toString() + "%");
+      }
       } else if (classType == 'bp') {
         setdisplayTime(AllTimeData.BP.level);
       } else if (classType == 'dn') {
