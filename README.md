@@ -35,6 +35,23 @@ Installation steps for the NodeJS dining hall app, Python web-scrape script, and
 * Anaconda3
 * pip
 
+### Python Script Setup
+* If you don't have Anaconda3 yet, follow the instructions [here](https://understandingdata.com/how-to-install-anaconda-mac-os/) to correctly implement and install Anaconda3
+* If you are within "UCLA_Dining", `cd` into "PythonCode"
+
+```shell
+cd PythonCode
+```
+* For the Python files, the scripts must be interpreted and ran under Python 3.9.7 alongside anaconda3; For users who use Visual Studio Code, enter "Python: Select Interpreter" and select the current intepreter. 
+
+<p align="center">
+<img src="https://i.imgur.com/0HVlTNm.png"
+  alt="Python Intepreter"
+  width="686">
+</p>
+
+* Afterwards, make sure that the directory within your Python terminal is within the directory "PythonCode". This is due to the fact that the scripts reference "./serviceAccountKey.json" which means that the Python directory must reside within the appropriate path. 
+
 ### Google Firebase Setup
 * If you haven't already, sign up for a firebase account in [Firebase](https://firebase.google.com/) and create a new project. If you already have an account, log in to your Firebase console and add a new project. 
 
@@ -60,8 +77,6 @@ pip install --upgrade firebase-admin
 
 ** Note ** Normally, your private key should not be shared to the public due to security concerns; however, for simplicity and practical purposes, I have added my own "serviceACcountKey.json" under the "PythonCode" directory.
 
-### Python Script Setup
-
 ## Dining Hall Application
 ### Requirements
 
@@ -81,10 +96,10 @@ npm install
 ```
 * Once all the required dependencies are installed, go to firebase and get the config keys for the web, and paste them into a file named "**keys.js**"
 
-```javascript
 keys.js
-	const firebaseConfig = {
-		[Paste your config keys here]
+```javascript
+const firebaseConfig = {
+	[Paste your config keys here]
 };
 
 export default firebaseConfig; 
