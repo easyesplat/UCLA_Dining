@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Keyboard } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -14,6 +14,7 @@ import { db, auth } from '../Core/Config';
 import AtAGlanceItem from '../components/atAGlanceItem';
 import Loading from '../components/loading';
 import { SmallStar, SmallStarNoFill } from '../assets/icons/icons';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 function DiningHall() {
     const routes = useRoute();
@@ -23,6 +24,15 @@ function DiningHall() {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
     const [ratingsDoc, setRatingsDoc] = useState(null);
+    const [mealTime, setMealTime] = useState(routes.params.period);
+    const [open, setOpen] = useState(false);
+    const [mealPlan, setMealPlan] = useState([
+        { label: 'breakfast', value: 'breakfast' },
+        { label: 'lunch', value: 'lunch' },
+        { label: 'dinner', value: 'dinner' },
+        { label: 'late night', value: 'late_night' },
+    ]);
+
     const [loaded] = useFonts({
         'sf-pro-b': require('dining_application/assets/fonts/SF-Pro-Text-Bold.otf'),
         'sf-pro-sb': require('dining_application/assets/fonts/SF-Pro-Text-Semibold.otf'),
@@ -64,12 +74,9 @@ function DiningHall() {
 
         getDoc(doc(db, "Ratings", (docName))).then((document) => {
             if (document.exists()) {
-                // alert("Found Ratings");
                 setRatingsDoc(document.data());
-                // console.log(document);
                 setShowSurvey(true)
             } else {
-                // alert("Did not find Ratings");
                 setShowSurvey(false);
                 setRatingsDoc(false);
             }
@@ -100,7 +107,7 @@ function DiningHall() {
     let halalItemsList = [];
     let likedItemsList = [];
 
-    for (let [key, value] of menuMap.get(routes.params.period)) {
+    for (let [key, value] of menuMap.get(mealTime)) {
         menu.push(<MenuHeader header={key} />)
         const subMenu = [];
         for (let item in value["food"]) {
@@ -145,8 +152,8 @@ function DiningHall() {
     }
 
 
-    let mealPeriod = routes.params.period;
-    if (routes.params.period === "late_night") {
+    let mealPeriod = mealTime;
+    if (mealTime === "late_night") {
         mealPeriod = "late night";
     }
 
@@ -157,14 +164,10 @@ function DiningHall() {
     let linesMessage;
     let linesColor
     let lockerAverage;
-    let lockerMessage; 
+    let lockerMessage;
     let lockersColor
     let overallAverage;
     let stars = [];
-    // if (busyAverage < 1.5) {
-    //     busyMessage = routes.params.name + " is empty";
-    //     busyColor = '#37B96B';
-    // } else
     if (showSurvey) {
         busyAverage = Math.round((ratingsDoc.totalBusy / ratingsDoc.numberOfResponders) * 2) / 2;
         if (busyAverage < 1.5) {
@@ -206,21 +209,26 @@ function DiningHall() {
         for (let i = 0; i < 5; i++) {
             if (overallAverage >= 1) {
                 stars.push(
-                    <View style={{paddingRight: 2, }}>
-                        <SmallStar/>
+                    <View style={{ paddingRight: 2, }}>
+                        <SmallStar />
                     </View>)
-                overallAverage--; 
+                overallAverage--;
             } else {
                 stars.push(
-                    <View style={{paddingRight: 2}}>
-                        <SmallStarNoFill/>
+                    <View style={{ paddingRight: 2 }}>
+                        <SmallStarNoFill />
                     </View>)
                 overallAverage--;
             }
         }
     }
 
-    let activityLevel = (routes.params.data.percentage).toString() + "%"; 
+    let activityLevel = (routes.params.data.percentage).toString() + "%";
+
+    const myTheme = require("../Themes/dropdownTheme.js");
+
+    DropDownPicker.addTheme("MyThemeName", myTheme);
+    DropDownPicker.setTheme("MyThemeName");
 
 
     return (
@@ -251,15 +259,37 @@ function DiningHall() {
                                     }
                                     <AtAGlanceItem number={likedItems} type="liked" list={likedItemsList} />
                                 </View>
-
                             }
-                            <View style={{width: "100%", marginTop: 15, backgroundColor: "#F0F2F5", padding: 8, borderRadius: 8, flexDirection: 'row', alignItems: 'center'}}>
-                                <Text style={{paddingRight: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>Activity Level</Text>
-                                <View style={{width: "100%", height: 10, backgroundColor: "#CDD0D4", flex: 1, borderRadius: 5, overflow: 'hidden'}}>
-                                    <View style={{width: activityLevel, backgroundColor: '#37B96B', height: 10,}}></View>
+                            <View style={{ width: "100%", marginTop: 15, backgroundColor: "#F0F2F5", padding: 8, borderRadius: 8, flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ paddingRight: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>Activity Level</Text>
+                                <View style={{ width: "100%", height: 10, backgroundColor: "#CDD0D4", flex: 1, borderRadius: 5, overflow: 'hidden' }}>
+                                    <View style={{ width: activityLevel, backgroundColor: '#37B96B', height: 10, }}></View>
                                 </View>
-                                <Text style={{paddingLeft: 5, fontFamily: "publica-sans-s", fontSize: 14,}}>{activityLevel}</Text>
+                                <Text style={{ paddingLeft: 5, fontFamily: "publica-sans-s", fontSize: 14, }}>{activityLevel}</Text>
                             </View>
+                            <View style={{ height: 10 }}></View>
+                            <>
+                                <DropDownPicker
+                                    open={open}
+                                    value={mealTime}
+                                    items={mealPlan}
+                                    setOpen={setOpen}
+                                    setValue={setMealTime}
+                                    setItems={setMealPlan}
+                                    theme="MyThemeName"
+                                    multiple={false}
+                                    mode="BADGE"
+                                    placeholder="Meal Time"
+                                    placeholderStyle={{
+                                        color: "#D8D8D8",
+                                        fontFamily: "publica-sans-l",
+                                        fontSize: 13,
+                                    }}
+                                    closeAfterSelecting={true}
+                                    onPress={() => { Keyboard.dismiss() }}
+                                    dropDownDirection="TOP"
+                                />
+                            </>
                             {
                                 showSurvey &&
                                 <>
@@ -277,7 +307,7 @@ function DiningHall() {
                                                 <Text style={{ color: lockersColor, fontFamily: "publica-sans-s", textAlign: 'center' }}>{lockerMessage} </Text>
                                             </View>
                                         }
-                                        <View style={{ backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, marginRight: 5, marginTop: 5, flexDirection: 'row', alignItems: 'center'}}>
+                                        <View style={{ backgroundColor: "#F0F2F5", padding: 5, borderRadius: 8, marginRight: 5, marginTop: 5, flexDirection: 'row', alignItems: 'center' }}>
                                             <Text style={{ color: 'black', fontFamily: "publica-sans-s", textAlign: 'center', }}>Overall Rating: </Text>
                                             {stars}
                                         </View>
@@ -287,7 +317,7 @@ function DiningHall() {
                         </View>
                     </View>
                 </View>
-                <SafeAreaView style={styles.items}>
+                <SafeAreaView style={[styles.items, { zIndex: 1 }]}>
                     {menu}
                 </SafeAreaView>
             </ScrollView>
@@ -352,7 +382,7 @@ const styles = StyleSheet.create({
     glanceView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 15, 
+        marginTop: 15,
     }
 });
 

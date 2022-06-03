@@ -65,6 +65,48 @@ pip install --upgrade firebase-admin
 ## Dining Hall Application
 ### Requirements
 
+### Setup
+* Run the following command to install the Expo command line interface globally on your system
+
+```shell
+npm install -g expo-cli
+```
+
+* Then download the “Expo Go” Application from the IOS App Store or the Google Play Store (**this step is required to run on a physical device**)
+* `cd` to the directory "**dining_application**"
+* Within the directory, run the following command
+
+```shell
+npm install
+```
+* Once all the required dependencies are installed, go to firebase and get the config keys for the web, and paste them into a file named "**keys.js**"
+
+```javascript
+keys.js
+	const firebaseConfig = {
+		[Paste your config keys here]
+};
+
+export default firebaseConfig; 
+```
+* Confirm that python web-scraping scripts have been ran
+   * In particular, check "**init.py**" since it initializes the collections that the application requires
+* Lastly, go back to the Firebase Firestore Console and ensure the following collections are present
+
+<p align="center">
+<img src="https://i.imgur.com/sMXSuTQ.png"
+  alt="Firebase Firestore Console"
+  width="686">
+</p>
+
+* Now that you're inside the directory, run the following command
+   * Expo will then print in the terminal that “Developer tools running on http://localhost:19002” (Expo will run the Developer tools on a different localhost if 19002 is in use)
+   * Then using your browser, navigate to that link. By default Expo sets the connection mode to “LAN”. Change that to tunnel, by clicking on tunnel
+```shell
+expo start
+```
+* Now to run that application on a local device, take the device and scan the QR code in the terminal. This QR code should open the “Expo Go” application and the app should begin loading. Metro will bundle all of your files, and you should now be able to use the app freely
+
 ## Chrome Extension
 ### Requirements
 

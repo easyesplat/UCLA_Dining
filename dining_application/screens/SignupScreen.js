@@ -143,6 +143,9 @@ const SignupScreen = () => {
                                 onPress={() => { Keyboard.dismiss() }}
                                 zIndex={2000}
                                 zIndexInverse={1000}
+                                dropDownContainerStyle={{
+                                    height: 100,
+                                }}
                             />
                         </>
                         <View style={{ height: 10 }}></View>
@@ -167,6 +170,9 @@ const SignupScreen = () => {
                                 zIndex={1000}
                                 zIndexInverse={2000}
                                 badgeDotColors={["#34C759", "#27AE60", "#FF2D55", "#FF9500" ]}
+                                dropDownContainerStyle={{
+                                    height: 100,
+                                }}
                             />
                         </>
                     </View>
