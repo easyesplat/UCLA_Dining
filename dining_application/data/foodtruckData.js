@@ -142,7 +142,7 @@ const FoodTruckData = [
     },
     {
         id: 24,
-        name: "Venice Caffe and Gelato",
+        name: "Venice Caffe & Gelato",
         link: "https://www.bestfoodtrucks.com/truck/venice-caffe-and-gelato/menu",
         imageUri: require('../assets/foodTruck_images/venice.jpeg'),
     },
@@ -160,7 +160,7 @@ const FoodTruckData = [
     },
     {
         id: 27,
-        name: "Yalla",
+        name: "Yalla ",
         link: "https://yallatruck.com",
         imageUri: require('../assets/foodTruck_images/yalla.jpeg'),
     },
@@ -174,7 +174,7 @@ const FoodTruckData = [
         id: 29,
         name: "Perro",
         link: "https://www.tacoperro.com",
-        imagueUri: require('../assets/foodTruck_images/perro.jpeg'),
+        imageUri: require('../assets/foodTruck_images/perro.jpeg'),
     },
     {
         id: 30,
