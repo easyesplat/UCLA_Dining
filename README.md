@@ -67,6 +67,8 @@ cd PythonCode
 ```shell
 pip install --upgrade firebase-admin
 ```
+<**Note**> Normally, your private key should not be shared to the public due to security concerns; however, for simplicity and practical purposes, I have added my own "serviceACcountKey.json" under the "PythonCode" directory. Therefore, if you would like to just run the Python script without worrying about making your own private key, skip the next step.
+
 * In [IAM & Admin > Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), create a new private key for your newly created firebase project and save the JSON file with the "PythonCode" directory; the file must be name "serviceAccountKey.json" and be placed in the correct location for the Python scripts to correctly push data to Firestore
 
 <p align="center">
@@ -75,7 +77,7 @@ pip install --upgrade firebase-admin
   width="686">
 </p>
 
-** Note ** Normally, your private key should not be shared to the public due to security concerns; however, for simplicity and practical purposes, I have added my own "serviceACcountKey.json" under the "PythonCode" directory.
+* Check that the whole process worked by checking your data in the firebase app within your firebase console
 
 ## Dining Hall Application
 ### Requirements
