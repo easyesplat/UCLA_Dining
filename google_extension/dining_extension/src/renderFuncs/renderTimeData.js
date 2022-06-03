@@ -148,12 +148,16 @@ function Square(props) {
   );
 }
 
+
+
+
 export function RenderData(props) {
   const [classType] = useState(props.class_type);
   const [AllTimeData] = useState(allTimeData);  // store data in this object
   const [dataLoaded, setdataLoaded] = useState(false);  // true after one load
   const [displayTime, setdisplayTime] = useState("");  // display on card back based on classType
-
+  const [color, setColor] = useState("");
+	
   function loadData() {
     if (dataLoaded == false) {
       // Avoid load again
@@ -163,40 +167,173 @@ export function RenderData(props) {
       if (classType == 'bc') {
         //setdisplayTime(AllTimeData.BC.level);
         //Need to Change Colors
-      let timeColor = '#37B96B';
-      let timeMessage = "Not too busy"; 
-      setdisplayTime("Not too busy "+ AllTimeData.BC.percentage.toString() + "%");
-      if (AllTimeData.BC.percentage > 70) {
-        timeColor = "#D24040";
-        timeMessage = "Super busy"; 
-        setdisplayTime("Super busy " + AllTimeData.BC.percentage.toString() + "%");
-      } else if (AllTimeData.BC.percentage > 50) {
-        timeColor = "#EF892B";
-        timeMessage = "Fairly busy ";
-        setdisplayTime("Fairly busy" + AllTimeData.BC.percentage.toString() + "%");
-      } else if (AllTimeData.BC.percentage > 30) {
-        timeColor = "#EFC42B";
-        timeMessage = "Getting busy"; 
-        setdisplayTime("Getting busy " + AllTimeData.BC.percentage.toString()  + "%");
-      } else if (AllTimeData.BC.percentage < 0) {
-        timeColor = "black";
-        timeMessage = "No data"; 
-        setdisplayTime("No data " + AllTimeData.BC.percentage.toString() + "%");
-      }
-      } else if (classType == 'bp') {
-        setdisplayTime(AllTimeData.BP.level);
-      } else if (classType == 'dn') {
-        setdisplayTime(AllTimeData.DN.level);
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.BC.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.BC.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.BC.percentage.toString() + "%");
+			}
+		} else if (classType == 'bp') {
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.BP.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.BP.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.BP.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.BP.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.BP.percentage.toString() + "%");
+			}
+		} else if (classType == 'dn') {
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.DN.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.DN.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.DN.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.DN.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.DN.percentage.toString() + "%");
+			}
       } else if (classType == 'ep') {
-        setdisplayTime(AllTimeData.EP.level);
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.EP.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.EP.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.EP.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.EP.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.EP.percentage.toString() + "%");
+			}
       } else if (classType == 'rw') {
-        setdisplayTime(AllTimeData.RW.level);
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.RW.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.RW.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.RW.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.RW.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.RW.percentage.toString() + "%");
+			}
       } else if (classType == 're') {
-        setdisplayTime(AllTimeData.RE.level);
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.BC.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.BC.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.BC.percentage.toString() + "%");
+			}
       } else if (classType == 'fe') {
-        setdisplayTime(AllTimeData.FE.level);
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.BC.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.BC.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.BC.percentage.toString() + "%");
+			}
       } else if (classType == 'st') {
-        setdisplayTime(AllTimeData.ST.level);
+				let timeColor = '#37B96B';
+				let timeMessage = "Not too busy"; 
+			setdisplayTime("Not too busy "+ AllTimeData.BC.percentage.toString() + "%");
+			if (AllTimeData.BC.percentage > 70) {
+				timeColor = "#D24040";
+				timeMessage = "Super busy"; 
+				setdisplayTime("Super busy " + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 50) {
+				timeColor = "#EF892B";
+				timeMessage = "Fairly busy ";
+				setdisplayTime("Fairly busy" + AllTimeData.BC.percentage.toString() + "%");
+			} else if (AllTimeData.BC.percentage > 30) {
+				timeColor = "#EFC42B";
+				timeMessage = "Getting busy"; 
+				setdisplayTime("Getting busy " + AllTimeData.BC.percentage.toString()  + "%");
+			} else if (AllTimeData.BC.percentage < 0) {
+				timeColor = "black";
+				timeMessage = "No data"; 
+				setdisplayTime("No data " + AllTimeData.BC.percentage.toString() + "%");
+			}
       }
     }
   }
